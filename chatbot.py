@@ -3,8 +3,9 @@ import random
 import string
 import simplemma
 from filmes import FILMES, MAPA_GENEROS
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
 
-# Baixa os recursos necessários do NLTK
 nltk.download("stopwords", quiet=True)
 nltk.download("punkt", quiet=True)
 nltk.download("punkt_tab", quiet=True)
@@ -25,10 +26,63 @@ LEMAS_GENEROS = {}
 for genero, palavras in MAPA_GENEROS.items():
     LEMAS_GENEROS[genero] = [lematizar(p) for p in palavras]
 
-LEMAS_SAUDACAO  = [lematizar(p) for p in ["oi", "ola", "olá", "hey", "bom", "boa", "salve", "opa"]]
-LEMAS_DESPEDIDA = [lematizar(p) for p in ["tchau", "ate", "adeus", "sair", "encerrar", "obrigado", "obrigada", "valeu"]]
-LEMAS_AJUDA     = [lematizar(p) for p in ["ajuda", "ajudar", "help", "como", "que", "fazer", "funcionar", "usar"]]
-LEMAS_RECOMENDACAO = [lematizar(p) for p in ["recomendar", "indicar", "sugerir", "querer", "assistir", "ver", "mostrar"]]
+FRASES_TREINO = [
+    "oi", "olá", "ola", "hey",
+    "bom", "boa", "salve",
+    "opa", "eai", "tudo bem",
+
+    "tchau", "ate", "até", "adeus",
+    "obrigado", "valeu", "sair",
+    "encerrar", "obrigada",
+
+    "como", "o que", "fazer", "funcionar",
+    "usar", "ajudar", "help",
+    "que", "quais", "dizer", "explicar",
+
+    "querer", "recomendar",
+    "sugerir", "indicar", "mostrar",
+    "tem algum filme bom", "precisar",
+    "ver", "passar", "assistir",
+]
+
+ROTULOS_TREINO = [
+    "saudacao", "saudacao", "saudacao", "saudacao",
+    "saudacao", "saudacao", "saudacao",
+    "saudacao", "saudacao", "saudacao",
+
+    "despedida", "despedida", "despedida", "despedida",
+    "despedida", "despedida", "despedida",
+    "despedida", "despedida",
+
+    "ajuda", "ajuda", "ajuda", "ajuda",
+    "ajuda", "ajuda", "ajuda",
+    "ajuda", "ajuda", "ajuda", "ajuda",
+
+    "recomendacao", "recomendacao",
+    "recomendacao", "recomendacao", "recomendacao",
+    "recomendacao", "recomendacao",
+    "recomendacao", "recomendacao", "recomendacao",
+]
+
+assert len(FRASES_TREINO) == len(ROTULOS_TREINO), (
+    f"Desalinhamento: {len(FRASES_TREINO)} frases vs {len(ROTULOS_TREINO)} rótulos"
+)
+
+
+def _preprocessar_treino(texto):
+    """Pré-processamento usado só no treino do modelo."""
+    texto = texto.lower().translate(str.maketrans("", "", string.punctuation))
+    tokens = word_tokenize(texto, language="portuguese")
+    tokens = [t for t in tokens if t not in STOPWORDS_PT]
+    return " ".join([lematizar(t) for t in tokens])
+
+_frases_proc = [_preprocessar_treino(f) for f in FRASES_TREINO]
+
+_vectorizer = CountVectorizer()
+_X_treino   = _vectorizer.fit_transform(_frases_proc)
+
+_modelo_intencao = MultinomialNB()
+_modelo_intencao.fit(_X_treino, ROTULOS_TREINO)
 
 
 def preprocessar(texto):
@@ -60,16 +114,10 @@ def detectar_genero(tokens, lemas):
 
 
 def detectar_intencao(tokens, lemas):
-    for lema in lemas:
-        if lema in LEMAS_SAUDACAO:
-            return "saudacao"
-        if lema in LEMAS_DESPEDIDA:
-            return "despedida"
-        if lema in LEMAS_AJUDA:
-            return "ajuda"
-        if lema in LEMAS_RECOMENDACAO:
-            return "recomendacao"
-    return "desconhecida"
+    """Classifica a intenção usando MultinomialNB."""
+    entrada = " ".join(lemas)
+    vetor   = _vectorizer.transform([entrada])
+    return _modelo_intencao.predict(vetor)[0]
 
 
 def recomendar_filmes(genero, quantidade=3):
