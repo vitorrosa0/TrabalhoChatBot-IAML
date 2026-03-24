@@ -15,7 +15,9 @@ O **CineBot** é um chatbot temático com interface web que recomenda filmes com
 | Tecnologia | Função |
 |---|---|
 | Python 3.x | Linguagem principal |
-| NLTK | Processamento de Linguagem Natural |
+| NLTK | Tokenização, stopwords e processamento de texto |
+| simplemma | Lematização em português |
+| scikit-learn | Classificador Naive Bayes para detecção de intenções |
 | Flask | Servidor web / Backend |
 | HTML + CSS + JS | Interface web (Frontend) |
 
@@ -43,11 +45,11 @@ O módulo `chatbot.py` aplica as seguintes etapas no processamento de cada mensa
 2. **Remoção de pontuação** — elimina caracteres especiais
 3. **Tokenização** — divide o texto em palavras individuais (usando `word_tokenize` do NLTK)
 4. **Remoção de stopwords** — remove palavras sem valor semântico (ex: "o", "de", "que") usando a lista de stopwords em português do NLTK
-5. **Stemming** — reduz palavras à sua raiz morfológica usando o `RSLPStemmer` do NLTK (ex: "ação", "ações" → mesmo stem)
+5. **Lematização** — reduz palavras à sua forma base usando o `simplemma` (ex: "assistindo", "assistiu" → "assistir")
 
 Após o processamento, o sistema:
-- **Detecta a intenção** do usuário (saudação, pedido de recomendação, despedida, ajuda)
-- **Detecta o gênero** cinematográfico mencionado comparando stems das palavras com o dicionário de palavras-chave
+- **Detecta a intenção** do usuário com um classificador **Naive Bayes (MultinomialNB)** treinado com frases de exemplo, usando `CountVectorizer` do scikit-learn para vetorização
+- **Detecta o gênero** cinematográfico mencionado comparando lemas das palavras com o dicionário de palavras-chave
 
 ---
 
@@ -74,7 +76,7 @@ cd TrabalhoChatBot-IAML
 
 ### 2. Instale as dependências
 ```bash
-pip3 install flask nltk
+pip3 install -r requirements.txt
 ```
 
 ### 3. Execute o servidor
