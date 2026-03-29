@@ -2,9 +2,9 @@ import nltk
 import random
 import string
 import simplemma
+from datetime import datetime
 from filmes import FILMES, MAPA_GENEROS
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
+from ml_recomendador import recomendar_com_ambos
 
 nltk.download("stopwords", quiet=True)
 nltk.download("punkt", quiet=True)
@@ -13,7 +13,6 @@ nltk.download("punkt_tab", quiet=True)
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
-# Inicializa as stopwords em português
 STOPWORDS_PT = set(stopwords.words("portuguese"))
 
 
@@ -21,79 +20,45 @@ def lematizar(palavra):
     return simplemma.lemmatize(palavra, lang="pt")
 
 
-# Lemas pré-computados para comparação
+# Lemas pré-computados para comparação de gêneros
 LEMAS_GENEROS = {}
 for genero, palavras in MAPA_GENEROS.items():
     LEMAS_GENEROS[genero] = [lematizar(p) for p in palavras]
 
-FRASES_TREINO = [
-    "oi", "olá", "ola", "hey",
-    "bom", "boa", "salve",
-    "opa", "eai", "tudo bem",
+# Lemas para detecção de intenção (substituindo o NaiveBayes)
+LEMAS_SAUDACAO     = [lematizar(p) for p in ["oi", "ola", "olá", "hey", "bom", "boa", "salve", "opa"]]
+LEMAS_DESPEDIDA    = [lematizar(p) for p in ["tchau", "ate", "adeus", "sair", "encerrar", "obrigado", "obrigada", "valeu"]]
+LEMAS_AJUDA        = [lematizar(p) for p in ["ajuda", "ajudar", "help", "como", "que", "fazer", "funcionar", "usar"]]
+LEMAS_RECOMENDACAO = [lematizar(p) for p in ["recomendar", "indicar", "sugerir", "querer", "assistir", "ver", "mostrar"]]
 
-    "tchau", "ate", "até", "adeus",
-    "obrigado", "valeu", "sair",
-    "encerrar", "obrigada",
+# Lemas para detecção de contexto (alimentam os modelos ML)
+LEMAS_HUMOR = {
+    "animado":   [lematizar(p) for p in ["animado", "empolgado", "energia", "agitado", "feliz"]],
+    "calmo":     [lematizar(p) for p in ["calmo", "relaxado", "tranquilo", "sossegado", "descansando"]],
+    "entediado": [lematizar(p) for p in ["entediado", "tedio", "chato", "sem", "fazer"]],
+    "assustado": [lematizar(p) for p in ["assustado", "medo", "nervoso", "tenso", "ansioso"]],
+    "romantico": [lematizar(p) for p in ["romantico", "apaixonado", "amor", "namorado", "namorada"]],
+    "curioso":   [lematizar(p) for p in ["curioso", "pensativo", "refletindo", "interessado", "intrigado"]],
+}
 
-    "como", "o que", "fazer", "funcionar",
-    "usar", "ajudar", "help",
-    "que", "quais", "dizer", "explicar",
+LEMAS_ACOMPANHADO = {
+    "sozinho": [lematizar(p) for p in ["sozinho", "solo", "so"]],
+    "amigos":  [lematizar(p) for p in ["amigos", "amigo", "galera", "turma", "pessoal"]],
+    "casal":   [lematizar(p) for p in ["casal", "namorado", "namorada", "esposo", "esposa", "parceiro", "parceira"]],
+    "familia": [lematizar(p) for p in ["familia", "filho", "filha", "pai", "mae", "crianca"]],
+}
 
-    "querer", "recomendar",
-    "sugerir", "indicar", "mostrar",
-    "tem algum filme bom", "precisar",
-    "ver", "passar", "assistir",
-]
-
-ROTULOS_TREINO = [
-    "saudacao", "saudacao", "saudacao", "saudacao",
-    "saudacao", "saudacao", "saudacao",
-    "saudacao", "saudacao", "saudacao",
-
-    "despedida", "despedida", "despedida", "despedida",
-    "despedida", "despedida", "despedida",
-    "despedida", "despedida",
-
-    "ajuda", "ajuda", "ajuda", "ajuda",
-    "ajuda", "ajuda", "ajuda",
-    "ajuda", "ajuda", "ajuda", "ajuda",
-
-    "recomendacao", "recomendacao",
-    "recomendacao", "recomendacao", "recomendacao",
-    "recomendacao", "recomendacao",
-    "recomendacao", "recomendacao", "recomendacao",
-]
-
-assert len(FRASES_TREINO) == len(ROTULOS_TREINO), (
-    f"Desalinhamento: {len(FRASES_TREINO)} frases vs {len(ROTULOS_TREINO)} rótulos"
-)
+NOMES_GENEROS = {
+    "acao": "Ação", "comedia": "Comédia", "drama": "Drama",
+    "terror": "Terror", "romance": "Romance",
+    "ficcao_cientifica": "Ficção Científica",
+    "animacao": "Animação", "suspense": "Suspense",
+}
 
 
-def _preprocessar_treino(texto):
-    """Pré-processamento usado só no treino do modelo."""
-    texto = texto.lower().translate(str.maketrans("", "", string.punctuation))
-    tokens = word_tokenize(texto, language="portuguese")
-    tokens = [t for t in tokens if t not in STOPWORDS_PT]
-    return " ".join([lematizar(t) for t in tokens])
-
-_frases_proc = [_preprocessar_treino(f) for f in FRASES_TREINO]
-
-_vectorizer = CountVectorizer()
-_X_treino   = _vectorizer.fit_transform(_frases_proc)
-
-_modelo_intencao = MultinomialNB()
-_modelo_intencao.fit(_X_treino, ROTULOS_TREINO)
-
+# Funções de PLN
 
 def preprocessar(texto):
-    """
-    Aplica pipeline de PLN:
-    1. Lowercase
-    2. Remove pontuação
-    3. Tokenização
-    4. Remoção de stopwords
-    5. Lematização (simplemma)
-    """
     texto = texto.lower()
     texto = texto.translate(str.maketrans("", "", string.punctuation))
     tokens = word_tokenize(texto, language="portuguese")
@@ -114,22 +79,104 @@ def detectar_genero(tokens, lemas):
 
 
 def detectar_intencao(tokens, lemas):
-    """Classifica a intenção usando MultinomialNB."""
-    entrada = " ".join(lemas)
-    vetor   = _vectorizer.transform([entrada])
-    return _modelo_intencao.predict(vetor)[0]
+    for lema in lemas:
+        if lema in LEMAS_SAUDACAO:
+            return "saudacao"
+        if lema in LEMAS_DESPEDIDA:
+            return "despedida"
+        if lema in LEMAS_AJUDA:
+            return "ajuda"
+        if lema in LEMAS_RECOMENDACAO:
+            return "recomendacao"
+    return "desconhecida"
+
+
+def detectar_humor(lemas):
+    for humor, lemas_humor in LEMAS_HUMOR.items():
+        for lema in lemas:
+            if lema in lemas_humor:
+                return humor
+    return "calmo"
+
+
+def detectar_acompanhado(lemas):
+    for comp, lemas_comp in LEMAS_ACOMPANHADO.items():
+        for lema in lemas:
+            if lema in lemas_comp:
+                return comp
+    return "sozinho"
+
+
+def detectar_idade(tokens):
+    for token in tokens:
+        if token in ["jovem", "novo", "nova", "adolescente", "teen"]:
+            return "jovem"
+        if token in ["idoso", "velho", "velha", "aposentado", "senior"]:
+            return "idoso"
+    return "adulto"
+
+
+def detectar_hora():
+    hora = datetime.now().hour
+    if 5 <= hora < 12:
+        return "manha"
+    elif 12 <= hora < 18:
+        return "tarde"
+    else:
+        return "noite"
+
+
+def detectar_dia():
+    return "fim_semana" if datetime.now().weekday() >= 5 else "semana"
 
 
 def recomendar_filmes(genero, quantidade=3):
     filmes = FILMES.get(genero, [])
-    selecionados = random.sample(filmes, min(quantidade, len(filmes)))
-    return selecionados
+    return random.sample(filmes, min(quantidade, len(filmes)))
 
+
+# Função auxiliar: coleta contexto e consulta J48 + LMT
+
+def _resposta_com_ml(genero_detectado, lemas, tokens):
+    humor       = detectar_humor(lemas)
+    acompanhado = detectar_acompanhado(lemas)
+    idade       = detectar_idade(tokens)
+    hora        = detectar_hora()
+    dia         = detectar_dia()
+
+    genero_j48, genero_lmt = recomendar_com_ambos(
+        idade, genero_detectado, hora, dia, humor, acompanhado
+    )
+
+    if genero_j48 == genero_lmt:
+        genero_final = genero_j48
+        nota_ml = f"🤖 _J48 e LMT concordaram: **{NOMES_GENEROS[genero_final]}** é o melhor para o seu perfil agora._\n\n"
+    else:
+        genero_final = genero_j48
+        nota_ml = (
+            f"🤖 _J48 indicou **{NOMES_GENEROS[genero_j48]}** e "
+            f"LMT indicou **{NOMES_GENEROS[genero_lmt]}**. "
+            f"Usando J48 (maior acurácia no experimento)._\n\n"
+        )
+
+    filmes = recomendar_filmes(genero_final)
+    nome_genero = NOMES_GENEROS.get(genero_final, genero_final)
+
+    resposta = f"🎬 Ótima escolha! Aqui estão {len(filmes)} filmes de **{nome_genero}** pra você:\n\n"
+    for i, filme in enumerate(filmes, 1):
+        resposta += f"{i}. **{filme['titulo']}** ({filme['ano']})\n"
+        resposta += f"   _{filme['descricao']}_\n\n"
+    resposta += nota_ml
+    resposta += "Quer recomendações de outro gênero? 😊"
+    return resposta
+
+
+# Função principal
 
 def gerar_resposta(mensagem_usuario):
     tokens, lemas = preprocessar(mensagem_usuario)
     intencao = detectar_intencao(tokens, lemas)
-    genero = detectar_genero(tokens, lemas)
+    genero   = detectar_genero(tokens, lemas)
 
     if intencao == "saudacao":
         return (
@@ -154,20 +201,7 @@ def gerar_resposta(mensagem_usuario):
         )
 
     if genero:
-        filmes = recomendar_filmes(genero)
-        nomes_generos = {
-            "acao": "Ação", "comedia": "Comédia", "drama": "Drama",
-            "terror": "Terror", "romance": "Romance",
-            "ficcao_cientifica": "Ficção Científica",
-            "animacao": "Animação", "suspense": "Suspense",
-        }
-        nome_genero = nomes_generos.get(genero, genero)
-        resposta = f"🎬 Ótima escolha! Aqui estão {len(filmes)} filmes de **{nome_genero}** pra você:\n\n"
-        for i, filme in enumerate(filmes, 1):
-            resposta += f"{i}. **{filme['titulo']}** ({filme['ano']})\n"
-            resposta += f"   _{filme['descricao']}_\n\n"
-        resposta += "Quer recomendações de outro gênero? 😊"
-        return resposta
+        return _resposta_com_ml(genero, lemas, tokens)
 
     if intencao == "recomendacao":
         return (
