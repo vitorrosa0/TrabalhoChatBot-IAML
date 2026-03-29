@@ -20,18 +20,15 @@ def lematizar(palavra):
     return simplemma.lemmatize(palavra, lang="pt")
 
 
-# Lemas pré-computados para comparação de gêneros
 LEMAS_GENEROS = {}
 for genero, palavras in MAPA_GENEROS.items():
     LEMAS_GENEROS[genero] = [lematizar(p) for p in palavras]
 
-# Lemas para detecção de intenção (substituindo o NaiveBayes)
 LEMAS_SAUDACAO     = [lematizar(p) for p in ["oi", "ola", "olá", "hey", "bom", "boa", "salve", "opa"]]
 LEMAS_DESPEDIDA    = [lematizar(p) for p in ["tchau", "ate", "adeus", "sair", "encerrar", "obrigado", "obrigada", "valeu"]]
 LEMAS_AJUDA        = [lematizar(p) for p in ["ajuda", "ajudar", "help", "como", "que", "fazer", "funcionar", "usar"]]
 LEMAS_RECOMENDACAO = [lematizar(p) for p in ["recomendar", "indicar", "sugerir", "querer", "assistir", "ver", "mostrar"]]
 
-# Lemas para detecção de contexto (alimentam os modelos ML)
 LEMAS_HUMOR = {
     "animado":   [lematizar(p) for p in ["animado", "empolgado", "energia", "agitado", "feliz"]],
     "calmo":     [lematizar(p) for p in ["calmo", "relaxado", "tranquilo", "sossegado", "descansando"]],
@@ -55,8 +52,6 @@ NOMES_GENEROS = {
     "animacao": "Animação", "suspense": "Suspense",
 }
 
-
-# Funções de PLN
 
 def preprocessar(texto):
     texto = texto.lower()
@@ -135,8 +130,6 @@ def recomendar_filmes(genero, quantidade=3):
     return random.sample(filmes, min(quantidade, len(filmes)))
 
 
-# Função auxiliar: coleta contexto e consulta J48 + LMT
-
 def _resposta_com_ml(genero_detectado, lemas, tokens):
     humor       = detectar_humor(lemas)
     acompanhado = detectar_acompanhado(lemas)
@@ -170,8 +163,6 @@ def _resposta_com_ml(genero_detectado, lemas, tokens):
     resposta += "Quer recomendações de outro gênero? 😊"
     return resposta
 
-
-# Função principal
 
 def gerar_resposta(mensagem_usuario):
     tokens, lemas = preprocessar(mensagem_usuario)

@@ -4,13 +4,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
  
-# Dataset de treino (equivalente ao filmes_recomendacao.arff)
-# Atributos: idade_usuario, genero_favorito, hora_do_dia,
-#            dia_semana, humor, acompanhado
-# Classe: genero_recomendado
  
 DADOS_TREINO = [
-    # idade, genero_fav, hora, dia, humor, acompanhado, recomendado
     ("jovem","acao","noite","fim_semana","animado","amigos","acao"),
     ("jovem","acao","noite","semana","animado","sozinho","acao"),
     ("jovem","ficcao_cientifica","noite","fim_semana","animado","amigos","acao"),
@@ -68,9 +63,8 @@ DADOS_TREINO = [
     ("adulto","ficcao_cientifica","noite","semana","curioso","sozinho","suspense"),
     ("idoso","drama","tarde","semana","curioso","sozinho","suspense"),
 ]
- 
-# Encoders para converter texto em números (sklearn só aceita números)
- 
+
+
 COLUNAS = ["idade_usuario", "genero_favorito", "hora_do_dia",
            "dia_semana", "humor", "acompanhado"]
  
@@ -90,7 +84,6 @@ encoders = {col: LabelEncoder().fit(vals) for col, vals in CATEGORIAS.items()}
  
  
 def codificar(linha):
-    # Converte uma linha de atributos (strings) em array numérico para o modelo
     return [encoders[col].transform([val])[0] for col, val in zip(COLUNAS, linha)]
  
  
@@ -102,21 +95,17 @@ def preparar_dados():
     return np.array(X), np.array(y)
  
  
-# Modelo 1: J48 (equivalente: DecisionTreeClassifier com poda)
  
 X, y = preparar_dados()
  
 modelo_j48 = DecisionTreeClassifier(
-    criterion="entropy",   # mesma base do J48 (information gain)
-    min_samples_leaf=2,    # equivalente ao -M 2 do WEKA
-    ccp_alpha=0.01,        # poda equivalente ao -C 0.25
+    criterion="entropy",
+    min_samples_leaf=2,
+    ccp_alpha=0.01,
     random_state=42
 )
 modelo_j48.fit(X, y)
  
-# Modelo 2: LMT (equivalente: árvore + regressão logística nas folhas)
-# Sklearn não tem LMT nativo, usamos pipeline DecisionTree + LogisticRegression
-# A árvore segmenta os dados e a regressão refina dentro de cada folha
  
 modelo_lmt = Pipeline([
     ("arvore", DecisionTreeClassifier(
@@ -128,9 +117,7 @@ modelo_lmt = Pipeline([
 ])
 modelo_lmt.fit(X, y)
  
- 
-# Função principal: recebe contexto do usuário e retorna gênero
- 
+  
 def recomendar_com_ml(idade, genero_favorito, hora, dia, humor, acompanhado,
                       modelo="j48"):
     """

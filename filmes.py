@@ -59,7 +59,6 @@ FILMES = {
     ],
 }
 
-# Mapeamento de palavras-chave para gêneros
 MAPA_GENEROS = {
     "acao": ["ação", "acao", "aventura", "luta", "heroi", "herói", "explosao", "explosão", "adrenalina", "combate"],
     "comedia": ["comedia", "comédia", "engraçado", "engracado", "rir", "humor", "divertido", "risada", "piada"],
