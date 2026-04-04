@@ -4,7 +4,7 @@ import string
 import simplemma
 from datetime import datetime
 from filmes import FILMES, MAPA_GENEROS
-from ml_recomendador import recomendar_com_ambos
+from ml_recomendador import recomendar_com_ambos, salvar_exemplo, MINIMO_TREINO
 
 nltk.download("stopwords", quiet=True)
 nltk.download("punkt", quiet=True)
@@ -141,7 +141,10 @@ def _resposta_com_ml(genero_detectado, lemas, tokens):
         idade, genero_detectado, hora, dia, humor, acompanhado
     )
 
-    if genero_j48 == genero_lmt:
+    if genero_j48 is None:
+        genero_final = genero_detectado
+        nota_ml = f"🤖 _Ainda aprendendo... usando o gênero que você pediu. ({MINIMO_TREINO} interações necessárias para ativar o ML)_\n\n"
+    elif genero_j48 == genero_lmt:
         genero_final = genero_j48
         nota_ml = f"🤖 _J48 e LMT concordaram: **{NOMES_GENEROS[genero_final]}** é o melhor para o seu perfil agora._\n\n"
     else:
@@ -151,6 +154,8 @@ def _resposta_com_ml(genero_detectado, lemas, tokens):
             f"LMT indicou **{NOMES_GENEROS[genero_lmt]}**. "
             f"Usando J48 (maior acurácia no experimento)._\n\n"
         )
+
+    salvar_exemplo(idade, genero_detectado, hora, dia, humor, acompanhado, genero_final)
 
     filmes = recomendar_filmes(genero_final)
     nome_genero = NOMES_GENEROS.get(genero_final, genero_final)
@@ -168,6 +173,11 @@ def gerar_resposta(mensagem_usuario):
     tokens, lemas = preprocessar(mensagem_usuario)
     intencao = detectar_intencao(tokens, lemas)
     genero   = detectar_genero(tokens, lemas)
+
+    print(f"tokens: {tokens}")
+    print(f"lemas:  {lemas}")
+    print(f"genero detectado: {genero}")
+    print(f"intencao: {intencao}")
 
     if intencao == "saudacao":
         return (
