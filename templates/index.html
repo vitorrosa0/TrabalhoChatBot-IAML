@@ -386,12 +386,12 @@
 
             for (let i = 0; i < linhas.length; i++) {
                 const l = linhas[i];
-                const matchFilme = l.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s+\((\d{4})\)/);
+                const matchFilme = l.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s+\((\d{4})\)(\s+⭐\s+([\d.]+)\/10)?/);
                 const matchDesc = l.match(/^\s+_(.+)_\s*$/);
 
                 if (matchFilme) {
                     emCards = true;
-                    cards.push({ num: matchFilme[1], titulo: matchFilme[2], ano: matchFilme[3], desc: "" });
+                    cards.push({ num: matchFilme[1], titulo: matchFilme[2], ano: matchFilme[3], nota: matchFilme[5] || "", desc: "" });
                 } else if (matchDesc && emCards && cards.length > 0) {
                     cards[cards.length - 1].desc = matchDesc[1];
                 } else {
@@ -413,7 +413,7 @@
             <div class="film-card">
               <div class="film-num">${c.num}.</div>
               <div>
-                <div class="film-title">${escapeHtml(c.titulo)}<span class="film-year">${c.ano}</span></div>
+                <div class="film-title">${escapeHtml(c.titulo)}<span class="film-year">${c.ano}</span>${c.nota ? `<span class="film-year" style="color:var(--gold)">⭐ ${c.nota}/10</span>` : ""}</div>
                 ${c.desc ? `<div class="film-desc">${escapeHtml(c.desc)}</div>` : ""}
               </div>
             </div>`;

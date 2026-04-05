@@ -2,3 +2,4 @@ flask
 nltk
 simplemma
 scikit-learn
+requests

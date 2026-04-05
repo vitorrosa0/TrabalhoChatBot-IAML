@@ -5,6 +5,7 @@ import simplemma
 from datetime import datetime
 from filmes import FILMES, MAPA_GENEROS
 from ml_recomendador import recomendar_com_ambos, salvar_exemplo, MINIMO_TREINO
+from tmdb_api import buscar_nota_filme
 
 nltk.download("stopwords", quiet=True)
 nltk.download("punkt", quiet=True)
@@ -162,7 +163,10 @@ def _resposta_com_ml(genero_detectado, lemas, tokens):
 
     resposta = f"🎬 Ótima escolha! Aqui estão {len(filmes)} filmes de **{nome_genero}** pra você:\n\n"
     for i, filme in enumerate(filmes, 1):
-        resposta += f"{i}. **{filme['titulo']}** ({filme['ano']})\n"
+        nota = buscar_nota_filme(filme["titulo"])
+        estrelas = f" ⭐ {nota}/10" if nota else ""
+        print(f"[TMDB] '{filme['titulo']}' → nota: {nota}")
+        resposta += f"{i}. **{filme['titulo']}** ({filme['ano']}){estrelas}\n"
         resposta += f"   _{filme['descricao']}_\n\n"
     resposta += nota_ml
     resposta += "Quer recomendações de outro gênero? 😊"
