@@ -3,8 +3,19 @@ import requests
 TMDB_API_KEY = "334e50050d16da0c941e5006fee5e7e8"
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
+GENEROS_TMDB = {
+    "acao":              28,
+    "comedia":           35,
+    "drama":             18,
+    "terror":            27,
+    "romance":           10749,
+    "ficcao_cientifica": 878,
+    "animacao":          16,
+    "suspense":          53,
+}
 
 def _get(endpoint, params={}):
+    params = dict(params)
     params["api_key"] = TMDB_API_KEY
     params["language"] = "pt-BR"
     try:
@@ -14,17 +25,46 @@ def _get(endpoint, params={}):
     except requests.exceptions.RequestException:
         return None
 
+def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None):
+    excluir_titulos = set(excluir_titulos or [])
+    genero_id = GENEROS_TMDB.get(genero)
+    if not genero_id:
+        return []
+
+    filmes = []
+    pagina = 1
+
+    while len(filmes) < quantidade and pagina <= 5:
+        dados = _get("/discover/movie", {
+            "with_genres":    genero_id,
+            "sort_by":        "vote_average.desc",
+            "vote_count.gte": 500,
+            "page":           pagina,
+        })
+
+        if not dados or not dados.get("results"):
+            break
+
+        for filme in dados["results"]:
+            titulo = filme.get("title", "Sem título")
+            if titulo in excluir_titulos:
+                continue
+            filmes.append({
+                "titulo":    titulo,
+                "ano":       filme.get("release_date", "????")[:4],
+                "descricao": filme.get("overview", "Sem descrição disponível."),
+                "nota":      round(filme.get("vote_average", 0), 1),
+            })
+            if len(filmes) >= quantidade:
+                break
+
+        pagina += 1
+
+    return filmes
 
 def buscar_nota_filme(titulo):
     dados = _get("/search/movie", {"query": titulo})
-
     if not dados or not dados.get("results"):
         return None
-
-    filme = dados["results"][0]
-    nota = filme.get("vote_average")
-
-    if not nota:
-        return None
-
-    return round(nota, 1)
+    nota = dados["results"][0].get("vote_average")
+    return round(nota, 1) if nota else None
