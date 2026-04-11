@@ -66,6 +66,6 @@ MAPA_GENEROS = {
     "terror": ["terror", "medo", "assustador", "horror", "susto", "assombrado", "sobrenatural", "sinistro"],
     "romance": ["romance", "amor", "romantico", "romântico", "casal", "paixao", "paixão", "apaixonado", "sentimento"],
     "ficcao_cientifica": ["ficção", "ficcao", "científica", "cientifica", "sci-fi", "scifi", "nave", "aliens", "alienigena", "futuro", "tecnologia", "robo", "robô", "espaco", "espaço"],
-    "animacao": ["animação", "animacao", "desenho", "animado", "infantil", "familia", "família", "pixar", "disney"],
+    "animacao": ["animação", "animacao", "desenho", "infantil", "familia", "família", "pixar", "disney"],
     "suspense": ["suspense", "thriller", "misterio", "mistério", "tensão", "tensao", "policial", "investigação", "investigacao", "crime"],
 }

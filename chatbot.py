@@ -203,7 +203,12 @@ def _montar_resposta_filmes(sid):
         )
 
     ja_vistos = filmes_ja_recomendados(sid)
-    filmes    = buscar_filmes_por_genero(genero_final, quantidade=3, excluir_titulos=ja_vistos)
+    filmes = buscar_filmes_por_genero(
+        genero_final,
+        quantidade=3,
+        excluir_titulos=ja_vistos,
+        duracao=sessao.get("duracao_preferida"),          
+    )
     adicionar_filmes_recomendados(sid, [f["titulo"] for f in filmes])
 
     nome_genero = NOMES_GENEROS.get(genero_final, genero_final)
@@ -219,7 +224,6 @@ def _montar_resposta_filmes(sid):
     if sessao_completa(sid):
         salvar_exemplo(genero_pedido, humor, acompanhado, duracao, disposicao, genero_final)
         encerrar_sessao(sid)
-        _sessao_atual["sid"] = None
         resposta += "Espero que curta! 🍿 Se quiser mais recomendações, é só pedir."
         return resposta
 
@@ -235,11 +239,9 @@ def gerar_resposta(mensagem_usuario, sid=None):
 
     print(f"[DEBUG] tokens={tokens} | lemas={lemas} | genero={genero} | intencao={intencao} | sid={sid}")
 
-    # ── Pedido de mais filmes ─────────────────────────────────────────────────
     if intencao == "mais_filmes" and sid:
         return _montar_resposta_filmes(sid), sid
 
-    # ── Saudação ──────────────────────────────────────────────────────────────
     if intencao == "saudacao":
         return (
             "Olá! 🎬 Sou o CineBot, seu assistente de filmes!\n\n"
@@ -248,14 +250,12 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "• Romance • Ficção Científica • Animação • Suspense"
         ), sid
 
-    # ── Despedida ─────────────────────────────────────────────────────────────
     if intencao == "despedida":
         if sid:
             encerrar_sessao(sid)
             sid = None
         return "Foi um prazer! Bom filme e até mais! 👋", sid
 
-    # ── Ajuda ─────────────────────────────────────────────────────────────────
     if intencao == "ajuda":
         return (
             "É simples! Me diga o gênero que você quer. Por exemplo:\n\n"
@@ -265,7 +265,6 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "Gêneros: Ação, Comédia, Drama, Terror, Romance, Ficção Científica, Animação e Suspense."
         ), sid
 
-    # ── Novo gênero detectado → inicia ou reinicia sessão ────────────────────
     if genero:
         if sid:
             encerrar_sessao(sid)
@@ -273,7 +272,6 @@ def gerar_resposta(mensagem_usuario, sid=None):
         preencher_campo(sid, "genero_pedido", genero)
         return _montar_resposta_filmes(sid), sid
 
-    # ── Usuário está respondendo uma pergunta da sessão ativa ─────────────────
     if sid:
         proximo = proximo_campo_vazio(sid)
         if proximo:
@@ -288,14 +286,12 @@ def gerar_resposta(mensagem_usuario, sid=None):
             else:
                 return f"Não entendi bem. 😅 {PERGUNTAS[proximo]}", sid
 
-    # ── Intenção genérica de recomendação sem gênero ──────────────────────────
     if intencao == "recomendacao":
         return (
             "Qual gênero você quer? 🎬\n"
             "Ação, Comédia, Drama, Terror, Romance, Ficção Científica, Animação ou Suspense."
         ), sid
 
-    # ── Fallback ──────────────────────────────────────────────────────────────
     return (
         "Não entendi muito bem... 😅 Tente me dizer o gênero do filme que você quer!\n\n"
         "Gêneros: Ação, Comédia, Drama, Terror, Romance, Ficção Científica, Animação, Suspense."
