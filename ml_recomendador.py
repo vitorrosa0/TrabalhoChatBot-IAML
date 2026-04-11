@@ -4,25 +4,22 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder
- 
-DATASET_PATH    = "dataset.csv"
-MINIMO_TREINO   = 16   
-RETREINO_A_CADA = 5    
 
-COLUNAS = ["idade_usuario", "genero_favorito", "hora_do_dia",
-           "dia_semana", "humor", "acompanhado"]
+DATASET_PATH    = "dataset.csv"
+MINIMO_TREINO   = 16
+RETREINO_A_CADA = 5
+
+COLUNAS = ["genero_pedido", "humor", "acompanhado", "duracao_preferida", "disposicao"]
 
 CATEGORIAS = {
-    "idade_usuario":      ["jovem", "adulto", "idoso"],
-    "genero_favorito":    ["acao", "comedia", "drama", "terror", "romance",
-                           "ficcao_cientifica", "animacao", "suspense"],
-    "hora_do_dia":        ["manha", "tarde", "noite"],
-    "dia_semana":         ["semana", "fim_semana"],
-    "humor":              ["animado", "calmo", "entediado", "assustado",
-                           "romantico", "curioso"],
-    "acompanhado":        ["sozinho", "amigos", "casal", "familia"],
-    "genero_recomendado": ["acao", "comedia", "drama", "terror", "romance",
-                           "ficcao_cientifica", "animacao", "suspense"],
+    "genero_pedido":     ["acao", "comedia", "drama", "terror", "romance",
+                          "ficcao_cientifica", "animacao", "suspense"],
+    "humor":             ["animado", "calmo", "entediado", "assustado", "romantico", "curioso", "triste"],
+    "acompanhado":       ["sozinho", "amigos", "casal", "familia"],
+    "duracao_preferida": ["curto", "medio", "longo"],
+    "disposicao":        ["pensar", "curtir"],
+    "genero_recomendado":["acao", "comedia", "drama", "terror", "romance",
+                          "ficcao_cientifica", "animacao", "suspense"],
 }
 
 encoders = {col: LabelEncoder().fit(vals) for col, vals in CATEGORIAS.items()}
@@ -43,11 +40,11 @@ def _carregar_csv():
             linhas.append(tuple(row[c] for c in COLUNAS + ["genero_recomendado"]))
     return linhas
 
-def salvar_exemplo(idade, genero_fav, hora, dia, humor, acompanhado, genero_final):
+def salvar_exemplo(genero_pedido, humor, acompanhado, duracao_preferida, disposicao, genero_recomendado):
     _inicializar_csv()
     with open(DATASET_PATH, "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow([idade, genero_fav, hora, dia, humor, acompanhado, genero_final])
+        writer.writerow([genero_pedido, humor, acompanhado, duracao_preferida, disposicao, genero_recomendado])
 
     dados = _carregar_csv()
     total = len(dados)
@@ -61,8 +58,8 @@ def preparar_dados():
     dados = _carregar_csv()
     X, y = [], []
     for row in dados:
-        X.append(codificar(row[:6]))
-        y.append(encoders["genero_recomendado"].transform([row[6]])[0])
+        X.append(codificar(row[:5]))
+        y.append(encoders["genero_recomendado"].transform([row[5]])[0])
     return np.array(X), np.array(y)
 
 modelo_j48 = None
@@ -71,14 +68,14 @@ modelo_lmt = None
 def _treinar(dados):
     global modelo_j48, modelo_lmt
 
-    X = np.array([codificar(row[:6]) for row in dados])
-    y = np.array([encoders["genero_recomendado"].transform([row[6]])[0]
+    X = np.array([codificar(row[:5]) for row in dados])
+    y = np.array([encoders["genero_recomendado"].transform([row[5]])[0]
                   for row in dados])
 
     modelo_j48 = DecisionTreeClassifier(
-        criterion="entropy",   
-        min_samples_leaf=2,    
-        ccp_alpha=0.01,        
+        criterion="entropy",
+        min_samples_leaf=2,
+        ccp_alpha=0.01,
         random_state=42
     )
     modelo_j48.fit(X, y)
@@ -96,26 +93,8 @@ def _treinar(dados):
 def modelos_prontos():
     return modelo_j48 is not None and modelo_lmt is not None
 
-def recomendar_com_ml(idade, genero_favorito, hora, dia, humor, acompanhado,
-                      modelo="j48"):
-    """
-    Usa J48 ou LMT para prever o gênero recomendado.
-
-    Parâmetros:
-        idade           : 'jovem' | 'adulto' | 'idoso'
-        genero_favorito : 'acao' | 'comedia' | 'drama' | 'terror' |
-                          'romance' | 'ficcao_cientifica' | 'animacao' | 'suspense'
-        hora            : 'manha' | 'tarde' | 'noite'
-        dia             : 'semana' | 'fim_semana'
-        humor           : 'animado' | 'calmo' | 'entediado' |
-                          'assustado' | 'romantico' | 'curioso'
-        acompanhado     : 'sozinho' | 'amigos' | 'casal' | 'familia'
-        modelo          : 'j48' | 'lmt'
-
-    Retorna:
-        string com o gênero recomendado
-    """
-    entrada = codificar([idade, genero_favorito, hora, dia, humor, acompanhado])
+def recomendar_com_ml(genero_pedido, humor, acompanhado, duracao_preferida, disposicao, modelo="j48"):
+    entrada = codificar([genero_pedido, humor, acompanhado, duracao_preferida, disposicao])
     X_input = np.array([entrada])
 
     if modelo == "lmt":
@@ -125,18 +104,12 @@ def recomendar_com_ml(idade, genero_favorito, hora, dia, humor, acompanhado,
 
     return encoders["genero_recomendado"].inverse_transform([pred])[0]
 
-def recomendar_com_ambos(idade, genero_favorito, hora, dia, humor, acompanhado):
-    """
-    Roda os dois modelos e retorna o resultado de cada um.
-    Útil para comparar ou usar votação entre eles.
-    """
+def recomendar_com_ambos(genero_pedido, humor, acompanhado, duracao_preferida, disposicao):
     if not modelos_prontos():
         return None, None
 
-    genero_j48 = recomendar_com_ml(idade, genero_favorito, hora, dia, humor,
-                                   acompanhado, modelo="j48")
-    genero_lmt = recomendar_com_ml(idade, genero_favorito, hora, dia, humor,
-                                   acompanhado, modelo="lmt")
+    genero_j48 = recomendar_com_ml(genero_pedido, humor, acompanhado, duracao_preferida, disposicao, modelo="j48")
+    genero_lmt = recomendar_com_ml(genero_pedido, humor, acompanhado, duracao_preferida, disposicao, modelo="lmt")
     return genero_j48, genero_lmt
 
 _inicializar_csv()
