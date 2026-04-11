@@ -42,6 +42,15 @@ def _carregar_csv():
 
 def salvar_exemplo(genero_pedido, humor, acompanhado, duracao_preferida, disposicao, genero_recomendado):
     _inicializar_csv()
+
+    # Garante newline no fim do arquivo antes de escrever
+    with open(DATASET_PATH, "r+", encoding="utf-8") as f:
+        f.seek(0, 2)
+        if f.tell() > 0:
+            f.seek(f.tell() - 1)
+            if f.read(1) != "\n":
+                f.write("\n")
+
     with open(DATASET_PATH, "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow([genero_pedido, humor, acompanhado, duracao_preferida, disposicao, genero_recomendado])
