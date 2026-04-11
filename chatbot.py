@@ -19,9 +19,15 @@ from session_manager import (
     deve_recomendar, proximo_campo_vazio, sessao_completa,
     encerrar_sessao, adicionar_filmes_recomendados,
     filmes_ja_recomendados, campos_preenchidos, PERGUNTAS,
+    banir_genero, generos_banidos, travar_genero,
+    genero_esta_travado, destravar_genero,
+    set_genero_recomendado, get_genero_recomendado,
 )
 
 STOPWORDS_PT = set(stopwords.words("portuguese"))
+
+PALAVRAS_NEGACAO = {"não", "nao", "nem", "nunca", "jamais", "tampouco"}
+PALAVRAS_ENFASE  = {"só", "so", "apenas", "somente", "somente", "prefiro", "insisto", "quero apenas", "só quero"}
 
 def lematizar(palavra):
     return simplemma.lemmatize(palavra, lang="pt")
@@ -145,15 +151,61 @@ def detectar_intencao(texto_original):
     print(f"[NaiveBayes] Intenção: '{intencao}' (confiança: {prob:.1%})")
     return intencao if prob >= 0.35 else "desconhecida"
 
-def detectar_genero(tokens, lemas):
+def detectar_genero(tokens, lemas, texto_bruto=""):
+    """
+    Detecta gêneros na mensagem separando os negados dos afirmados.
+    Retorna (genero_afirmado, genero_negado).
+    """
+    tokens_brutos = word_tokenize(texto_bruto.lower(), language="portuguese")
+
+    genero_afirmado = None
+    genero_negado   = None
+
     for genero, lemas_genero in LEMAS_GENEROS.items():
-        for lema in lemas:
-            if lema in lemas_genero:
-                return genero
-        for token in tokens:
-            if token in MAPA_GENEROS[genero]:
-                return genero
-    return None
+        for i, token_bruto in enumerate(tokens_brutos):
+            lema_token = lematizar(token_bruto)
+            pertence_ao_genero = (
+                lema_token in lemas_genero or
+                token_bruto in MAPA_GENEROS[genero]
+            )
+            if pertence_ao_genero:
+                inicio   = max(0, i - 3)
+                contexto = tokens_brutos[inicio:i]
+                if any(neg in contexto for neg in PALAVRAS_NEGACAO):
+                    print(f"[Negação] Gênero '{genero}' negado. Contexto: {contexto}")
+                    genero_negado = genero
+                else:
+                    genero_afirmado = genero
+                break  # encontrou esse gênero, passa para o próximo
+
+    return genero_afirmado, genero_negado
+
+def _tem_enfase_no_genero(texto_bruto, genero_pedido):
+    """
+    Detecta se o usuário está enfatizando o gênero que pediu.
+    Ex: 'só quero ação', 'apenas ação', 'quero apenas animação'
+    Verifica palavras individuais restritivas e bigrams.
+    """
+    tokens_brutos = word_tokenize(texto_bruto.lower(), language="portuguese")
+    lemas_genero  = LEMAS_GENEROS.get(genero_pedido, [])
+
+    tem_genero_pedido = any(
+        lematizar(t) in lemas_genero or t in MAPA_GENEROS.get(genero_pedido, [])
+        for t in tokens_brutos
+    )
+    if not tem_genero_pedido:
+        return False
+
+    # Palavras restritivas individuais
+    ENFASE_SIMPLES = {"só", "so", "apenas", "somente", "prefiro", "insisto"}
+    tem_enfase = any(p in tokens_brutos for p in ENFASE_SIMPLES)
+
+    # Bigrams restritivos: "quero apenas", "só quero", "quero só"
+    bigrams = [f"{tokens_brutos[i]} {tokens_brutos[i+1]}" for i in range(len(tokens_brutos)-1)]
+    ENFASE_BIGRAM = {"quero apenas", "só quero", "quero só", "quero somente"}
+    tem_enfase = tem_enfase or any(b in bigrams for b in ENFASE_BIGRAM)
+
+    return tem_enfase
 
 def _detectar_valor_campo(campo, tokens, lemas):
     mapa = {
@@ -172,42 +224,60 @@ def _detectar_valor_campo(campo, tokens, lemas):
 def _montar_resposta_filmes(sid):
     sessao = obter_sessao(sid)
 
-    genero_pedido    = sessao.get("genero_pedido")
-    humor            = sessao.get("humor") or "calmo"
-    acompanhado      = sessao.get("acompanhado") or "sozinho"
-    duracao          = sessao.get("duracao_preferida") or "medio"
-    disposicao       = sessao.get("disposicao") or "curtir"
+    genero_pedido = sessao.get("genero_pedido")
+    humor         = sessao.get("humor") or "calmo"
+    acompanhado   = sessao.get("acompanhado") or "sozinho"
+    duracao       = sessao.get("duracao_preferida") or "medio"
+    disposicao    = sessao.get("disposicao") or "curtir"
+    banidos       = generos_banidos(sid)
+    travado       = genero_esta_travado(sid)
 
-    genero_j48, genero_lmt = recomendar_com_ambos(
-        genero_pedido, humor, acompanhado, duracao, disposicao
-    )
-
-    if genero_j48 is None:
+    if travado:
+        # Usuário insistiu no gênero pedido — ignora o ML
         genero_final = genero_pedido
-        nota_ml = (
-            f"🤖 _Ainda aprendendo... usando o gênero que você pediu. "
-            f"({MINIMO_TREINO} interações necessárias para ativar o ML)_\n\n"
-        )
-    elif genero_j48 == genero_lmt:
-        genero_final = genero_j48
-        nota_ml = (
-            f"🤖 _J48 e LMT concordaram: **{NOMES_GENEROS[genero_final]}** "
-            f"é o melhor para o seu perfil agora._\n\n"
-        )
+        nota_ml = f"🤖 _Usando **{NOMES_GENEROS[genero_final]}** conforme você pediu._\n\n"
     else:
-        genero_final = genero_j48
-        nota_ml = (
-            f"🤖 _J48 indicou **{NOMES_GENEROS[genero_j48]}** e "
-            f"LMT indicou **{NOMES_GENEROS[genero_lmt]}**. "
-            f"Usando J48 (maior acurácia no experimento)._\n\n"
+        genero_j48, genero_lmt = recomendar_com_ambos(
+            genero_pedido, humor, acompanhado, duracao, disposicao
         )
+
+        if genero_j48 is None:
+            genero_final = genero_pedido
+            nota_ml = (
+                f"🤖 _Ainda aprendendo... usando o gênero que você pediu. "
+                f"({MINIMO_TREINO} interações necessárias para ativar o ML)_\n\n"
+            )
+        elif genero_j48 == genero_lmt:
+            genero_final = genero_j48
+            nota_ml = (
+                f"🤖 _J48 e LMT concordaram: **{NOMES_GENEROS[genero_final]}** "
+                f"é o melhor para o seu perfil agora._\n\n"
+            )
+        else:
+            genero_final = genero_j48
+            nota_ml = (
+                f"🤖 _J48 indicou **{NOMES_GENEROS[genero_j48]}** e "
+                f"LMT indicou **{NOMES_GENEROS[genero_lmt]}**. "
+                f"Usando J48 (maior acurácia no experimento)._\n\n"
+            )
+
+        # Se o ML sugeriu um gênero banido, cai no genero_pedido
+        if genero_final in banidos:
+            print(f"[Banido] ML sugeriu '{genero_final}' que está banido. Usando '{genero_pedido}'.")
+            genero_final = genero_pedido
+            nota_ml = (
+                f"🤖 _O ML sugeriu um gênero que você não quer. "
+                f"Usando **{NOMES_GENEROS[genero_final]}** no lugar._\n\n"
+            )
 
     ja_vistos = filmes_ja_recomendados(sid)
+    # Salva o gênero que foi de fato recomendado na sessão
+    set_genero_recomendado(sid, genero_final)
     filmes = buscar_filmes_por_genero(
         genero_final,
         quantidade=3,
         excluir_titulos=ja_vistos,
-        duracao=sessao.get("duracao_preferida"),          
+        duracao=sessao.get("duracao_preferida"),
     )
     adicionar_filmes_recomendados(sid, [f["titulo"] for f in filmes])
 
@@ -233,15 +303,21 @@ def _montar_resposta_filmes(sid):
 
 
 def gerar_resposta(mensagem_usuario, sid=None):
-    tokens, lemas = preprocessar(mensagem_usuario)
-    intencao      = detectar_intencao(mensagem_usuario)
-    genero        = detectar_genero(tokens, lemas)
+    tokens, lemas   = preprocessar(mensagem_usuario)
+    intencao        = detectar_intencao(mensagem_usuario)
+    genero_afirmado, genero_negado = detectar_genero(tokens, lemas, texto_bruto=mensagem_usuario)
 
-    print(f"[DEBUG] tokens={tokens} | lemas={lemas} | genero={genero} | intencao={intencao} | sid={sid}")
+    print(f"[DEBUG] tokens={tokens} | genero_afirmado={genero_afirmado} | genero_negado={genero_negado} | intencao={intencao} | sid={sid}")
 
+    # ── Banir gênero negado na sessão atual ───────────────────────────────────
+    if genero_negado and sid:
+        banir_genero(sid, genero_negado)
+
+    # ── Usuário pediu "mais filmes" ───────────────────────────────────────────
     if intencao == "mais_filmes" and sid:
         return _montar_resposta_filmes(sid), sid
 
+    # ── Saudação ──────────────────────────────────────────────────────────────
     if intencao == "saudacao":
         return (
             "Olá! 🎬 Sou o CineBot, seu assistente de filmes!\n\n"
@@ -250,12 +326,14 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "• Romance • Ficção Científica • Animação • Suspense"
         ), sid
 
+    # ── Despedida ─────────────────────────────────────────────────────────────
     if intencao == "despedida":
         if sid:
             encerrar_sessao(sid)
             sid = None
         return "Foi um prazer! Bom filme e até mais! 👋", sid
 
+    # ── Ajuda ─────────────────────────────────────────────────────────────────
     if intencao == "ajuda":
         return (
             "É simples! Me diga o gênero que você quer. Por exemplo:\n\n"
@@ -265,13 +343,42 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "Gêneros: Ação, Comédia, Drama, Terror, Romance, Ficção Científica, Animação e Suspense."
         ), sid
 
-    if genero:
+    # ── Usuário afirmou um gênero ─────────────────────────────────────────────
+    if genero_afirmado:
+        sessao = obter_sessao(sid) if sid else None
+        genero_atual = sessao.get("genero_pedido") if sessao else None
+
+        if sid and genero_afirmado == genero_atual:
+            # Mesmo gênero que o usuário pediu originalmente — mantém sessão
+            if _tem_enfase_no_genero(mensagem_usuario, genero_afirmado):
+                # Usuário insistiu ("só quero animação") — trava o ML
+                travar_genero(sid)
+                nome = NOMES_GENEROS[genero_afirmado]
+                return (
+                    f"Entendido! Vou te recomendar apenas **{nome}** daqui pra frente. 🎬\n\n"
+                    + _montar_resposta_filmes(sid)
+                ), sid
+            else:
+                # Usuário só repetiu o gênero — recomenda sem reiniciar
+                return _montar_resposta_filmes(sid), sid
+
+        # Gênero diferente do pedido original = nova sessão
         if sid:
             encerrar_sessao(sid)
         sid = criar_sessao()
-        preencher_campo(sid, "genero_pedido", genero)
+        preencher_campo(sid, "genero_pedido", genero_afirmado)
         return _montar_resposta_filmes(sid), sid
 
+    # ── Apenas negação, sem gênero afirmado ───────────────────────────────────
+    if genero_negado:
+        return (
+            f"Entendido, sem **{NOMES_GENEROS.get(genero_negado, genero_negado)}**! 😊 "
+            f"Que tal tentar outro gênero?\n\n"
+            "• Ação • Comédia • Drama • Terror\n"
+            "• Romance • Ficção Científica • Animação • Suspense"
+        ), sid
+
+    # ── Responde a perguntas do fluxo (humor, companhia, etc.) ───────────────
     if sid:
         proximo = proximo_campo_vazio(sid)
         if proximo:

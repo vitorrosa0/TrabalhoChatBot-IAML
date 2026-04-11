@@ -17,6 +17,9 @@ def criar_sessao():
     sid = str(uuid.uuid4())
     _sessoes[sid] = {campo: None for campo in CAMPOS_ORDEM}
     _sessoes[sid]["filmes_recomendados"] = []
+    _sessoes[sid]["generos_banidos"]     = []
+    _sessoes[sid]["genero_travado"]      = False
+    _sessoes[sid]["genero_recomendado"]  = None  # último gênero que o ML recomendou
     return sid
 
 def obter_sessao(sid):
@@ -52,3 +55,36 @@ def deve_recomendar(sid):
 
 def encerrar_sessao(sid):
     return _sessoes.pop(sid, None)
+
+# ── Funções de controle de banimento e travamento ──────────────────────────────
+
+def banir_genero(sid, genero):
+    """Adiciona um gênero à lista restritiva da sessão."""
+    if sid in _sessoes and genero not in _sessoes[sid]["generos_banidos"]:
+        _sessoes[sid]["generos_banidos"].append(genero)
+        print(f"[Sessão] Gênero banido: {genero} | Banidos: {_sessoes[sid]['generos_banidos']}")
+
+def generos_banidos(sid):
+    return _sessoes.get(sid, {}).get("generos_banidos", [])
+
+def travar_genero(sid):
+    """Trava o gênero: ML será ignorado e apenas genero_pedido será usado."""
+    if sid in _sessoes:
+        _sessoes[sid]["genero_travado"] = True
+        print(f"[Sessão] Gênero travado para: {_sessoes[sid].get('genero_pedido')}")
+
+def genero_esta_travado(sid):
+    return _sessoes.get(sid, {}).get("genero_travado", False)
+
+def destravar_genero(sid):
+    """Destrava o gênero (quando usuário pede um novo gênero)."""
+    if sid in _sessoes:
+        _sessoes[sid]["genero_travado"] = False
+
+def set_genero_recomendado(sid, genero):
+    """Salva o último gênero recomendado pelo ML na sessão."""
+    if sid in _sessoes:
+        _sessoes[sid]["genero_recomendado"] = genero
+
+def get_genero_recomendado(sid):
+    return _sessoes.get(sid, {}).get("genero_recomendado")
