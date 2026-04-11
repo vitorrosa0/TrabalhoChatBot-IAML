@@ -14,6 +14,12 @@ GENEROS_TMDB = {
     "suspense":          53,
 }
 
+DURACAO_FILTROS = {
+    "curto": {"with_runtime.lte": 90},
+    "medio": {"with_runtime.gte": 90, "with_runtime.lte": 120},
+    "longo": {"with_runtime.gte": 120},
+}
+
 def _get(endpoint, params={}):
     params = dict(params)
     params["api_key"] = TMDB_API_KEY
@@ -25,41 +31,54 @@ def _get(endpoint, params={}):
     except requests.exceptions.RequestException:
         return None
 
-def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None):
+def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao=None):
     excluir_titulos = set(excluir_titulos or [])
     genero_id = GENEROS_TMDB.get(genero)
     if not genero_id:
         return []
 
+    params_base = {
+        "with_genres":    genero_id,
+        "sort_by":        "vote_average.desc",
+        "vote_count.gte": 500,
+    }
+
+    if duracao and duracao in DURACAO_FILTROS:
+        params_base.update(DURACAO_FILTROS[duracao])
+        print(f"[TMDB] Filtro de duração '{duracao}': {DURACAO_FILTROS[duracao]}")
+
     filmes = []
     pagina = 1
 
     while len(filmes) < quantidade and pagina <= 5:
-        dados = _get("/discover/movie", {
-            "with_genres":    genero_id,
-            "sort_by":        "vote_average.desc",
-            "vote_count.gte": 500,
-            "page":           pagina,
-        })
+        dados = _get("/discover/movie", {**params_base, "page": pagina})
 
         if not dados or not dados.get("results"):
             break
 
+        print(f"[TMDB] Página {pagina} — {len(dados['results'])} resultados brutos")
+
         for filme in dados["results"]:
             titulo = filme.get("title", "Sem título")
+            nota   = round(filme.get("vote_average", 0), 1)
+            ano    = filme.get("release_date", "????")[:4]
+            print(f"  {'✗ (já recomendado)' if titulo in excluir_titulos else '✓'} {titulo} ({ano}) ⭐ {nota}")
+
             if titulo in excluir_titulos:
                 continue
+
             filmes.append({
                 "titulo":    titulo,
-                "ano":       filme.get("release_date", "????")[:4],
+                "ano":       ano,
                 "descricao": filme.get("overview", "Sem descrição disponível."),
-                "nota":      round(filme.get("vote_average", 0), 1),
+                "nota":      nota,
             })
             if len(filmes) >= quantidade:
                 break
 
         pagina += 1
 
+    print(f"[TMDB] Retornando {len(filmes)} filmes para gênero '{genero}' duração '{duracao}'")
     return filmes
 
 def buscar_nota_filme(titulo):
