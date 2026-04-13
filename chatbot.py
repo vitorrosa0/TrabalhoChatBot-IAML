@@ -119,7 +119,7 @@ LEMAS_ACOMPANHADO = {
     "sozinho": [lematizar(p) for p in ["sozinho","solo","so"]],
     "amigos":  [lematizar(p) for p in ["amigos","amigo","galera","turma","pessoal","amiga"]],
     "casal":   [lematizar(p) for p in ["casal","namorado","namorada","esposo","esposa","parceiro","parceira"]],
-    "familia": [lematizar(p) for p in ["familia","filho","filha","pai","mae","crianca","filhos"]],
+    "familia": [lematizar(p) for p in ["familia","filho","filha","pai","mae","crianca","filhos", "família"]],
 }
 
 LEMAS_DURACAO = {
@@ -298,7 +298,7 @@ def _montar_resposta_filmes(sid):
         return resposta
 
     proximo   = proximo_campo_vazio(sid)
-    resposta += f"💬 {PERGUNTAS[proximo]}"
+    resposta += f"\n💬 {PERGUNTAS[proximo]}"
     return resposta
 
 
@@ -309,15 +309,12 @@ def gerar_resposta(mensagem_usuario, sid=None):
 
     print(f"[DEBUG] tokens={tokens} | genero_afirmado={genero_afirmado} | genero_negado={genero_negado} | intencao={intencao} | sid={sid}")
 
-    # ── Banir gênero negado na sessão atual ───────────────────────────────────
     if genero_negado and sid:
         banir_genero(sid, genero_negado)
 
-    # ── Usuário pediu "mais filmes" ───────────────────────────────────────────
     if intencao == "mais_filmes" and sid:
         return _montar_resposta_filmes(sid), sid
 
-    # ── Saudação ──────────────────────────────────────────────────────────────
     if intencao == "saudacao":
         return (
             "Olá! 🎬 Sou o CineBot, seu assistente de filmes!\n\n"
@@ -326,14 +323,12 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "• Romance • Ficção Científica • Animação • Suspense"
         ), sid
 
-    # ── Despedida ─────────────────────────────────────────────────────────────
     if intencao == "despedida":
         if sid:
             encerrar_sessao(sid)
             sid = None
         return "Foi um prazer! Bom filme e até mais! 👋", sid
 
-    # ── Ajuda ─────────────────────────────────────────────────────────────────
     if intencao == "ajuda":
         return (
             "É simples! Me diga o gênero que você quer. Por exemplo:\n\n"
@@ -343,7 +338,6 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "Gêneros: Ação, Comédia, Drama, Terror, Romance, Ficção Científica, Animação e Suspense."
         ), sid
 
-    # ── Usuário afirmou um gênero ─────────────────────────────────────────────
     if genero_afirmado:
         sessao = obter_sessao(sid) if sid else None
         genero_atual = sessao.get("genero_pedido") if sessao else None
@@ -359,17 +353,14 @@ def gerar_resposta(mensagem_usuario, sid=None):
                     + _montar_resposta_filmes(sid)
                 ), sid
             else:
-                # Usuário só repetiu o gênero — recomenda sem reiniciar
                 return _montar_resposta_filmes(sid), sid
 
-        # Gênero diferente do pedido original = nova sessão
         if sid:
             encerrar_sessao(sid)
         sid = criar_sessao()
         preencher_campo(sid, "genero_pedido", genero_afirmado)
         return _montar_resposta_filmes(sid), sid
 
-    # ── Apenas negação, sem gênero afirmado ───────────────────────────────────
     if genero_negado:
         return (
             f"Entendido, sem **{NOMES_GENEROS.get(genero_negado, genero_negado)}**! 😊 "
@@ -378,7 +369,6 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "• Romance • Ficção Científica • Animação • Suspense"
         ), sid
 
-    # ── Responde a perguntas do fluxo (humor, companhia, etc.) ───────────────
     if sid:
         proximo = proximo_campo_vazio(sid)
         if proximo:

@@ -351,11 +351,11 @@
         <div class="msg-row">
             <div class="avatar bot">C</div>
             <div class="bubble bot">Bem-vindo ao CineBot. Diga-me o gênero que deseja e recomendarei os melhores filmes
-                para você.
+                para você. <br />
 
                 Gêneros disponíveis:
-                Ação · Comédia · Drama · Terror
-                Romance · Ficção Científica · Animação · Suspense
+                Ação · Comédia · Drama · Terror ·
+                Romance · Ficção Científica · Animação · Suspense <br />
 
                 Ou clique em um dos botões acima para começar!</div>
         </div>
@@ -378,51 +378,67 @@
         }
 
         function renderBotMessage(texto) {
-            const linhas = texto.split("\n");
-            let html = "";
-            let cards = [];
-            let restoLinhas = [];
-            let emCards = false;
+    const linhas = texto.split("\n");
+    let html = "";
+    let bufferTexto = "";
+    let cards = [];
+    let coletandoCards = false;
 
-            for (let i = 0; i < linhas.length; i++) {
-                const l = linhas[i];
-                const matchFilme = l.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s+\((\d{4})\)(\s+⭐\s+([\d.]+)\/10)?/);
-                const matchDesc = l.match(/^\s+_(.+)_\s*$/);
-
-                if (matchFilme) {
-                    emCards = true;
-                    cards.push({ num: matchFilme[1], titulo: matchFilme[2], ano: matchFilme[3], nota: matchFilme[5] || "", desc: "" });
-                } else if (matchDesc && emCards && cards.length > 0) {
-                    cards[cards.length - 1].desc = matchDesc[1];
-                } else {
-                    if (emCards) emCards = false;
-                    restoLinhas.push(l);
-                }
-            }
-
-            const textoFormatado = restoLinhas.join("\n")
+    function flushTexto() {
+        if (bufferTexto.trim()) {
+            const formatado = bufferTexto
                 .replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--gold)">$1</strong>')
                 .replace(/_(.*?)_/g, '<em style="color:var(--text-muted)">$1</em>');
-
-            html += `<div style="white-space:pre-wrap">${textoFormatado}</div>`;
-
-            if (cards.length > 0) {
-                html += `<div class="film-cards">`;
-                cards.forEach(c => {
-                    html += `
-            <div class="film-card">
-              <div class="film-num">${c.num}.</div>
-              <div>
-                <div class="film-title">${escapeHtml(c.titulo)}<span class="film-year">${c.ano}</span>${c.nota ? `<span class="film-year" style="color:var(--gold)">⭐ ${c.nota}/10</span>` : ""}</div>
-                ${c.desc ? `<div class="film-desc">${escapeHtml(c.desc)}</div>` : ""}
-              </div>
-            </div>`;
-                });
-                html += `</div>`;
-            }
-
-            return html;
+            html += `<div style="white-space:pre-wrap">${formatado}</div>`;
+            bufferTexto = "";
         }
+    }
+
+    function flushCards() {
+        if (cards.length > 0) {
+            html += `<div class="film-cards">`;
+            cards.forEach(c => {
+                html += `
+                    <div class="film-card">
+                        <div class="film-num">${c.num}.</div>
+                        <div>
+                            <div class="film-title">${escapeHtml(c.titulo)}<span class="film-year">${c.ano}</span>${c.nota ? `<span class="film-year" style="color:var(--gold)">⭐ ${c.nota}/10</span>` : ""}</div>
+                            ${c.desc ? `<div class="film-desc">${escapeHtml(c.desc)}</div>` : ""}
+                        </div>
+                    </div>`;
+            });
+            html += `</div>`;
+            cards = [];
+        }
+    }
+
+    for (let i = 0; i < linhas.length; i++) {
+        const l = linhas[i];
+        const matchFilme = l.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s+\((\d{4})\)(\s+⭐\s+([\d.]+)\/10)?/);
+        const matchDesc  = l.match(/^\s+_(.+)_\s*$/);
+
+        if (matchFilme) {
+            if (!coletandoCards) {
+                flushTexto();
+                coletandoCards = true;
+            }
+            cards.push({ num: matchFilme[1], titulo: matchFilme[2], ano: matchFilme[3], nota: matchFilme[5] || "", desc: "" });
+        } else if (matchDesc && coletandoCards && cards.length > 0) {
+            cards[cards.length - 1].desc = matchDesc[1];
+        } else {
+            if (coletandoCards) {
+                flushCards();
+                coletandoCards = false;
+            }
+            bufferTexto += l + "\n";
+        }
+    }
+
+    flushTexto();
+    flushCards();
+
+    return html;
+}
 
         function adicionarMensagem(texto, tipo) {
             const row = document.createElement("div");

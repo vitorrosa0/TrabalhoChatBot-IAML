@@ -15,7 +15,7 @@ CATEGORIAS = {
     "genero_pedido":     ["acao", "comedia", "drama", "terror", "romance",
                           "ficcao_cientifica", "animacao", "suspense"],
     "humor":             ["animado", "calmo", "entediado", "assustado", "romantico", "curioso", "triste"],
-    "acompanhado":       ["sozinho", "amigos", "casal", "familia"],
+    "acompanhado":       ["sozinho", "amigos", "casal", "familia", "família"],
     "duracao_preferida": ["curto", "medio", "longo"],
     "disposicao":        ["pensar", "curtir"],
     "genero_recomendado":["acao", "comedia", "drama", "terror", "romance",
