@@ -406,7 +406,7 @@
                                         ${escapeHtml(c.titulo)}
                                         <span class="film-year">${c.ano}</span>
                                         ${c.nota ? `<span class="film-year" style="color:var(--gold)">⭐ ${c.nota}/10</span>` : ""}
-                                        ${c.duracao ? `<span class="film-year" style="color:var(--text-muted)">⏱ ${c.duracao} min</span>` : ""}
+                                        ${c.duracao ? `<span class="film-year" style="color:var(--text-muted)">⏱ ${c.duracao}</span>` : ""}
                                     </div>
                                     ${c.desc ? `<div class="film-desc">${escapeHtml(c.desc)}</div>` : ""}
                                 </div>
@@ -420,7 +420,7 @@
             for (let i = 0; i < linhas.length; i++) {
                 const l = linhas[i];
 
-                const matchFilme = l.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s+\((\d{4})\)(\s+⭐\s+([\d.]+)\/10)?(\s+⏱\s+(\d+)\s+min)?/);
+                const matchFilme = l.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s+\((\d{4})\)(\s+⭐\s+([\d.]+)\/10)?(\s+⏱\s+(\d+\s+h\s+\d+\s+min|\d+\s+min))?/);
                 const matchDesc  = l.match(/^\s+_(.+)_\s*$/);
 
                 if (matchFilme) {
