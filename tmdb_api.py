@@ -20,6 +20,7 @@ DURACAO_FILTROS = {
     "longo": {"with_runtime.gte": 120},
 }
 
+
 def _get(endpoint, params={}):
     params = dict(params)
     params["api_key"] = TMDB_API_KEY
@@ -30,6 +31,15 @@ def _get(endpoint, params={}):
         return response.json()
     except requests.exceptions.RequestException:
         return None
+
+
+def _buscar_duracao(filme_id):
+    dados = _get(f"/movie/{filme_id}")
+    if not dados:
+        return None
+    runtime = dados.get("runtime")
+    return runtime if runtime and runtime > 0 else None
+
 
 def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao=None):
     excluir_titulos = set(excluir_titulos or [])
@@ -47,8 +57,8 @@ def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao
         params_base.update(DURACAO_FILTROS[duracao])
         print(f"[TMDB] Filtro de duração '{duracao}': {DURACAO_FILTROS[duracao]}")
 
-    filmes = []
-    pagina = 1
+    filmes  = []
+    pagina  = 1
 
     while len(filmes) < quantidade and pagina <= 5:
         dados = _get("/discover/movie", {**params_base, "page": pagina})
@@ -67,12 +77,18 @@ def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao
             if titulo in excluir_titulos:
                 continue
 
+            filme_id      = filme.get("id")
+            duracao_min   = _buscar_duracao(filme_id) if filme_id else None
+            print(f"  [TMDB] Duração de '{titulo}': {duracao_min} min")
+
             filmes.append({
-                "titulo":    titulo,
-                "ano":       ano,
-                "descricao": filme.get("overview", "Sem descrição disponível."),
-                "nota":      nota,
+                "titulo":      titulo,
+                "ano":         ano,
+                "descricao":   filme.get("overview", "Sem descrição disponível."),
+                "nota":        nota,
+                "duracao_min": duracao_min,
             })
+
             if len(filmes) >= quantidade:
                 break
 
@@ -80,6 +96,7 @@ def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao
 
     print(f"[TMDB] Retornando {len(filmes)} filmes para gênero '{genero}' duração '{duracao}'")
     return filmes
+
 
 def buscar_nota_filme(titulo):
     dados = _get("/search/movie", {"query": titulo})

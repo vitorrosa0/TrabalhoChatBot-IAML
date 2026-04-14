@@ -285,9 +285,11 @@ def _montar_resposta_filmes(sid):
     resposta    = f"🎬 Aqui estão filmes de **{nome_genero}** pra você:\n\n"
 
     for i, filme in enumerate(filmes, 1):
-        estrelas  = f" ⭐ {filme['nota']}/10" if filme.get("nota") else ""
-        resposta += f"{i}. **{filme['titulo']}** ({filme['ano']}){estrelas}\n"
-        resposta += f"   _{filme['descricao']}_\n\n"
+        estrelas     = f" ⭐ {filme['nota']}/10" if filme.get("nota") else ""
+        duracao_min  = filme.get("duracao_min")
+        info_duracao = f" ⏱ {duracao_min} min" if duracao_min else ""
+        resposta    += f"{i}. **{filme['titulo']}** ({filme['ano']}){estrelas}{info_duracao}\n"
+        resposta    += f"   _{filme['descricao']}_\n\n"
 
     resposta += nota_ml
 
