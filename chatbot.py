@@ -287,7 +287,12 @@ def _montar_resposta_filmes(sid):
     for i, filme in enumerate(filmes, 1):
         estrelas     = f" ⭐ {filme['nota']}/10" if filme.get("nota") else ""
         duracao_min  = filme.get("duracao_min")
-        info_duracao = f" ⏱ {duracao_min} min" if duracao_min else ""
+        if duracao_min:
+            horas = duracao_min // 60
+            mins  = duracao_min % 60
+            info_duracao = f" ⏱ {horas} h {mins} min" if horas else f" ⏱ {mins} min"
+        else:
+            info_duracao = ""
         resposta    += f"{i}. **{filme['titulo']}** ({filme['ano']}){estrelas}{info_duracao}\n"
         resposta    += f"   _{filme['descricao']}_\n\n"
 
