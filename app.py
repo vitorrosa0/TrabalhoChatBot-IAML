@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, session
 from chatbot import gerar_resposta
+from tmdb_api import buscar_destaques
 import secrets
 
 app = Flask(__name__)
@@ -21,6 +22,10 @@ def chat():
     session["sid"] = sid
 
     return jsonify({"resposta": resposta})
+
+@app.route("/api/destaques")
+def destaques():
+    return jsonify(buscar_destaques())
 
 if __name__ == "__main__":
     app.run(debug=True)

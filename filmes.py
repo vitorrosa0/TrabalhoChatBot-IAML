@@ -1,5 +1,3 @@
-# Base de dados de filmes por gênero
-
 FILMES = {
     "acao": [
         {"titulo": "Mad Max: Estrada da Fúria", "ano": 2015, "descricao": "Uma mulher rebelde e um fugitivo cruzam um mundo pós-apocalíptico em busca de liberdade."},

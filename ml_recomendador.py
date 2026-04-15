@@ -43,7 +43,6 @@ def _carregar_csv():
 def salvar_exemplo(genero_pedido, humor, acompanhado, duracao_preferida, disposicao, genero_recomendado):
     _inicializar_csv()
 
-    # Garante newline no fim do arquivo antes de escrever
     with open(DATASET_PATH, "r+", encoding="utf-8") as f:
         f.seek(0, 2)
         if f.tell() > 0:
