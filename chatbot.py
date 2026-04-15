@@ -30,6 +30,7 @@ from session_manager import (
     genero_esta_travado, destravar_genero,
     set_genero_recomendado, get_genero_recomendado,
     set_referencia, get_referencia,
+    set_pais, get_pais,
 )
 
 STOPWORDS_PT = set(stopwords.words("portuguese"))
@@ -140,6 +141,41 @@ LEMAS_DISPOSICAO = {
     "pensar": [lematizar(p) for p in ["pensar","refletir","profundo","inteligente","complexo","denso","cerebral"]],
     "curtir": [lematizar(p) for p in ["curtir","desligar","relaxar","entretenimento","leve","divertir","besteira"]],
 }
+
+MAPA_PAISES = {
+    "BR": ["brasileiro","brasileira","brasileiros","brasileiras","brasil"],
+    "US": ["americano","americana","americanos","americanas","eua","hollywood"],
+    "FR": ["francês","frances","francesa","franceses","francesas","franca","franca"],
+    "ES": ["espanhol","espanhola","espanhóis","espanhois","espanholas","espanha"],
+    "IT": ["italiano","italiana","italianos","italianas","italia"],
+    "JP": ["japonês","japones","japonesa","japoneses","japonesas","japao","japão","anime"],
+    "KR": ["coreano","coreana","coreanos","coreanas","coreia","sul-coreano"],
+    "MX": ["mexicano","mexicana","mexicanos","mexicanas","mexico","méxico"],
+    "AR": ["argentino","argentina","argentinos","argentinas"],
+    "IN": ["indiano","indiana","indianos","indianas","bollywood"],
+}
+
+NOMES_PAISES = {
+    "BR": "brasileiros", "US": "americanos", "FR": "franceses",
+    "ES": "espanhóis",   "IT": "italianos",  "JP": "japoneses",
+    "KR": "coreanos",    "MX": "mexicanos",  "AR": "argentinos", "IN": "indianos",
+}
+
+LEMAS_PAISES = {
+    codigo: [lematizar(p) for p in palavras]
+    for codigo, palavras in MAPA_PAISES.items()
+}
+
+
+def detectar_pais(texto_bruto):
+    tokens_brutos = word_tokenize(texto_bruto.lower(), language="portuguese")
+    for codigo, lemas_pais in LEMAS_PAISES.items():
+        palavras_pais = MAPA_PAISES[codigo]
+        for token_bruto in tokens_brutos:
+            lema_token = lematizar(token_bruto)
+            if lema_token in lemas_pais or token_bruto in palavras_pais:
+                return codigo
+    return None
 
 
 _RE_FILME_SIMILAR = [
@@ -354,8 +390,28 @@ def _montar_resposta_por_entidade(sid):
 
 def _montar_resposta_filmes(sid):
     sessao = obter_sessao(sid)
+    pais = get_pais(sid)
 
     genero_pedido = sessao.get("genero_pedido")
+
+    if pais and not genero_pedido:
+        ja_vistos = filmes_ja_recomendados(sid)
+        nome_pais = NOMES_PAISES.get(pais, pais)
+        filmes = buscar_filmes_por_genero(
+            None,
+            quantidade=3,
+            excluir_titulos=ja_vistos,
+            duracao=sessao.get("duracao_preferida"),
+            pais=pais,
+        )
+        if not filmes:
+            return "Hmm, não encontrei filmes para esse país no momento. 😅 Tente pedir um gênero também!"
+        adicionar_filmes_recomendados(sid, [f["titulo"] for f in filmes])
+        resposta  = f"🎬 Aqui estão filmes {nome_pais} para você:\n\n"
+        resposta += _formatar_lista_filmes(filmes)
+        resposta += "Se quiser mais ou um gênero específico, é só pedir! 😊"
+        return resposta
+
     humor         = sessao.get("humor") or "calmo"
     acompanhado   = sessao.get("acompanhado") or "sozinho"
     duracao       = sessao.get("duracao_preferida") or "medio"
@@ -406,11 +462,16 @@ def _montar_resposta_filmes(sid):
         quantidade=3,
         excluir_titulos=ja_vistos,
         duracao=sessao.get("duracao_preferida"),
+        pais=pais,
     )
     adicionar_filmes_recomendados(sid, [f["titulo"] for f in filmes])
 
     nome_genero = NOMES_GENEROS.get(genero_final, genero_final)
-    resposta    = f"🎬 Aqui estão filmes de **{nome_genero}** pra você:\n\n"
+    nome_pais   = NOMES_PAISES.get(pais) if pais else None
+    if nome_pais:
+        resposta = f"🎬 Aqui estão filmes {nome_pais} de **{nome_genero}**:\n\n"
+    else:
+        resposta = f"🎬 Aqui estão filmes de **{nome_genero}** pra você:\n\n"
     resposta   += _formatar_lista_filmes(filmes)
     resposta   += nota_ml
 
@@ -430,8 +491,9 @@ def gerar_resposta(mensagem_usuario, sid=None):
     intencao        = detectar_intencao(mensagem_usuario)
     genero_afirmado, genero_negado = detectar_genero(tokens, lemas, texto_bruto=mensagem_usuario)
     tipo_ref, nome_ref = _detectar_referencia_texto(mensagem_usuario)
+    pais = detectar_pais(mensagem_usuario)
 
-    print(f"[DEBUG] tokens={tokens} | genero={genero_afirmado}/{genero_negado} | intencao={intencao} | ref={tipo_ref}:{nome_ref} | sid={sid}")
+    print(f"[DEBUG] tokens={tokens} | genero={genero_afirmado}/{genero_negado} | intencao={intencao} | ref={tipo_ref}:{nome_ref} | pais={pais} | sid={sid}")
 
     if genero_negado and sid:
         banir_genero(sid, genero_negado)
@@ -492,6 +554,8 @@ def gerar_resposta(mensagem_usuario, sid=None):
             encerrar_sessao(sid)
         sid = criar_sessao()
         preencher_campo(sid, "genero_pedido", genero_afirmado)
+        if pais:
+            set_pais(sid, pais)
 
         candidato_ator = nome_ref if tipo_ref == "ator" else _detectar_ator_em_mensagem_com_genero(mensagem_usuario)
         if candidato_ator:
@@ -509,6 +573,13 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "• Ação • Comédia • Drama • Terror\n"
             "• Romance • Ficção Científica • Animação • Suspense"
         ), sid
+
+    if pais and not genero_afirmado:
+        if sid:
+            encerrar_sessao(sid)
+        sid = criar_sessao()
+        set_pais(sid, pais)
+        return _montar_resposta_filmes(sid), sid
 
     if sid:
         ref = get_referencia(sid)

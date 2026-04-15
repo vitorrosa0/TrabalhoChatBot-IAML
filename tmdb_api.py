@@ -44,17 +44,23 @@ def _buscar_duracao(filme_id):
     return runtime if runtime and runtime > 0 else None
 
 
-def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao=None):
+def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao=None, pais=None):
     excluir_titulos = set(excluir_titulos or [])
-    genero_id = GENEROS_TMDB.get(genero)
-    if not genero_id:
+    genero_id = GENEROS_TMDB.get(genero) if genero else None
+    if not genero_id and not pais:
         return []
 
     params_base = {
-        "with_genres":    genero_id,
         "sort_by":        "vote_average.desc",
-        "vote_count.gte": 500,
+        "vote_count.gte": 200 if pais else 500,
     }
+
+    if genero_id:
+        params_base["with_genres"] = genero_id
+
+    if pais:
+        params_base["with_origin_country"] = pais
+        print(f"[TMDB] Filtro de país: '{pais}'")
 
     if duracao and duracao in DURACAO_FILTROS:
         params_base.update(DURACAO_FILTROS[duracao])
@@ -97,7 +103,7 @@ def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao
 
         pagina += 1
 
-    print(f"[TMDB] Retornando {len(filmes)} filmes para gênero '{genero}' duração '{duracao}'")
+    print(f"[TMDB] Retornando {len(filmes)} filmes para gênero '{genero}' duração '{duracao}' país '{pais}'")
     return filmes
 
 
