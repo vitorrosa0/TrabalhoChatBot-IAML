@@ -349,7 +349,11 @@ def _formatar_lista_filmes(filmes):
             info_duracao = f" ⏱ {horas} h {mins} min" if horas else f" ⏱ {mins} min"
         else:
             info_duracao = ""
+        plataformas = filme.get("plataformas", [])
         resultado += f"{i}. **{filme['titulo']}** ({filme['ano']}){estrelas}{info_duracao}\n"
+        if plataformas:
+            plat_encoded = "|".join(f"{p['nome']}={p['logo']}" for p in plataformas)
+            resultado += f"   [PLATFORMS:{plat_encoded}]\n"
         resultado += f"   _{filme['descricao']}_\n\n"
     return resultado
 

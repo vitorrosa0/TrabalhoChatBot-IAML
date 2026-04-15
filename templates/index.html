@@ -113,6 +113,38 @@ header {
             padding: 14px 16px 10px;
             border-bottom: 1px solid var(--border);
             flex-shrink: 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        #toggle-sidebar {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+
+        #toggle-sidebar:hover { color: var(--gold); }
+
+        #sidebar.collapsed {
+            width: 36px;
+            min-width: 36px;
+        }
+
+        #sidebar.collapsed .sidebar-eyebrow,
+        #sidebar.collapsed .sidebar-sub,
+        #sidebar.collapsed #sidebar-films {
+            display: none;
+        }
+
+        #sidebar.collapsed #toggle-sidebar {
+            margin: 0 auto;
         }
 
         .sidebar-eyebrow {
@@ -428,6 +460,22 @@ header {
             line-height: 1.5;
         }
 
+        .film-platforms {
+            display: inline-flex;
+            gap: 3px;
+            align-items: center;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .platform-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
         .typing-dots {
             display: flex;
             gap: 4px;
@@ -602,8 +650,11 @@ header {
         <!-- ── Sidebar de destaques ── -->
         <aside id="sidebar">
             <div class="sidebar-header">
-                <p class="sidebar-eyebrow">Principais Escolhas</p>
-                <p class="sidebar-sub">Clique para ver filmes similares</p>
+                <div>
+                    <p class="sidebar-eyebrow">Principais Escolhas</p>
+                    <p class="sidebar-sub">Clique para ver filmes similares</p>
+                </div>
+                <button id="toggle-sidebar" title="Ocultar barra">‹</button>
             </div>
             <div id="sidebar-films">
                 <!-- skeletons renderizados por JS -->
@@ -668,6 +719,11 @@ function escapeHtml(t) {
                 if (!cards.length) return;
                 html += `<div class="film-cards">`;
                 cards.forEach(c => {
+                    const platHtml = c.plataformas && c.plataformas.length
+                        ? `<span class="film-platforms">${c.plataformas.map(p =>
+                            `<img src="${p.logo}" alt="${escapeHtml(p.nome)}" title="${escapeHtml(p.nome)}" class="platform-icon">`
+                          ).join("")}</span>`
+                        : "";
                     html += `
                         <div class="film-card">
                             <div class="film-num">${c.num}.</div>
@@ -677,6 +733,7 @@ function escapeHtml(t) {
                                     <span class="film-year">${c.ano}</span>
                                     ${c.nota   ? `<span class="film-year" style="color:var(--gold)">⭐ ${c.nota}/10</span>` : ""}
                                     ${c.duracao ? `<span class="film-year" style="color:var(--text-muted)">⏱ ${c.duracao}</span>` : ""}
+                                    ${platHtml}
                                 </div>
                                 ${c.desc ? `<div class="film-desc">${escapeHtml(c.desc)}</div>` : ""}
                             </div>
@@ -688,15 +745,22 @@ function escapeHtml(t) {
 
             for (let i = 0; i < linhas.length; i++) {
                 const l = linhas[i];
-                const matchFilme = l.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s+\((\d{4})\)(\s+⭐\s+([\d.]+)\/10)?(\s+⏱\s+(\d+\s+h\s+\d+\s+min|\d+\s+min))?/);
-                const matchDesc  = l.match(/^\s+_(.+)_\s*$/);
+                const matchFilme     = l.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s+\((\d{4})\)(\s+⭐\s+([\d.]+)\/10)?(\s+⏱\s+(\d+\s+h\s+\d+\s+min|\d+\s+min))?/);
+                const matchDesc      = l.match(/^\s+_(.+)_\s*$/);
+                const matchPlatforms = l.match(/^\s+\[PLATFORMS:(.+)\]\s*$/);
 
                 if (matchFilme) {
                     if (!coletandoCards) { flushTexto(); coletandoCards = true; }
                     cards.push({
                         num: matchFilme[1], titulo: matchFilme[2],
                         ano: matchFilme[3], nota: matchFilme[5] || "",
-                        duracao: matchFilme[7] || "", desc: ""
+                        duracao: matchFilme[7] || "", desc: "",
+                        plataformas: []
+                    });
+                } else if (matchPlatforms && coletandoCards && cards.length) {
+                    cards[cards.length - 1].plataformas = matchPlatforms[1].split("|").map(p => {
+                        const idx = p.indexOf("=");
+                        return { nome: p.slice(0, idx), logo: p.slice(idx + 1) };
                     });
                 } else if (matchDesc && coletandoCards && cards.length) {
                     cards[cards.length - 1].desc = matchDesc[1];
@@ -853,6 +917,15 @@ function renderSkeletons(n) {
         }
 
         carregarDestaques();
+
+        const sidebar     = document.getElementById("sidebar");
+        const toggleBtn   = document.getElementById("toggle-sidebar");
+
+        toggleBtn.addEventListener("click", () => {
+            const collapsed = sidebar.classList.toggle("collapsed");
+            toggleBtn.textContent = collapsed ? "›" : "‹";
+            toggleBtn.title       = collapsed ? "Mostrar barra" : "Ocultar barra";
+        });
 
         function copiarChat() {
             const rows = messagesDiv.querySelectorAll(".msg-row");

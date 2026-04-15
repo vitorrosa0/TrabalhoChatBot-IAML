@@ -55,6 +55,20 @@ def _buscar_duracao(filme_id):
     return runtime if runtime and runtime > 0 else None
 
 
+_TMDB_LOGO_BASE = "https://image.tmdb.org/t/p/w45"
+
+def _buscar_plataformas(filme_id, pais="BR"):
+    dados = _get(f"/movie/{filme_id}/watch/providers")
+    if not dados:
+        return []
+    resultado = dados.get("results", {}).get(pais, {})
+    flatrate = resultado.get("flatrate", [])
+    return [
+        {"nome": p["provider_name"], "logo": f"{_TMDB_LOGO_BASE}{p['logo_path']}"}
+        for p in flatrate if p.get("logo_path")
+    ]
+
+
 def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao=None, pais=None):
     excluir_titulos = set(excluir_titulos or [])
     genero_id = GENEROS_TMDB.get(genero) if genero else None
@@ -99,6 +113,7 @@ def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao
 
             filme_id    = filme.get("id")
             duracao_min = _buscar_duracao(filme_id) if filme_id else None
+            plataformas = _buscar_plataformas(filme_id) if filme_id else []
             print(f"  [TMDB] Duração de '{titulo}': {duracao_min} min")
 
             filmes.append({
@@ -107,6 +122,7 @@ def buscar_filmes_por_genero(genero, quantidade=3, excluir_titulos=None, duracao
                 "descricao":   filme.get("overview", "Sem descrição disponível."),
                 "nota":        nota,
                 "duracao_min": duracao_min,
+                "plataformas": plataformas,
             })
 
             if len(filmes) >= quantidade:
@@ -205,12 +221,14 @@ def buscar_filmes_similares(filme_id, generos_filme=None, quantidade=3, excluir_
             ano = (filme.get("release_date") or "????")[:4]
             fid = filme.get("id")
             duracao_min = _buscar_duracao(fid) if fid else None
+            plataformas = _buscar_plataformas(fid) if fid else []
             filmes.append({
                 "titulo":      titulo,
                 "ano":         ano,
                 "descricao":   filme.get("overview") or "Sem descrição disponível.",
                 "nota":        nota,
                 "duracao_min": duracao_min,
+                "plataformas": plataformas,
             })
             if len(filmes) >= quantidade:
                 break
@@ -244,12 +262,14 @@ def buscar_filmes_por_ator(pessoa_id, quantidade=3, excluir_titulos=None):
         ano  = (filme.get("release_date") or "????")[:4]
         fid  = filme.get("id")
         duracao_min = _buscar_duracao(fid) if fid else None
+        plataformas = _buscar_plataformas(fid) if fid else []
         filmes.append({
             "titulo":      titulo,
             "ano":         ano,
             "descricao":   filme.get("overview") or "Sem descrição disponível.",
             "nota":        nota,
             "duracao_min": duracao_min,
+            "plataformas": plataformas,
         })
         if len(filmes) >= quantidade:
             break
@@ -322,12 +342,14 @@ def buscar_filmes_por_genero_e_ator(genero, pessoa_id, quantidade=3, excluir_tit
         ano  = (filme.get("release_date") or "????")[:4]
         fid  = filme.get("id")
         duracao_min = _buscar_duracao(fid) if fid else None
+        plataformas = _buscar_plataformas(fid) if fid else []
         filmes.append({
             "titulo":      titulo,
             "ano":         ano,
             "descricao":   filme.get("overview") or "Sem descrição disponível.",
             "nota":        nota,
             "duracao_min": duracao_min,
+            "plataformas": plataformas,
         })
         if len(filmes) >= quantidade:
             break
