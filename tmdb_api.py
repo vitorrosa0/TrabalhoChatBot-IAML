@@ -8,13 +8,24 @@ TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
 GENEROS_TMDB = {
     "acao":              28,
-    "comedia":           35,
-    "drama":             18,
-    "terror":            27,
-    "romance":           10749,
-    "ficcao_cientifica": 878,
+    "aventura":          12,
     "animacao":          16,
+    "cinema_tv":         10770,
+    "comedia":           35,
+    "crime":             80,
+    "documentario":      99,
+    "drama":             18,
+    "familia":           10751,
+    "fantasia":          14,
+    "faroeste":          37,
+    "ficcao_cientifica": 878,
+    "guerra":            10752,
+    "historia":          36,
+    "misterio":          9648,
+    "musica":            10402,
+    "romance":           10749,
     "suspense":          53,
+    "terror":            27,
 }
 
 DURACAO_FILTROS = {

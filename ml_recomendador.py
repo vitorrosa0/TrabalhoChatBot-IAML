@@ -11,15 +11,20 @@ RETREINO_A_CADA = 5
 
 COLUNAS = ["genero_pedido", "humor", "acompanhado", "duracao_preferida", "disposicao"]
 
+_GENEROS = [
+    "acao", "aventura", "animacao", "cinema_tv", "comedia", "crime",
+    "documentario", "drama", "familia", "fantasia", "faroeste",
+    "ficcao_cientifica", "guerra", "historia", "misterio", "musica",
+    "romance", "suspense", "terror",
+]
+
 CATEGORIAS = {
-    "genero_pedido":     ["acao", "comedia", "drama", "terror", "romance",
-                          "ficcao_cientifica", "animacao", "suspense"],
+    "genero_pedido":     _GENEROS,
     "humor":             ["animado", "calmo", "entediado", "assustado", "romantico", "curioso", "triste"],
     "acompanhado":       ["sozinho", "amigos", "casal", "familia", "família"],
     "duracao_preferida": ["curto", "medio", "longo"],
     "disposicao":        ["pensar", "curtir"],
-    "genero_recomendado":["acao", "comedia", "drama", "terror", "romance",
-                          "ficcao_cientifica", "animacao", "suspense"],
+    "genero_recomendado": _GENEROS,
 }
 
 encoders = {col: LabelEncoder().fit(vals) for col, vals in CATEGORIAS.items()}

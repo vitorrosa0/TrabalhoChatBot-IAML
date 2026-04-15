@@ -89,10 +89,25 @@ DADOS_TREINO_BRUTOS = [
 ]
 
 NOMES_GENEROS = {
-    "acao": "Ação", "comedia": "Comédia", "drama": "Drama",
-    "terror": "Terror", "romance": "Romance",
+    "acao":              "Ação",
+    "aventura":          "Aventura",
+    "animacao":          "Animação",
+    "cinema_tv":         "Cinema TV",
+    "comedia":           "Comédia",
+    "crime":             "Crime",
+    "documentario":      "Documentário",
+    "drama":             "Drama",
+    "familia":           "Família",
+    "fantasia":          "Fantasia",
+    "faroeste":          "Faroeste",
     "ficcao_cientifica": "Ficção Científica",
-    "animacao": "Animação", "suspense": "Suspense",
+    "guerra":            "Guerra",
+    "historia":          "História",
+    "misterio":          "Mistério",
+    "musica":            "Música",
+    "romance":           "Romance",
+    "suspense":          "Suspense",
+    "terror":            "Terror",
 }
 
 
@@ -535,6 +550,13 @@ def gerar_resposta(mensagem_usuario, sid=None):
             "• \"Quero ação com o Brad Pitt\" → gênero + pessoa\n\n"
             "Gêneros: Ação, Comédia, Drama, Terror, Romance, Ficção Científica, Animação e Suspense."
         ), sid
+
+    if sid and genero_afirmado:
+        proximo = proximo_campo_vazio(sid)
+        if proximo and proximo != "genero_pedido":
+            valor = _detectar_valor_campo(proximo, tokens, lemas)
+            if valor:
+                genero_afirmado = None
 
     if genero_afirmado:
         sessao       = obter_sessao(sid) if sid else None
