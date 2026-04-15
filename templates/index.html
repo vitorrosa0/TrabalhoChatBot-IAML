@@ -494,6 +494,25 @@ header {
         #send-btn:hover    { background: var(--gold-light); }
         #send-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
 
+        #copy-btn {
+            padding: 11px 14px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 0.5px solid #333;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        #copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+        #copy-btn.copied { border-color: #4caf50; color: #4caf50; }
+
 @media (max-width: 700px) {
             .app-layout { flex-direction: column; }
 
@@ -610,6 +629,7 @@ header {
             <div id="input-area">
                 <input type="text" id="user-input"
                     placeholder="Gênero, filme de referência ou ator..." />
+                <button id="copy-btn" onclick="copiarChat()" title="Copiar conversa">📋</button>
                 <button id="send-btn" onclick="enviarMensagem()">Enviar</button>
             </div>
         </div>
@@ -833,6 +853,49 @@ function renderSkeletons(n) {
         }
 
         carregarDestaques();
+
+        function copiarChat() {
+            const rows = messagesDiv.querySelectorAll(".msg-row");
+            if (!rows.length) return;
+
+            const linhas = [];
+            rows.forEach(row => {
+                const isUser = row.classList.contains("user");
+                const bubble = row.querySelector(".bubble");
+                if (!bubble) return;
+                const prefix = isUser ? "Você" : "CineBot";
+                const texto = bubble.innerText.trim();
+                linhas.push(`${prefix}: ${texto}`);
+            });
+
+            const texto = linhas.join("\n\n");
+            navigator.clipboard.writeText(texto).then(() => {
+                const btn = document.getElementById("copy-btn");
+                btn.textContent = "✓";
+                btn.classList.add("copied");
+                setTimeout(() => {
+                    btn.textContent = "📋";
+                    btn.classList.remove("copied");
+                }, 2000);
+            }).catch(() => {
+                // fallback para browsers sem suporte
+                const ta = document.createElement("textarea");
+                ta.value = texto;
+                ta.style.position = "fixed";
+                ta.style.opacity = "0";
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand("copy");
+                document.body.removeChild(ta);
+                const btn = document.getElementById("copy-btn");
+                btn.textContent = "✓";
+                btn.classList.add("copied");
+                setTimeout(() => {
+                    btn.textContent = "📋";
+                    btn.classList.remove("copied");
+                }, 2000);
+            });
+        }
     </script>
 
 </body>
