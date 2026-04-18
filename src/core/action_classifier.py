@@ -17,45 +17,48 @@ ACTIONS = {
 
 class ActionClassifier:
     def classify(self, state: ConversationState, intencao: str, contexto: dict) -> str:
-        # ── Intenções diretas ─────────────────────────────────────────────────
-        if intencao == "saudacao":
-            return "SAUDAR"
+        # ── Intenções diretas (Comandos de controle) ──────────────────────────
+        if intencao == "saudacao": return "SAUDAR"
+        if intencao == "despedida": return "DESPEDIR"
+        if intencao == "ajuda": return "AJUDAR"
+        if intencao == "mais_filmes": return "MAIS_FILMES"
 
-        if intencao == "despedida":
-            return "DESPEDIR"
-
-        if intencao == "ajuda":
-            return "AJUDAR"
-
-        if intencao == "mais_filmes":
-            return "MAIS_FILMES"
-
-        if intencao == "consulta_entidade" and contexto.get("tipo_ref") and contexto.get("nome_ref"):
+        # ── Entidades Detectadas (Sementes) ───────────────────────────────────
+        if (intencao == "consulta_entidade" or contexto.get("tipo_ref")) and contexto.get("nome_ref"):
             return "APRESENTAR_ENTIDADE"
 
-        # ── Gênero negado sem sessão ativa ────────────────────────────────────
+        # ── Tratamentos específicos sem sessão ────────────────────────────────
         if contexto.get("genero_negado") and not state.tem_genero:
             return "GENERO_NEGADO"
 
-        # ── Semente detectada (filme ou ator de referência) ───────────────────
-        if contexto.get("tipo_ref") and contexto.get("nome_ref"):
-            return "APRESENTAR_ENTIDADE"
+        # ── Sistema de Pesos (Action Classifier Baseado em Score) ─────────────
+        score = 0.0
 
-        # ── Sem gênero na sessão (mas o usuário pode ter citado o gênero nesta mensagem)
-        if not state.tem_genero:
-            if contexto.get("genero_afirmado"):
-                return "RECOMENDAR"
+        if state.tem_genero or contexto.get("genero_afirmado"):
+            score += 1.0
+        if state.tem_humor: score += 0.5
+        if state.tem_acompanhado: score += 0.5
+        if state.tem_duracao: score += 0.5
+        if state.tem_disposicao: score += 0.5
+        if state.tem_semente: score += 1.5
+
+        # Não temos informação nenhuma
+        if score == 0.0:
             if intencao == "recomendacao":
                 return "PEDIR_GENERO"
             return "FALLBACK"
 
-        # ── Sessão completa ───────────────────────────────────────────────────
-        if state.campos_preenchidos == 5:
-            return "RECOMENDAR_FINAL"
+        # Temos uma base muito forte (Sessão completa ou Semente + Gênero/Humor)
+        if score >= 3.0 or state.campos_preenchidos >= 5:
+            return "RECOMENDAR_FINAL" if state.campos_preenchidos == 5 else "RECOMENDAR"
 
-        # ── Triggers de recomendação: com gênero + 1 slot (1) ou quase completo (4) ──
-        if state.campos_preenchidos in {1, 4}:
+        # Se recebemos um gênero e não tínhamos sessão, devemos ir para RECOMENDAR para iniciar o fluxo
+        if contexto.get("genero_afirmado") and not state.tem_genero:
             return "RECOMENDAR"
 
-        # ── Coleta de campos intermediários ───────────────────────────────────
+        # Temos alguma base intermediária (Gênero + 1 ou 2 slots)
+        if score >= 1.5:
+            return "RECOMENDAR"
+
+        # Só temos o gênero na sessão, e o usuário está respondendo a próxima pergunta
         return "PEDIR_PROXIMO_CAMPO"

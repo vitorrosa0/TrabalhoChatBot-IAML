@@ -118,7 +118,7 @@ def recomendar_com_ml(genero_pedido, humor, acompanhado, duracao_preferida, disp
     return encoders["genero_recomendado"].inverse_transform([pred])[0]
 
 def recomendar_com_ambos(genero_pedido, humor, acompanhado, duracao_preferida, disposicao):
-    if not modelos_prontos():
+    if not modelos_prontos() or not genero_pedido:
         return None, None
 
     genero_j48 = recomendar_com_ml(genero_pedido, humor, acompanhado, duracao_preferida, disposicao, modelo="j48")
