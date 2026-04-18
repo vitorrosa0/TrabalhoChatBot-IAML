@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session
-from chatbot import gerar_resposta
-from tmdb_api import buscar_destaques
+from src.core.chatbot import gerar_resposta
 import secrets
 
 app = Flask(__name__)

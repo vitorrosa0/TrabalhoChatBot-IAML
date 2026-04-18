@@ -5,7 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder
 
-DATASET_PATH    = "dataset.csv"
+DATASET_PATH    = "data/dataset.csv"
 MINIMO_TREINO   = 16
 RETREINO_A_CADA = 5
 
