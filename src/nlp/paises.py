@@ -2,7 +2,7 @@ from nltk.tokenize import word_tokenize
 from src.nlp.pipeline import lematizar
 
 MAPA_PAISES = {
-    "BR": ["brasileiro","brasileira","brasileiros","brasileiras","brasil"],
+    "BR": ["brasileiro","brasileira","brasileiros","brasileiras","brasil","nacional","nacionais"],
     "US": ["americano","americana","americanos","americanas","eua","hollywood"],
     "FR": ["francês","frances","francesa","franceses","francesas","franca"],
     "ES": ["espanhol","espanhola","espanhóis","espanhois","espanholas","espanha"],
@@ -12,12 +12,14 @@ MAPA_PAISES = {
     "MX": ["mexicano","mexicana","mexicanos","mexicanas","mexico","méxico"],
     "AR": ["argentino","argentina","argentinos","argentinas"],
     "IN": ["indiano","indiana","indianos","indianas","bollywood"],
+    "NL": ["holandês","holandes","holandesa","holandeses","holandesas","holanda","neerlandês","neerlandes"],
 }
 
 NOMES_PAISES = {
     "BR": "brasileiros", "US": "americanos", "FR": "franceses",
     "ES": "espanhóis",   "IT": "italianos",  "JP": "japoneses",
     "KR": "coreanos",    "MX": "mexicanos",  "AR": "argentinos", "IN": "indianos",
+    "NL": "holandeses",
 }
 
 LEMAS_PAISES = {

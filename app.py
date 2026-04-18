@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, session
 from src.core.chatbot import gerar_resposta
 import secrets
+from src.api.tmdb import buscar_destaques
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)

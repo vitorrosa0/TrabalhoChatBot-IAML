@@ -85,9 +85,14 @@ def set_genero_recomendado(sid, genero):
 def get_genero_recomendado(sid):
     return _sessoes.get(sid, {}).get("genero_recomendado")
 
-def set_referencia(sid, tipo, id_, nome):
+def set_referencia(sid, tipo, id_, nome, generos=None, ano=None):
     if sid in _sessoes:
-        _sessoes[sid]["referencia"] = {"tipo": tipo, "id": id_, "nome": nome}
+        ref = {"tipo": tipo, "id": id_, "nome": nome}
+        if generos is not None:
+            ref["generos"] = generos
+        if ano:
+            ref["ano"] = ano
+        _sessoes[sid]["referencia"] = ref
 
 def get_referencia(sid):
     return _sessoes.get(sid, {}).get("referencia")

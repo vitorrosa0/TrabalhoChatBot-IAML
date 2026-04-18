@@ -78,7 +78,10 @@ class RecomendarAction(BotAction):
         if candidato:
             entidade = self._identificar_entidade(candidato, tipo_hint="ator")
             if entidade:
-                self._set_referencia(sid, "ator", entidade["id"], entidade["nome"])
+                self._set_referencia(
+                    sid, "ator", entidade["id"], entidade["nome"],
+                    generos=entidade.get("generos"), ano=entidade.get("ano"),
+                )
                 return self._montar_entidade(sid), sid
 
         return self._montar_filmes(sid), sid
@@ -103,13 +106,14 @@ class RecomendarAction(BotAction):
 
 class ApresentarEntidadeAction(BotAction):
     def __init__(self, identificar_fn, criar_fn, encerrar_fn,
-                 set_ref_fn, preencher_fn, montar_fn):
+                 set_ref_fn, preencher_fn, montar_fn, set_pais_fn=None):
         self._identificar  = identificar_fn
         self._criar        = criar_fn
         self._encerrar     = encerrar_fn
         self._set_ref      = set_ref_fn
         self._preencher    = preencher_fn
         self._montar       = montar_fn
+        self._set_pais     = set_pais_fn
 
     def execute(self, contexto, sid):
         entidade = self._identificar(contexto["nome_ref"], tipo_hint=contexto["tipo_ref"])
@@ -122,9 +126,20 @@ class ApresentarEntidadeAction(BotAction):
         if sid:
             self._encerrar(sid)
         sid = self._criar()
-        self._set_ref(sid, entidade["tipo"], entidade["id"], entidade["nome"])
+        self._set_ref(
+            sid,
+            entidade["tipo"],
+            entidade["id"],
+            entidade["nome"],
+            generos=entidade.get("generos"),
+            ano=entidade.get("ano"),
+        )
 
         if entidade["tipo"] == "filme" and entidade.get("generos"):
             self._preencher(sid, "genero_pedido", entidade["generos"][0])
+
+        pais_ctx = contexto.get("pais")
+        if pais_ctx and self._set_pais:
+            self._set_pais(sid, pais_ctx)
 
         return self._montar(sid), sid

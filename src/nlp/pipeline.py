@@ -71,6 +71,20 @@ DADOS_TREINO_BRUTOS = [
     ("me dá mais", "mais_filmes"), ("mais opções", "mais_filmes"),
     ("não gostei manda outros", "mais_filmes"), ("tem mais", "mais_filmes"),
     ("quero ver outros", "mais_filmes"), ("manda diferentes", "mais_filmes"),
+
+    ("você conhece esse filme", "consulta_entidade"),
+    ("voce conhece algum filme", "consulta_entidade"),
+    ("conhece esse filme", "consulta_entidade"),
+    ("conhece algum assim", "consulta_entidade"),
+    ("sabe se tem esse filme", "consulta_entidade"),
+    ("sabe se existe esse filme", "consulta_entidade"),
+    ("sabe se tem no catálogo", "consulta_entidade"),
+    ("sabe se já lançou", "consulta_entidade"),
+    ("já ouviu falar desse filme", "consulta_entidade"),
+    ("ja ouviu falar de algum assim", "consulta_entidade"),
+    ("ouviu falar de algum filme", "consulta_entidade"),
+    ("você já viu esse filme", "consulta_entidade"),
+    ("voce ja viu algum parecido", "consulta_entidade"),
 ]
 
 _dados_formatados      = [(_extrair_features(f), i) for f, i in DADOS_TREINO_BRUTOS]

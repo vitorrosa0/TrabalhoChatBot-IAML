@@ -1,4 +1,5 @@
 from src.nlp.pipeline import lematizar
+from typing import Optional
 
 LEMAS_HUMOR = {
     "animado":   [lematizar(p) for p in ["animado","empolgado","energia","agitado","feliz","bem","otimo","ótimo"]],
@@ -35,7 +36,7 @@ _MAPA_CAMPOS = {
     "disposicao":        LEMAS_DISPOSICAO,
 }
 
-def detectar_valor_campo(campo: str, tokens, lemas) -> str | None:
+def detectar_valor_campo(campo: str, tokens, lemas) -> Optional[str]:
     for valor, lemas_valor in _MAPA_CAMPOS.get(campo, {}).items():
         for lema in lemas:
             if lema in lemas_valor:

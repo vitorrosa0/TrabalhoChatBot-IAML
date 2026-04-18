@@ -30,6 +30,9 @@ class ActionClassifier:
         if intencao == "mais_filmes":
             return "MAIS_FILMES"
 
+        if intencao == "consulta_entidade" and contexto.get("tipo_ref") and contexto.get("nome_ref"):
+            return "APRESENTAR_ENTIDADE"
+
         # ── Gênero negado sem sessão ativa ────────────────────────────────────
         if contexto.get("genero_negado") and not state.tem_genero:
             return "GENERO_NEGADO"
@@ -38,8 +41,10 @@ class ActionClassifier:
         if contexto.get("tipo_ref") and contexto.get("nome_ref"):
             return "APRESENTAR_ENTIDADE"
 
-        # ── Sem gênero ainda ─────────────────────────────────────────────────
+        # ── Sem gênero na sessão (mas o usuário pode ter citado o gênero nesta mensagem)
         if not state.tem_genero:
+            if contexto.get("genero_afirmado"):
+                return "RECOMENDAR"
             if intencao == "recomendacao":
                 return "PEDIR_GENERO"
             return "FALLBACK"
@@ -48,8 +53,8 @@ class ActionClassifier:
         if state.campos_preenchidos == 5:
             return "RECOMENDAR_FINAL"
 
-        # ── Triggers de recomendação: 1, 3 e 5 campos ────────────────────────
-        if state.campos_preenchidos in {1, 3}:
+        # ── Triggers de recomendação: com gênero + 1 slot (1) ou quase completo (4) ──
+        if state.campos_preenchidos in {1, 4}:
             return "RECOMENDAR"
 
         # ── Coleta de campos intermediários ───────────────────────────────────

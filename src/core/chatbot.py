@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from src.nlp.pipeline import preprocessar, detectar_intencao
 from src.nlp.generos import detectar_genero
 from src.nlp.paises import detectar_pais
@@ -8,8 +10,8 @@ from src.data.ml_recomendador import recomendar_com_ambos, salvar_exemplo, MINIM
 from src.api.tmdb import (
     buscar_filmes_por_genero, buscar_filmes_similares,
     buscar_filmes_por_ator, buscar_filmes_por_genero_e_ator,
-    identificar_entidade,
 )
+from src.data.knowledge import identificar_entidade_camadas
 from src.core.session_manager import (
     criar_sessao, obter_sessao, preencher_campo,
     deve_recomendar, proximo_campo_vazio, sessao_completa,
@@ -30,6 +32,8 @@ from src.actions.simples import (
 from src.actions.recomendacao import (
     MaisFilmesAction, RecomendarAction, ApresentarEntidadeAction,
 )
+from typing import Any, Dict, Optional
+
 from src.nlp.generos import NOMES_GENEROS
 from src.nlp.paises import NOMES_PAISES
 
@@ -90,6 +94,8 @@ def _montar_resposta_filmes(sid):
     nota_ml, genero_final = _resolver_genero_e_nota(
         genero_pedido, genero_j48, genero_lmt, banidos, genero_esta_travado(sid)
     )
+    ref = sessao.get("referencia")
+    genero_final = _ajustar_genero_com_semente_e_humor(genero_final, humor, ref)
 
     ja_vistos = filmes_ja_recomendados(sid)
     set_genero_recomendado(sid, genero_final)
@@ -111,6 +117,17 @@ def _montar_resposta_filmes(sid):
 
     proximo = proximo_campo_vazio(sid)
     return resposta + f"\n💬 {PERGUNTAS[proximo]}"
+
+
+def _ajustar_genero_com_semente_e_humor(genero_ml: str, humor: str, ref: Optional[Dict[str, Any]]) -> str:
+    if not ref or ref.get("tipo") != "filme" or humor != "triste":
+        return genero_ml
+    genes = set(ref.get("generos") or [])
+    pesados = {"acao", "terror", "guerra"}
+    if not (genes & pesados):
+        return genero_ml
+    leve = {"acao": "aventura", "terror": "suspense", "guerra": "drama"}
+    return leve.get(genero_ml, genero_ml)
 
 
 def _resolver_genero_e_nota(genero_pedido, genero_j48, genero_lmt, banidos, travado):
@@ -142,7 +159,7 @@ def _build_registry() -> ActionRegistry:
         "perguntas": PERGUNTAS, "set_pais": set_pais, "get_pais": get_pais,
     }
     entidade_fns = {
-        "identificar":   identificar_entidade,
+        "identificar":   identificar_entidade_camadas,
         "set_ref":       set_referencia,
         "detectar_ator": detectar_ator_em_mensagem_com_genero,
     }
@@ -162,8 +179,9 @@ def _build_registry() -> ActionRegistry:
     registry.registrar("RECOMENDAR_FINAL",    recomendar)
     registry.registrar("PEDIR_PROXIMO_CAMPO", recomendar)
     registry.registrar("APRESENTAR_ENTIDADE", ApresentarEntidadeAction(
-        identificar_entidade, criar_sessao, encerrar_sessao,
+        identificar_entidade_camadas, criar_sessao, encerrar_sessao,
         set_referencia, preencher_campo, _montar_resposta_por_entidade,
+        set_pais_fn=set_pais,
     ))
 
     return registry
