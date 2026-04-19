@@ -1,0 +1,6693 @@
+{
+  "filmes": [
+    {
+      "id": 1226863,
+      "titulo": "Super Mario Galaxy: O Filme",
+      "titulo_original": "The Super Mario Galaxy Movie",
+      "generos": [
+        "familia",
+        "comedia",
+        "aventura",
+        "fantasia",
+        "animacao"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1523145,
+      "titulo": "Um Amor de Mentiras",
+      "titulo_original": "Твоё сердце будет разбито",
+      "generos": [
+        "romance",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 83533,
+      "titulo": "Avatar: Fogo e Cinzas",
+      "titulo_original": "Avatar: Fire and Ash",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 687163,
+      "titulo": "Devoradores de Estrelas",
+      "titulo_original": "Project Hail Mary",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1327819,
+      "titulo": "Cara de Um, Focinho de Outro",
+      "titulo_original": "Hoppers",
+      "generos": [
+        "animacao",
+        "familia",
+        "ficcao_cientifica",
+        "comedia",
+        "aventura"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 980431,
+      "titulo": "A Lenda de Aang: O Último Mestre do Ar",
+      "titulo_original": "Avatar: Aang, The Last Airbender",
+      "generos": [
+        "animacao",
+        "acao",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 502356,
+      "titulo": "Super Mario Bros. O Filme",
+      "titulo_original": "The Super Mario Bros. Movie",
+      "generos": [
+        "familia",
+        "comedia",
+        "aventura",
+        "fantasia",
+        "animacao"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1290417,
+      "titulo": "Ataque Brutal",
+      "titulo_original": "Thrash",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1470130,
+      "titulo": "The Mortuary Assistant",
+      "titulo_original": "The Mortuary Assistant",
+      "generos": [
+        "terror",
+        "misterio"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1084577,
+      "titulo": "Bola pra Cima",
+      "titulo_original": "Balls Up",
+      "generos": [
+        "comedia",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1290821,
+      "titulo": "Missão Refúgio",
+      "titulo_original": "Shelter",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1641319,
+      "titulo": "O Atirador: Sem Nação",
+      "titulo_original": "Sniper: No Nation",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 840464,
+      "titulo": "Destruição Final 2",
+      "titulo_original": "Greenland 2: Migration",
+      "generos": [
+        "aventura",
+        "suspense",
+        "ficcao_cientifica"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1171145,
+      "titulo": "Caminhos do Crime",
+      "titulo_original": "Crime 101",
+      "generos": [
+        "crime",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1297842,
+      "titulo": "Um Cabra Bom de Bola",
+      "titulo_original": "GOAT",
+      "generos": [
+        "animacao",
+        "comedia",
+        "familia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1304313,
+      "titulo": "Maldição da Múmia",
+      "titulo_original": "Lee Cronin's The Mummy",
+      "generos": [
+        "terror",
+        "misterio"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1049471,
+      "titulo": "Consequência",
+      "titulo_original": "Outcome",
+      "generos": [
+        "comedia",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1159559,
+      "titulo": "Pânico 7",
+      "titulo_original": "Scream 7",
+      "generos": [
+        "terror",
+        "misterio",
+        "crime"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1311031,
+      "titulo": "Demon Slayer: Kimetsu no Yaiba Castelo Infinito",
+      "titulo_original": "劇場版「鬼滅の刃」無限城編 第一章 猗窩座再来",
+      "generos": [
+        "animacao",
+        "acao",
+        "fantasia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 20222,
+      "titulo": "Sexo Com Amor",
+      "titulo_original": "Sexo con amor",
+      "generos": [
+        "comedia",
+        "romance"
+      ],
+      "ano": "2003",
+      "origem": []
+    },
+    {
+      "id": 1265609,
+      "titulo": "Máquina de Guerra",
+      "titulo_original": "War Machine",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1526650,
+      "titulo": "O Boneco de Barro",
+      "titulo_original": "泥娃娃",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 680493,
+      "titulo": "Terror em Silent Hill: Regresso Para o Inferno",
+      "titulo_original": "Return to Silent Hill",
+      "generos": [
+        "misterio",
+        "drama",
+        "terror"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 879945,
+      "titulo": "L'homme inconnu",
+      "titulo_original": "L'homme inconnu",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2021",
+      "origem": []
+    },
+    {
+      "id": 1010755,
+      "titulo": "Os Estranhos: Capítulo Final",
+      "titulo_original": "The Strangers: Chapter 3",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1480387,
+      "titulo": "undertone",
+      "titulo_original": "undertone",
+      "generos": [
+        "terror",
+        "misterio"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1084242,
+      "titulo": "Zootopia 2",
+      "titulo_original": "Zootopia 2",
+      "generos": [
+        "animacao",
+        "familia",
+        "misterio",
+        "aventura",
+        "comedia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1193501,
+      "titulo": "O Som da Morte",
+      "titulo_original": "Whistle",
+      "generos": [
+        "terror",
+        "misterio"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1084187,
+      "titulo": "Lindas e Letais",
+      "titulo_original": "Pretty Lethal",
+      "generos": [
+        "musica",
+        "suspense",
+        "acao",
+        "terror"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1159831,
+      "titulo": "A Noiva!",
+      "titulo_original": "The Bride!",
+      "generos": [
+        "ficcao_cientifica",
+        "terror",
+        "fantasia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1418657,
+      "titulo": "The Yeti",
+      "titulo_original": "The Yeti",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1368166,
+      "titulo": "A Empregada",
+      "titulo_original": "The Housemaid",
+      "generos": [
+        "misterio",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 350,
+      "titulo": "O Diabo Veste Prada",
+      "titulo_original": "The Devil Wears Prada",
+      "generos": [
+        "drama",
+        "comedia"
+      ],
+      "ano": "2006",
+      "origem": []
+    },
+    {
+      "id": 1419406,
+      "titulo": "A Sombra do Perigo",
+      "titulo_original": "捕风追影",
+      "generos": [
+        "acao",
+        "crime",
+        "drama",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 755898,
+      "titulo": "A Guerra dos Mundos",
+      "titulo_original": "War of the Worlds",
+      "generos": [
+        "ficcao_cientifica",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1613798,
+      "titulo": "Vingança Brutal",
+      "titulo_original": "Venganza",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1268127,
+      "titulo": "Inteligência Humana",
+      "titulo_original": "휴민트",
+      "generos": [
+        "suspense",
+        "acao",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1266127,
+      "titulo": "Casamento Sangrento: A Viúva",
+      "titulo_original": "Ready or Not: Here I Come",
+      "generos": [
+        "terror",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1115544,
+      "titulo": "Mike & Nick & Nick & Alice",
+      "titulo_original": "Mike & Nick & Nick & Alice",
+      "generos": [
+        "comedia",
+        "ficcao_cientifica",
+        "crime"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1234731,
+      "titulo": "Anaconda",
+      "titulo_original": "Anaconda",
+      "generos": [
+        "aventura",
+        "comedia",
+        "terror"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 634649,
+      "titulo": "Homem-Aranha: Sem Volta Para Casa",
+      "titulo_original": "Spider-Man: No Way Home",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2021",
+      "origem": []
+    },
+    {
+      "id": 1316092,
+      "titulo": "“O Morro dos Ventos Uivantes”",
+      "titulo_original": "\"Wuthering Heights\"",
+      "generos": [
+        "romance",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1610418,
+      "titulo": "The House on Haunted Grounds",
+      "titulo_original": "The House on Haunted Grounds",
+      "generos": [
+        "terror"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 418579,
+      "titulo": "어린 형수",
+      "titulo_original": "어린 형수",
+      "generos": [
+        "romance"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 615,
+      "titulo": "A Paixão de Cristo",
+      "titulo_original": "The Passion of the Christ",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 77338,
+      "titulo": "Intocáveis",
+      "titulo_original": "Intouchables",
+      "generos": [
+        "drama",
+        "comedia"
+      ],
+      "ano": "2011",
+      "origem": []
+    },
+    {
+      "id": 1198994,
+      "titulo": "Socorro!",
+      "titulo_original": "Send Help",
+      "generos": [
+        "terror",
+        "suspense",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1235877,
+      "titulo": "ஜன நாயகன்",
+      "titulo_original": "ஜன நாயகன்",
+      "generos": [
+        "acao",
+        "drama",
+        "ficcao_cientifica"
+      ],
+      "ano": "",
+      "origem": []
+    },
+    {
+      "id": 300496,
+      "titulo": "Nefeli",
+      "titulo_original": "Nefeli",
+      "generos": [
+        "romance"
+      ],
+      "ano": "1980",
+      "origem": []
+    },
+    {
+      "id": 1472951,
+      "titulo": "Infiltrate",
+      "titulo_original": "Infiltrate",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 7451,
+      "titulo": "Triplo X",
+      "titulo_original": "xXx",
+      "generos": [
+        "acao",
+        "aventura",
+        "suspense",
+        "crime",
+        "drama"
+      ],
+      "ano": "2002",
+      "origem": []
+    },
+    {
+      "id": 1646787,
+      "titulo": "Sundutan",
+      "titulo_original": "Sundutan",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 157336,
+      "titulo": "Interestelar",
+      "titulo_original": "Interstellar",
+      "generos": [
+        "aventura",
+        "drama",
+        "ficcao_cientifica"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 848116,
+      "titulo": "रॉकी और रानी की प्रेम कहानी",
+      "titulo_original": "रॉकी और रानी की प्रेम कहानी",
+      "generos": [
+        "comedia",
+        "drama",
+        "familia",
+        "romance"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1325734,
+      "titulo": "O Drama",
+      "titulo_original": "The Drama",
+      "generos": [
+        "romance",
+        "comedia",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1367642,
+      "titulo": "Uma Segunda Chance",
+      "titulo_original": "Reminders of Him",
+      "generos": [
+        "romance",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 875828,
+      "titulo": "Peaky Blinders: O Homem Imortal",
+      "titulo_original": "Peaky Blinders: The Immortal Man",
+      "generos": [
+        "crime",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1088434,
+      "titulo": "Hellfire",
+      "titulo_original": "Hellfire",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1168190,
+      "titulo": "Dupla Perigosa",
+      "titulo_original": "The Wrecking Crew",
+      "generos": [
+        "acao",
+        "comedia",
+        "crime",
+        "misterio"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 936075,
+      "titulo": "Michael",
+      "titulo_original": "Michael",
+      "generos": [
+        "musica",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1236153,
+      "titulo": "Justiça Artificial",
+      "titulo_original": "Mercy",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1658216,
+      "titulo": "Stepdaddy",
+      "titulo_original": "Stepdaddy",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 299536,
+      "titulo": "Vingadores: Guerra Infinita",
+      "titulo_original": "Avengers: Infinity War",
+      "generos": [
+        "aventura",
+        "acao",
+        "ficcao_cientifica"
+      ],
+      "ano": "2018",
+      "origem": []
+    },
+    {
+      "id": 1339876,
+      "titulo": "Corajosa 3",
+      "titulo_original": "मर्दानी 3",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1242898,
+      "titulo": "Predador: Terras Selvagens",
+      "titulo_original": "Predator: Badlands",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1539104,
+      "titulo": "JUJUTSU KAISEN: Execução",
+      "titulo_original": "劇場版 呪術廻戦「渋谷事変 特別編集版」×「死滅回游 先行上映」",
+      "generos": [
+        "animacao",
+        "acao",
+        "fantasia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1572073,
+      "titulo": "The Deadly Little Mermaid",
+      "titulo_original": "The Deadly Little Mermaid",
+      "generos": [
+        "terror"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 181808,
+      "titulo": "Star Wars: Os Últimos Jedi",
+      "titulo_original": "Star Wars: The Last Jedi",
+      "generos": [
+        "aventura",
+        "acao",
+        "ficcao_cientifica"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 278,
+      "titulo": "Um Sonho de Liberdade",
+      "titulo_original": "The Shawshank Redemption",
+      "generos": [
+        "drama",
+        "crime"
+      ],
+      "ano": "1994",
+      "origem": []
+    },
+    {
+      "id": 1582770,
+      "titulo": "धुरंधर: द रिवेंज",
+      "titulo_original": "धुरंधर: द रिवेंज",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 226674,
+      "titulo": "L'Adolescente",
+      "titulo_original": "L'Adolescente",
+      "generos": [
+        "drama"
+      ],
+      "ano": "1979",
+      "origem": []
+    },
+    {
+      "id": 1416391,
+      "titulo": "A Torradeira",
+      "titulo_original": "टोस्टर",
+      "generos": [
+        "comedia",
+        "crime",
+        "acao"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 803796,
+      "titulo": "Guerreiras do K-Pop",
+      "titulo_original": "KPop Demon Hunters",
+      "generos": [
+        "fantasia",
+        "musica",
+        "comedia",
+        "animacao"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1110034,
+      "titulo": "Kraken",
+      "titulo_original": "Kraken",
+      "generos": [
+        "terror",
+        "acao",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 238,
+      "titulo": "O Poderoso Chefão",
+      "titulo_original": "The Godfather",
+      "generos": [
+        "drama",
+        "crime"
+      ],
+      "ano": "1972",
+      "origem": []
+    },
+    {
+      "id": 1234821,
+      "titulo": "Jurassic World: Recomeço",
+      "titulo_original": "Jurassic World Rebirth",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura",
+        "acao"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 329505,
+      "titulo": "Il peccato di Lola",
+      "titulo_original": "Il peccato di Lola",
+      "generos": [
+        "drama",
+        "comedia",
+        "terror"
+      ],
+      "ano": "1984",
+      "origem": []
+    },
+    {
+      "id": 425274,
+      "titulo": "Truque de Mestre: O 3° Ato",
+      "titulo_original": "Now You See Me: Now You Don't",
+      "generos": [
+        "crime",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 50619,
+      "titulo": "Crepúsculo: Amanhecer - Parte 1",
+      "titulo_original": "The Twilight Saga: Breaking Dawn - Part 1",
+      "generos": [
+        "aventura",
+        "fantasia",
+        "romance"
+      ],
+      "ano": "2011",
+      "origem": []
+    },
+    {
+      "id": 969681,
+      "titulo": "Homem-Aranha: Um Novo Dia",
+      "titulo_original": "Spider-Man: Brand New Day",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1010581,
+      "titulo": "Minha Culpa",
+      "titulo_original": "Culpa mía",
+      "generos": [
+        "drama",
+        "romance",
+        "suspense"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1246049,
+      "titulo": "Drácula - Uma História de Amor Eterno",
+      "titulo_original": "Dracula",
+      "generos": [
+        "terror",
+        "fantasia",
+        "romance"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 950891,
+      "titulo": "Худалдагч Охин",
+      "titulo_original": "Худалдагч Охин",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 324857,
+      "titulo": "Homem-Aranha: No Aranhaverso",
+      "titulo_original": "Spider-Man: Into the Spider-Verse",
+      "generos": [
+        "animacao",
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2018",
+      "origem": []
+    },
+    {
+      "id": 1408208,
+      "titulo": "Exit 8",
+      "titulo_original": "８番出口",
+      "generos": [
+        "terror",
+        "misterio"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1117857,
+      "titulo": "Nos Seus Sonhos",
+      "titulo_original": "In Your Dreams",
+      "generos": [
+        "animacao",
+        "familia",
+        "comedia",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 19995,
+      "titulo": "Avatar",
+      "titulo_original": "Avatar",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2009",
+      "origem": []
+    },
+    {
+      "id": 1387382,
+      "titulo": "Temporada de Sangue",
+      "titulo_original": "Hunting Season",
+      "generos": [
+        "acao",
+        "drama",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1511057,
+      "titulo": "A Colega Perfeita",
+      "titulo_original": "Roommates",
+      "generos": [
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 315635,
+      "titulo": "Homem-Aranha: De Volta ao Lar",
+      "titulo_original": "Spider-Man: Homecoming",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 299534,
+      "titulo": "Vingadores: Ultimato",
+      "titulo_original": "Avengers: Endgame",
+      "generos": [
+        "aventura",
+        "ficcao_cientifica",
+        "acao"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 467905,
+      "titulo": "Manual Prático da Vingança Lucrativa",
+      "titulo_original": "How to Make a Killing",
+      "generos": [
+        "comedia",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1119449,
+      "titulo": "Boa Sorte, Divirta-se, Não Morra",
+      "titulo_original": "Good Luck, Have Fun, Don't Die",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1192548,
+      "titulo": "Hannah Waddingham - Em Casa Para o Natal",
+      "titulo_original": "Hannah Waddingham: Home for Christmas",
+      "generos": [
+        "musica"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 496243,
+      "titulo": "Parasita",
+      "titulo_original": "기생충",
+      "generos": [
+        "comedia",
+        "suspense",
+        "drama"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 744275,
+      "titulo": "After: Depois do Desencontro",
+      "titulo_original": "After We Fell",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "2021",
+      "origem": []
+    },
+    {
+      "id": 155,
+      "titulo": "Batman: O Cavaleiro das Trevas",
+      "titulo_original": "The Dark Knight",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2008",
+      "origem": []
+    },
+    {
+      "id": 1297454,
+      "titulo": "À Espera da Morte",
+      "titulo_original": "The Death That Awaits",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1011985,
+      "titulo": "Kung Fu Panda 4",
+      "titulo_original": "Kung Fu Panda 4",
+      "generos": [
+        "animacao",
+        "familia",
+        "acao",
+        "comedia",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1276038,
+      "titulo": "A Desert",
+      "titulo_original": "A Desert",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 76600,
+      "titulo": "Avatar: O Caminho da Água",
+      "titulo_original": "Avatar: The Way of Water",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 1493859,
+      "titulo": "Noite da Pizza",
+      "titulo_original": "Pizza Movie",
+      "generos": [
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 597,
+      "titulo": "Titanic",
+      "titulo_original": "Titanic",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "1997",
+      "origem": []
+    },
+    {
+      "id": 533535,
+      "titulo": "Deadpool & Wolverine",
+      "titulo_original": "Deadpool & Wolverine",
+      "generos": [
+        "acao",
+        "comedia",
+        "ficcao_cientifica"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 567609,
+      "titulo": "Casamento Sangrento",
+      "titulo_original": "Ready or Not",
+      "generos": [
+        "terror",
+        "comedia"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 402431,
+      "titulo": "Wicked",
+      "titulo_original": "Wicked",
+      "generos": [
+        "drama",
+        "romance",
+        "fantasia"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 677638,
+      "titulo": "Ursos Sem Curso: O Filme",
+      "titulo_original": "We Bare Bears: The Movie",
+      "generos": [
+        "animacao",
+        "aventura",
+        "familia",
+        "comedia",
+        "cinema_tv"
+      ],
+      "ano": "2020",
+      "origem": []
+    },
+    {
+      "id": 1241470,
+      "titulo": "Osíris",
+      "titulo_original": "Osiris",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "terror"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 991494,
+      "titulo": "Bob Esponja: Em Busca da Calça Quadrada",
+      "titulo_original": "The SpongeBob Movie: Search for SquarePants",
+      "generos": [
+        "animacao",
+        "familia",
+        "comedia",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1306368,
+      "titulo": "Dinheiro Suspeito",
+      "titulo_original": "The Rip",
+      "generos": [
+        "acao",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 858024,
+      "titulo": "Hamnet: A Vida Antes de Hamlet",
+      "titulo_original": "Hamnet",
+      "generos": [
+        "drama",
+        "romance",
+        "historia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 680,
+      "titulo": "Pulp Fiction: Tempo de Violência",
+      "titulo_original": "Pulp Fiction",
+      "generos": [
+        "suspense",
+        "crime",
+        "comedia"
+      ],
+      "ano": "1994",
+      "origem": []
+    },
+    {
+      "id": 129,
+      "titulo": "A Viagem de Chihiro",
+      "titulo_original": "千と千尋の神隠し",
+      "generos": [
+        "animacao",
+        "familia",
+        "fantasia"
+      ],
+      "ano": "2001",
+      "origem": []
+    },
+    {
+      "id": 27205,
+      "titulo": "A Origem",
+      "titulo_original": "Inception",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2010",
+      "origem": []
+    },
+    {
+      "id": 1659087,
+      "titulo": "180",
+      "titulo_original": "180",
+      "generos": [
+        "suspense",
+        "crime",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 120,
+      "titulo": "O Senhor dos Anéis: A Sociedade do Anel",
+      "titulo_original": "The Lord of the Rings: The Fellowship of the Ring",
+      "generos": [
+        "aventura",
+        "fantasia",
+        "acao"
+      ],
+      "ano": "2001",
+      "origem": []
+    },
+    {
+      "id": 911430,
+      "titulo": "F1: O Filme",
+      "titulo_original": "F1",
+      "generos": [
+        "acao",
+        "drama"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1266992,
+      "titulo": "Balinsasayaw",
+      "titulo_original": "Balinsasayaw",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 603,
+      "titulo": "Matrix",
+      "titulo_original": "The Matrix",
+      "generos": [
+        "acao",
+        "ficcao_cientifica"
+      ],
+      "ano": "1999",
+      "origem": []
+    },
+    {
+      "id": 1167307,
+      "titulo": "Davi: Nasce Um Rei",
+      "titulo_original": "David",
+      "generos": [
+        "animacao",
+        "familia",
+        "drama",
+        "musica"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1650558,
+      "titulo": "Abot Langit",
+      "titulo_original": "Abot Langit",
+      "generos": [
+        "romance"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1233413,
+      "titulo": "Pecadores",
+      "titulo_original": "Sinners",
+      "generos": [
+        "terror",
+        "acao",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 28322,
+      "titulo": "Vacanze per un massacro",
+      "titulo_original": "Vacanze per un massacro",
+      "generos": [
+        "suspense",
+        "acao",
+        "crime"
+      ],
+      "ano": "1980",
+      "origem": []
+    },
+    {
+      "id": 1054867,
+      "titulo": "Uma Batalha Após a Outra",
+      "titulo_original": "One Battle After Another",
+      "generos": [
+        "suspense",
+        "crime",
+        "comedia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 122,
+      "titulo": "O Senhor dos Anéis: O Retorno do Rei",
+      "titulo_original": "The Lord of the Rings: The Return of the King",
+      "generos": [
+        "aventura",
+        "fantasia",
+        "acao"
+      ],
+      "ano": "2003",
+      "origem": []
+    },
+    {
+      "id": 1218925,
+      "titulo": "Chainsaw Man – O Filme: Arco da Reze",
+      "titulo_original": "劇場版 チェンソーマン レゼ篇",
+      "generos": [
+        "animacao",
+        "acao",
+        "romance",
+        "fantasia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1424965,
+      "titulo": "Ice Skater",
+      "titulo_original": "Ice Skater",
+      "generos": [
+        "drama",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 335984,
+      "titulo": "Blade Runner 2049",
+      "titulo_original": "Blade Runner 2049",
+      "generos": [
+        "ficcao_cientifica",
+        "drama"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 671,
+      "titulo": "Harry Potter e a Pedra Filosofal",
+      "titulo_original": "Harry Potter and the Philosopher's Stone",
+      "generos": [
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2001",
+      "origem": []
+    },
+    {
+      "id": 38,
+      "titulo": "Brilho Eterno de uma Mente sem Lembranças",
+      "titulo_original": "Eternal Sunshine of the Spotless Mind",
+      "generos": [
+        "ficcao_cientifica",
+        "drama",
+        "romance"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 1061474,
+      "titulo": "Superman",
+      "titulo_original": "Superman",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura",
+        "acao"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1291608,
+      "titulo": "Dhurandhar",
+      "titulo_original": "धुरंधर",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 497,
+      "titulo": "À Espera de um Milagre",
+      "titulo_original": "The Green Mile",
+      "generos": [
+        "fantasia",
+        "drama",
+        "crime"
+      ],
+      "ano": "1999",
+      "origem": []
+    },
+    {
+      "id": 1241982,
+      "titulo": "Moana 2",
+      "titulo_original": "Moana 2",
+      "generos": [
+        "animacao",
+        "aventura",
+        "familia",
+        "comedia",
+        "fantasia"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 372058,
+      "titulo": "Your name.",
+      "titulo_original": "君の名は。",
+      "generos": [
+        "animacao",
+        "romance",
+        "drama"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 14836,
+      "titulo": "Coraline e o Mundo Secreto",
+      "titulo_original": "Coraline",
+      "generos": [
+        "animacao",
+        "familia",
+        "fantasia"
+      ],
+      "ano": "2009",
+      "origem": []
+    },
+    {
+      "id": 1228246,
+      "titulo": "Five Nights at Freddy's 2",
+      "titulo_original": "Five Nights at Freddy's 2",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1015606,
+      "titulo": "Obi-Wan Kenobi: O Retorno do Jedi",
+      "titulo_original": "Obi-Wan Kenobi: A Jedi's Return",
+      "generos": [
+        "documentario"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 1314481,
+      "titulo": "O Diabo Veste Prada 2",
+      "titulo_original": "The Devil Wears Prada 2",
+      "generos": [
+        "drama",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1634301,
+      "titulo": "Vanaveera",
+      "titulo_original": "Vanaveera",
+      "generos": [
+        "acao",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 13,
+      "titulo": "Forrest Gump: O Contador de Histórias",
+      "titulo_original": "Forrest Gump",
+      "generos": [
+        "comedia",
+        "drama",
+        "romance"
+      ],
+      "ano": "1994",
+      "origem": []
+    },
+    {
+      "id": 62029,
+      "titulo": "Bingo Bongo",
+      "titulo_original": "Bingo Bongo",
+      "generos": [
+        "comedia"
+      ],
+      "ano": "1982",
+      "origem": []
+    },
+    {
+      "id": 1658214,
+      "titulo": "Scorpio Nights 4",
+      "titulo_original": "Scorpio Nights 4",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 424,
+      "titulo": "A Lista de Schindler",
+      "titulo_original": "Schindler's List",
+      "generos": [
+        "drama",
+        "historia",
+        "guerra"
+      ],
+      "ano": "1993",
+      "origem": []
+    },
+    {
+      "id": 1631917,
+      "titulo": "18 Rosas",
+      "titulo_original": "18th Rose",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 872585,
+      "titulo": "Oppenheimer",
+      "titulo_original": "Oppenheimer",
+      "generos": [
+        "drama",
+        "historia"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1314786,
+      "titulo": "Agente Zeta",
+      "titulo_original": "Zeta",
+      "generos": [
+        "drama",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 550,
+      "titulo": "Clube da Luta",
+      "titulo_original": "Fight Club",
+      "generos": [
+        "drama",
+        "suspense"
+      ],
+      "ano": "1999",
+      "origem": []
+    },
+    {
+      "id": 519182,
+      "titulo": "Meu Malvado Favorito 4",
+      "titulo_original": "Despicable Me 4",
+      "generos": [
+        "familia",
+        "comedia",
+        "animacao",
+        "ficcao_cientifica",
+        "acao"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 346364,
+      "titulo": "It: A Coisa",
+      "titulo_original": "It",
+      "generos": [
+        "terror",
+        "suspense",
+        "drama"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 569094,
+      "titulo": "Homem-Aranha: Através do Aranhaverso",
+      "titulo_original": "Spider-Man: Across the Spider-Verse",
+      "generos": [
+        "animacao",
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1511417,
+      "titulo": "Baahubali: The Epic",
+      "titulo_original": "Bāhubali: The Epic",
+      "generos": [
+        "acao",
+        "drama"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 330457,
+      "titulo": "Frozen II",
+      "titulo_original": "Frozen II",
+      "generos": [
+        "familia",
+        "animacao",
+        "aventura",
+        "comedia",
+        "fantasia"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 1184918,
+      "titulo": "Robô Selvagem",
+      "titulo_original": "The Wild Robot",
+      "generos": [
+        "familia",
+        "animacao",
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 798645,
+      "titulo": "O Sobrevivente",
+      "titulo_original": "The Running Man",
+      "generos": [
+        "acao",
+        "suspense",
+        "ficcao_cientifica"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 807,
+      "titulo": "Seven - Os Sete Crimes Capitais",
+      "titulo_original": "Se7en",
+      "generos": [
+        "crime",
+        "misterio",
+        "suspense"
+      ],
+      "ano": "1995",
+      "origem": []
+    },
+    {
+      "id": 769,
+      "titulo": "Os Bons Companheiros",
+      "titulo_original": "GoodFellas",
+      "generos": [
+        "drama",
+        "crime"
+      ],
+      "ano": "1990",
+      "origem": []
+    },
+    {
+      "id": 575265,
+      "titulo": "Missão: Impossível - O Acerto Final",
+      "titulo_original": "Mission: Impossible - The Final Reckoning",
+      "generos": [
+        "acao",
+        "suspense",
+        "aventura"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 912649,
+      "titulo": "Venom: A Última Rodada",
+      "titulo_original": "Venom: The Last Dance",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 346698,
+      "titulo": "Barbie",
+      "titulo_original": "Barbie",
+      "generos": [
+        "comedia",
+        "aventura"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1726,
+      "titulo": "Homem de Ferro",
+      "titulo_original": "Iron Man",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2008",
+      "origem": []
+    },
+    {
+      "id": 1412598,
+      "titulo": "Orca: A Baleia Assassina",
+      "titulo_original": "Killer Whale",
+      "generos": [
+        "suspense",
+        "terror",
+        "acao",
+        "misterio",
+        "ficcao_cientifica"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 950387,
+      "titulo": "Um Filme Minecraft",
+      "titulo_original": "A Minecraft Movie",
+      "generos": [
+        "familia",
+        "fantasia",
+        "comedia",
+        "aventura"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1191876,
+      "titulo": "From the Ashes",
+      "titulo_original": "From the Ashes",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2027",
+      "origem": []
+    },
+    {
+      "id": 8587,
+      "titulo": "O Rei Leão",
+      "titulo_original": "The Lion King",
+      "generos": [
+        "animacao",
+        "familia",
+        "drama"
+      ],
+      "ano": "1994",
+      "origem": []
+    },
+    {
+      "id": 1078605,
+      "titulo": "A Hora do Mal",
+      "titulo_original": "Weapons",
+      "generos": [
+        "terror",
+        "misterio"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 140607,
+      "titulo": "Star Wars: O Despertar da Força",
+      "titulo_original": "Star Wars: The Force Awakens",
+      "generos": [
+        "aventura",
+        "acao",
+        "ficcao_cientifica"
+      ],
+      "ano": "2015",
+      "origem": []
+    },
+    {
+      "id": 808,
+      "titulo": "Shrek",
+      "titulo_original": "Shrek",
+      "generos": [
+        "animacao",
+        "comedia",
+        "fantasia",
+        "aventura",
+        "familia"
+      ],
+      "ano": "2001",
+      "origem": []
+    },
+    {
+      "id": 121,
+      "titulo": "O Senhor dos Anéis: As Duas Torres",
+      "titulo_original": "The Lord of the Rings: The Two Towers",
+      "generos": [
+        "aventura",
+        "fantasia",
+        "acao"
+      ],
+      "ano": "2002",
+      "origem": []
+    },
+    {
+      "id": 1022789,
+      "titulo": "Divertida Mente 2",
+      "titulo_original": "Inside Out 2",
+      "generos": [
+        "animacao",
+        "aventura",
+        "comedia",
+        "familia"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1292695,
+      "titulo": "Eles Vão te Matar",
+      "titulo_original": "They Will Kill You",
+      "generos": [
+        "acao",
+        "terror",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 240,
+      "titulo": "O Poderoso Chefão: Parte II",
+      "titulo_original": "The Godfather Part II",
+      "generos": [
+        "drama",
+        "crime"
+      ],
+      "ano": "1974",
+      "origem": []
+    },
+    {
+      "id": 557,
+      "titulo": "Homem-Aranha",
+      "titulo_original": "Spider-Man",
+      "generos": [
+        "acao",
+        "ficcao_cientifica"
+      ],
+      "ano": "2002",
+      "origem": []
+    },
+    {
+      "id": 508947,
+      "titulo": "Red: Crescer é Uma Fera",
+      "titulo_original": "Turning Red",
+      "generos": [
+        "animacao",
+        "familia",
+        "comedia",
+        "fantasia"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 105,
+      "titulo": "De Volta para o Futuro",
+      "titulo_original": "Back to the Future",
+      "generos": [
+        "aventura",
+        "comedia",
+        "ficcao_cientifica"
+      ],
+      "ano": "1985",
+      "origem": []
+    },
+    {
+      "id": 693134,
+      "titulo": "Duna: Parte Dois",
+      "titulo_original": "Dune: Part Two",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1087192,
+      "titulo": "Como Treinar o Seu Dragão",
+      "titulo_original": "How to Train Your Dragon",
+      "generos": [
+        "fantasia",
+        "familia",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1448560,
+      "titulo": "Wildcat",
+      "titulo_original": "Wildcat",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 939243,
+      "titulo": "Sonic 3: O Filme",
+      "titulo_original": "Sonic the Hedgehog 3",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "comedia",
+        "familia"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 137051,
+      "titulo": "Midnight Matinee",
+      "titulo_original": "Midnight Matinee",
+      "generos": [
+        "terror",
+        "misterio",
+        "suspense",
+        "cinema_tv"
+      ],
+      "ano": "1988",
+      "origem": []
+    },
+    {
+      "id": 1242332,
+      "titulo": "Normal",
+      "titulo_original": "Normal",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1196067,
+      "titulo": "Preparada para a Guerra",
+      "titulo_original": "Worldbreaker",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "terror"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 582834,
+      "titulo": "鍵",
+      "titulo_original": "鍵",
+      "generos": [
+        "drama"
+      ],
+      "ano": "1983",
+      "origem": []
+    },
+    {
+      "id": 1317288,
+      "titulo": "Marty Supreme",
+      "titulo_original": "Marty Supreme",
+      "generos": [
+        "drama",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 652,
+      "titulo": "Tróia",
+      "titulo_original": "Troy",
+      "generos": [
+        "guerra",
+        "acao",
+        "historia"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 862,
+      "titulo": "Toy Story: Um Mundo de Aventuras",
+      "titulo_original": "Toy Story",
+      "generos": [
+        "familia",
+        "comedia",
+        "animacao",
+        "aventura"
+      ],
+      "ano": "1995",
+      "origem": []
+    },
+    {
+      "id": 4935,
+      "titulo": "O Castelo Animado",
+      "titulo_original": "ハウルの動く城",
+      "generos": [
+        "fantasia",
+        "animacao",
+        "aventura"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 617126,
+      "titulo": "Quarteto Fantástico: Primeiros Passos",
+      "titulo_original": "The Fantastic 4: First Steps",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura",
+        "acao"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1579,
+      "titulo": "Apocalypto",
+      "titulo_original": "Apocalypto",
+      "generos": [
+        "acao",
+        "drama",
+        "historia"
+      ],
+      "ano": "2006",
+      "origem": []
+    },
+    {
+      "id": 1197306,
+      "titulo": "Resgate Implacável",
+      "titulo_original": "A Working Man",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 552524,
+      "titulo": "Lilo & Stitch",
+      "titulo_original": "Lilo & Stitch",
+      "generos": [
+        "familia",
+        "ficcao_cientifica",
+        "comedia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 429617,
+      "titulo": "Homem-Aranha: Longe de Casa",
+      "titulo_original": "Spider-Man: Far From Home",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 438631,
+      "titulo": "Duna",
+      "titulo_original": "Dune",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2021",
+      "origem": []
+    },
+    {
+      "id": 102382,
+      "titulo": "O Espetacular Homem-Aranha 2: A Ameaça de Electro",
+      "titulo_original": "The Amazing Spider-Man 2",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 232078,
+      "titulo": "Triplo Cruzado",
+      "titulo_original": "Triple Crossed",
+      "generos": [
+        "misterio"
+      ],
+      "ano": "2013",
+      "origem": []
+    },
+    {
+      "id": 574475,
+      "titulo": "Premonição 6: Laços de Sangue",
+      "titulo_original": "Final Destination Bloodlines",
+      "generos": [
+        "terror",
+        "misterio"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 269149,
+      "titulo": "Zootopia: Essa Cidade é o Bicho",
+      "titulo_original": "Zootopia",
+      "generos": [
+        "animacao",
+        "aventura",
+        "familia",
+        "comedia"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 1426297,
+      "titulo": "Finja-se de Morta",
+      "titulo_original": "Hazte la muerta",
+      "generos": [
+        "terror"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 67395,
+      "titulo": "Regresso à Praia Selvagem",
+      "titulo_original": "L.E.T.H.A.L. Ladies: Return to Savage Beach",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "1998",
+      "origem": []
+    },
+    {
+      "id": 980477,
+      "titulo": "Ne Zha 2: O Renascer da Alma",
+      "titulo_original": "哪吒之魔童闹海",
+      "generos": [
+        "animacao",
+        "fantasia",
+        "aventura"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1321179,
+      "titulo": "왕과 사는 남자",
+      "titulo_original": "왕과 사는 남자",
+      "generos": [
+        "historia",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 564,
+      "titulo": "A Múmia",
+      "titulo_original": "The Mummy",
+      "generos": [
+        "aventura",
+        "acao",
+        "fantasia"
+      ],
+      "ano": "1999",
+      "origem": []
+    },
+    {
+      "id": 7131,
+      "titulo": "Van Helsing: O Caçador de Monstros",
+      "titulo_original": "Van Helsing",
+      "generos": [
+        "terror",
+        "aventura",
+        "acao"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 85,
+      "titulo": "Indiana Jones e os Caçadores da Arca Perdida",
+      "titulo_original": "Raiders of the Lost Ark",
+      "generos": [
+        "aventura",
+        "acao"
+      ],
+      "ano": "1981",
+      "origem": []
+    },
+    {
+      "id": 950396,
+      "titulo": "Entre Montanhas",
+      "titulo_original": "The Gorge",
+      "generos": [
+        "romance",
+        "ficcao_cientifica",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 766507,
+      "titulo": "O Predador: A Caçada",
+      "titulo_original": "Prey",
+      "generos": [
+        "suspense",
+        "acao",
+        "ficcao_cientifica"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 11,
+      "titulo": "Guerra nas Estrelas",
+      "titulo_original": "Star Wars",
+      "generos": [
+        "aventura",
+        "acao",
+        "ficcao_cientifica"
+      ],
+      "ano": "1977",
+      "origem": []
+    },
+    {
+      "id": 670,
+      "titulo": "Oldboy",
+      "titulo_original": "올드보이",
+      "generos": [
+        "drama",
+        "suspense",
+        "misterio",
+        "acao"
+      ],
+      "ano": "2003",
+      "origem": []
+    },
+    {
+      "id": 559,
+      "titulo": "Homem-Aranha 3",
+      "titulo_original": "Spider-Man 3",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2007",
+      "origem": []
+    },
+    {
+      "id": 1480382,
+      "titulo": "A Voz de Hind Rajab",
+      "titulo_original": "صوت هند رجب",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 292238,
+      "titulo": "人皮高跟鞋",
+      "titulo_original": "人皮高跟鞋",
+      "generos": [
+        "terror"
+      ],
+      "ano": "1996",
+      "origem": []
+    },
+    {
+      "id": 1497970,
+      "titulo": "Tom e Jerry: Uma Aventura no Museu",
+      "titulo_original": "猫和老鼠：星盘奇缘",
+      "generos": [
+        "animacao",
+        "comedia",
+        "familia",
+        "fantasia",
+        "aventura"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 11324,
+      "titulo": "Ilha do Medo",
+      "titulo_original": "Shutter Island",
+      "generos": [
+        "drama",
+        "suspense",
+        "misterio"
+      ],
+      "ano": "2010",
+      "origem": []
+    },
+    {
+      "id": 560016,
+      "titulo": "Fúria Primitiva",
+      "titulo_original": "Monkey Man",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1601243,
+      "titulo": "Oscar Shaw",
+      "titulo_original": "Oscar Shaw",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense",
+        "faroeste"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 541671,
+      "titulo": "Bailarina: Do Universo de John Wick",
+      "titulo_original": "Ballerina",
+      "generos": [
+        "acao",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 337404,
+      "titulo": "Cruella",
+      "titulo_original": "Cruella",
+      "generos": [
+        "comedia",
+        "crime",
+        "drama"
+      ],
+      "ano": "2021",
+      "origem": []
+    },
+    {
+      "id": 106646,
+      "titulo": "O Lobo de Wall Street",
+      "titulo_original": "The Wolf of Wall Street",
+      "generos": [
+        "crime",
+        "drama",
+        "comedia"
+      ],
+      "ano": "2013",
+      "origem": []
+    },
+    {
+      "id": 585,
+      "titulo": "Monstros S.A.",
+      "titulo_original": "Monsters, Inc.",
+      "generos": [
+        "animacao",
+        "comedia",
+        "familia"
+      ],
+      "ano": "2001",
+      "origem": []
+    },
+    {
+      "id": 210577,
+      "titulo": "Garota Exemplar",
+      "titulo_original": "Gone Girl",
+      "generos": [
+        "misterio",
+        "suspense",
+        "drama"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 286687,
+      "titulo": "화려한 외출",
+      "titulo_original": "화려한 외출",
+      "generos": [
+        "romance",
+        "drama",
+        "comedia"
+      ],
+      "ano": "2013",
+      "origem": []
+    },
+    {
+      "id": 672,
+      "titulo": "Harry Potter e a Câmara Secreta",
+      "titulo_original": "Harry Potter and the Chamber of Secrets",
+      "generos": [
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2002",
+      "origem": []
+    },
+    {
+      "id": 931285,
+      "titulo": "Mortal Kombat 2",
+      "titulo_original": "Mortal Kombat II",
+      "generos": [
+        "acao",
+        "fantasia",
+        "aventura"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 101,
+      "titulo": "O Profissional",
+      "titulo_original": "Léon",
+      "generos": [
+        "crime",
+        "drama",
+        "acao"
+      ],
+      "ano": "1994",
+      "origem": []
+    },
+    {
+      "id": 674,
+      "titulo": "Harry Potter e o Cálice de Fogo",
+      "titulo_original": "Harry Potter and the Goblet of Fire",
+      "generos": [
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2005",
+      "origem": []
+    },
+    {
+      "id": 150540,
+      "titulo": "Divertida Mente",
+      "titulo_original": "Inside Out",
+      "generos": [
+        "animacao",
+        "familia",
+        "aventura",
+        "drama",
+        "comedia"
+      ],
+      "ano": "2015",
+      "origem": []
+    },
+    {
+      "id": 76341,
+      "titulo": "Mad Max: Estrada da Fúria",
+      "titulo_original": "Mad Max: Fury Road",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2015",
+      "origem": []
+    },
+    {
+      "id": 429,
+      "titulo": "Três Homens em Conflito",
+      "titulo_original": "Il buono, il brutto, il cattivo",
+      "generos": [
+        "faroeste"
+      ],
+      "ano": "1966",
+      "origem": []
+    },
+    {
+      "id": 1266990,
+      "titulo": "Kulong",
+      "titulo_original": "Kulong",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 734286,
+      "titulo": "ミルク　滴る女",
+      "titulo_original": "ミルク　滴る女",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2010",
+      "origem": []
+    },
+    {
+      "id": 1426964,
+      "titulo": "Salve Geral: Irmandade",
+      "titulo_original": "Salve Geral: Irmandade",
+      "generos": [
+        "acao",
+        "suspense",
+        "crime",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 8966,
+      "titulo": "Crepúsculo",
+      "titulo_original": "Twilight",
+      "generos": [
+        "fantasia",
+        "drama",
+        "romance"
+      ],
+      "ano": "2008",
+      "origem": []
+    },
+    {
+      "id": 201811,
+      "titulo": "Mutande Pazze",
+      "titulo_original": "Mutande Pazze",
+      "generos": [
+        "comedia"
+      ],
+      "ano": "1992",
+      "origem": []
+    },
+    {
+      "id": 35739,
+      "titulo": "Linha de Fogo",
+      "titulo_original": "Do or Die",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "1991",
+      "origem": []
+    },
+    {
+      "id": 646380,
+      "titulo": "Não Olhe para Cima",
+      "titulo_original": "Don't Look Up",
+      "generos": [
+        "comedia",
+        "ficcao_cientifica",
+        "drama"
+      ],
+      "ano": "2021",
+      "origem": []
+    },
+    {
+      "id": 12153,
+      "titulo": "As Branquelas",
+      "titulo_original": "White Chicks",
+      "generos": [
+        "comedia",
+        "crime"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 1214931,
+      "titulo": "Nuremberg",
+      "titulo_original": "Nuremberg",
+      "generos": [
+        "historia",
+        "drama"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 122917,
+      "titulo": "O Hobbit: A Batalha dos Cinco Exércitos",
+      "titulo_original": "The Hobbit: The Battle of the Five Armies",
+      "generos": [
+        "acao",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 1305781,
+      "titulo": "镖人：风起大漠",
+      "titulo_original": "镖人：风起大漠",
+      "generos": [
+        "acao",
+        "drama",
+        "historia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 414906,
+      "titulo": "Batman",
+      "titulo_original": "The Batman",
+      "generos": [
+        "crime",
+        "misterio",
+        "suspense"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 396535,
+      "titulo": "Invasão Zumbi",
+      "titulo_original": "부산행",
+      "generos": [
+        "terror",
+        "suspense",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 216015,
+      "titulo": "Cinquenta Tons de Cinza",
+      "titulo_original": "Fifty Shades of Grey",
+      "generos": [
+        "drama",
+        "romance",
+        "suspense"
+      ],
+      "ano": "2015",
+      "origem": []
+    },
+    {
+      "id": 1175942,
+      "titulo": "Os Caras Malvados 2",
+      "titulo_original": "The Bad Guys 2",
+      "generos": [
+        "familia",
+        "comedia",
+        "crime",
+        "aventura",
+        "animacao"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 696393,
+      "titulo": "Alerta Apocalipse",
+      "titulo_original": "Cold Storage",
+      "generos": [
+        "terror",
+        "ficcao_cientifica",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 348,
+      "titulo": "Alien: O Oitavo Passageiro",
+      "titulo_original": "Alien",
+      "generos": [
+        "terror",
+        "ficcao_cientifica"
+      ],
+      "ano": "1979",
+      "origem": []
+    },
+    {
+      "id": 533533,
+      "titulo": "Tron: Ares",
+      "titulo_original": "TRON: Ares",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura",
+        "acao"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 441168,
+      "titulo": "Aluna Exemplar e Estrela Pornô",
+      "titulo_original": "From Straight A's to XXX",
+      "generos": [
+        "drama",
+        "cinema_tv"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 673,
+      "titulo": "Harry Potter e o Prisioneiro de Azkaban",
+      "titulo_original": "Harry Potter and the Prisoner of Azkaban",
+      "generos": [
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 1233506,
+      "titulo": "L'Homme qui rétrécit",
+      "titulo_original": "L'Homme qui rétrécit",
+      "generos": [
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 12445,
+      "titulo": "Harry Potter e as Relíquias da Morte - Parte 2",
+      "titulo_original": "Harry Potter and the Deathly Hallows: Part 2",
+      "generos": [
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2011",
+      "origem": []
+    },
+    {
+      "id": 1584215,
+      "titulo": "O Estágio",
+      "titulo_original": "The Internship",
+      "generos": [
+        "acao"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 177572,
+      "titulo": "Operação Big Hero",
+      "titulo_original": "Big Hero 6",
+      "generos": [
+        "aventura",
+        "familia",
+        "animacao",
+        "acao",
+        "comedia"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 1930,
+      "titulo": "O Espetacular Homem-Aranha",
+      "titulo_original": "The Amazing Spider-Man",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2012",
+      "origem": []
+    },
+    {
+      "id": 68721,
+      "titulo": "Homem de Ferro 3",
+      "titulo_original": "Iron Man 3",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2013",
+      "origem": []
+    },
+    {
+      "id": 1620551,
+      "titulo": "Sinta a Minha Voz",
+      "titulo_original": "Non abbiam bisogno di parole",
+      "generos": [
+        "musica",
+        "drama",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 98,
+      "titulo": "Gladiador",
+      "titulo_original": "Gladiator",
+      "generos": [
+        "acao",
+        "drama",
+        "aventura"
+      ],
+      "ano": "2000",
+      "origem": []
+    },
+    {
+      "id": 1357633,
+      "titulo": "Solo Leveling -Segundo Despertar-",
+      "titulo_original": "俺だけレベルアップな件 -ReAwakening-",
+      "generos": [
+        "acao",
+        "aventura",
+        "fantasia",
+        "animacao"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 354912,
+      "titulo": "Viva: A Vida é uma Festa",
+      "titulo_original": "Coco",
+      "generos": [
+        "familia",
+        "animacao",
+        "musica",
+        "aventura"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 604079,
+      "titulo": "A Longa Marcha: Caminhe ou Morra",
+      "titulo_original": "The Long Walk",
+      "generos": [
+        "ficcao_cientifica",
+        "suspense",
+        "terror"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 646315,
+      "titulo": "전설의 라이타",
+      "titulo_original": "전설의 라이타",
+      "generos": [
+        "acao"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 156022,
+      "titulo": "O Protetor",
+      "titulo_original": "The Equalizer",
+      "generos": [
+        "suspense",
+        "acao",
+        "crime"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 1156593,
+      "titulo": "Sua Culpa",
+      "titulo_original": "Culpa tuya",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 475557,
+      "titulo": "Coringa",
+      "titulo_original": "Joker",
+      "generos": [
+        "crime",
+        "suspense",
+        "drama"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 107257,
+      "titulo": "A Perfect Ending",
+      "titulo_original": "A Perfect Ending",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "2012",
+      "origem": []
+    },
+    {
+      "id": 933260,
+      "titulo": "A Substância",
+      "titulo_original": "The Substance",
+      "generos": [
+        "terror",
+        "ficcao_cientifica",
+        "drama"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1020969,
+      "titulo": "Um Natal com Teddy",
+      "titulo_original": "Teddybjørnens Jul",
+      "generos": [
+        "familia",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 1317672,
+      "titulo": "Amor Demais",
+      "titulo_original": "Love Me Love Me",
+      "generos": [
+        "romance",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1455079,
+      "titulo": "Eu & Você na Toscana",
+      "titulo_original": "You, Me & Tuscany",
+      "generos": [
+        "romance",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 22,
+      "titulo": "Piratas do Caribe: A Maldição do Pérola Negra",
+      "titulo_original": "Pirates of the Caribbean: The Curse of the Black Pearl",
+      "generos": [
+        "aventura",
+        "fantasia",
+        "acao"
+      ],
+      "ano": "2003",
+      "origem": []
+    },
+    {
+      "id": 405746,
+      "titulo": "DOOR",
+      "titulo_original": "DOOR",
+      "generos": [
+        "terror",
+        "misterio",
+        "suspense"
+      ],
+      "ano": "1988",
+      "origem": []
+    },
+    {
+      "id": 1197137,
+      "titulo": "O Telefone Preto 2",
+      "titulo_original": "Black Phone 2",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1284496,
+      "titulo": "C'était mieux demain",
+      "titulo_original": "C'était mieux demain",
+      "generos": [
+        "comedia",
+        "ficcao_cientifica"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1153576,
+      "titulo": "Street Fighter",
+      "titulo_original": "Street Fighter",
+      "generos": [
+        "acao",
+        "comedia",
+        "fantasia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 58,
+      "titulo": "Piratas do Caribe: O Baú da Morte",
+      "titulo_original": "Pirates of the Caribbean: Dead Man's Chest",
+      "generos": [
+        "aventura",
+        "fantasia",
+        "acao"
+      ],
+      "ano": "2006",
+      "origem": []
+    },
+    {
+      "id": 62201,
+      "titulo": "शहँशाह",
+      "titulo_original": "शहँशाह",
+      "generos": [
+        "acao"
+      ],
+      "ano": "1988",
+      "origem": []
+    },
+    {
+      "id": 1630433,
+      "titulo": "Desligue!",
+      "titulo_original": "เส้นตาย สายลวง",
+      "generos": [
+        "suspense",
+        "crime",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1363123,
+      "titulo": "Plano em Família 2",
+      "titulo_original": "The Family Plan 2",
+      "generos": [
+        "acao",
+        "comedia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 37165,
+      "titulo": "O Show de Truman: O Show da Vida",
+      "titulo_original": "The Truman Show",
+      "generos": [
+        "comedia",
+        "drama"
+      ],
+      "ano": "1998",
+      "origem": []
+    },
+    {
+      "id": 1661563,
+      "titulo": "レイプ仕掛人",
+      "titulo_original": "レイプ仕掛人",
+      "generos": [
+        "drama"
+      ],
+      "ano": "1997",
+      "origem": []
+    },
+    {
+      "id": 359410,
+      "titulo": "Matador de Aluguel",
+      "titulo_original": "Road House",
+      "generos": [
+        "acao",
+        "suspense",
+        "drama"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 524047,
+      "titulo": "Destruição Final: O Último Refúgio",
+      "titulo_original": "Greenland",
+      "generos": [
+        "acao",
+        "aventura",
+        "suspense",
+        "ficcao_cientifica"
+      ],
+      "ano": "2020",
+      "origem": []
+    },
+    {
+      "id": 259694,
+      "titulo": "Como Ser Solteira",
+      "titulo_original": "How to Be Single",
+      "generos": [
+        "comedia",
+        "romance"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 286217,
+      "titulo": "Perdido em Marte",
+      "titulo_original": "The Martian",
+      "generos": [
+        "ficcao_cientifica",
+        "drama",
+        "aventura"
+      ],
+      "ano": "2015",
+      "origem": []
+    },
+    {
+      "id": 111,
+      "titulo": "Scarface",
+      "titulo_original": "Scarface",
+      "generos": [
+        "acao",
+        "crime",
+        "drama"
+      ],
+      "ano": "1983",
+      "origem": []
+    },
+    {
+      "id": 812037,
+      "titulo": "Culpa e Desejo",
+      "titulo_original": "L'Été dernier",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 384527,
+      "titulo": "Dolce... calda Lisa",
+      "titulo_original": "Dolce... calda Lisa",
+      "generos": [
+        "drama"
+      ],
+      "ano": "1980",
+      "origem": []
+    },
+    {
+      "id": 762509,
+      "titulo": "Mufasa: O Rei Leão",
+      "titulo_original": "Mufasa: The Lion King",
+      "generos": [
+        "aventura",
+        "familia",
+        "animacao"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1223601,
+      "titulo": "SISU: Estrada da Vingança",
+      "titulo_original": "Sisu 2",
+      "generos": [
+        "acao",
+        "guerra"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 207,
+      "titulo": "Sociedade dos Poetas Mortos",
+      "titulo_original": "Dead Poets Society",
+      "generos": [
+        "drama"
+      ],
+      "ano": "1989",
+      "origem": []
+    },
+    {
+      "id": 767,
+      "titulo": "Harry Potter e o Enigma do Príncipe",
+      "titulo_original": "Harry Potter and the Half-Blood Prince",
+      "generos": [
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2009",
+      "origem": []
+    },
+    {
+      "id": 324786,
+      "titulo": "Até o Último Homem",
+      "titulo_original": "Hacksaw Ridge",
+      "generos": [
+        "drama",
+        "historia",
+        "guerra"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 389,
+      "titulo": "12 Homens e uma Sentença",
+      "titulo_original": "12 Angry Men",
+      "generos": [
+        "drama"
+      ],
+      "ano": "1957",
+      "origem": []
+    },
+    {
+      "id": 14161,
+      "titulo": "2012",
+      "titulo_original": "2012",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2009",
+      "origem": []
+    },
+    {
+      "id": 1243741,
+      "titulo": "Ballistic",
+      "titulo_original": "Ballistic",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 12,
+      "titulo": "Procurando Nemo",
+      "titulo_original": "Finding Nemo",
+      "generos": [
+        "animacao",
+        "familia",
+        "aventura"
+      ],
+      "ano": "2003",
+      "origem": []
+    },
+    {
+      "id": 1003596,
+      "titulo": "Vingadores: Doutor Destino",
+      "titulo_original": "Avengers: Doomsday",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 228150,
+      "titulo": "Corações de Ferro",
+      "titulo_original": "Fury",
+      "generos": [
+        "guerra",
+        "drama",
+        "acao"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 949,
+      "titulo": "Fogo Contra Fogo",
+      "titulo_original": "Heat",
+      "generos": [
+        "crime",
+        "drama",
+        "acao"
+      ],
+      "ano": "1995",
+      "origem": []
+    },
+    {
+      "id": 99861,
+      "titulo": "Vingadores: Era de Ultron",
+      "titulo_original": "Avengers: Age of Ultron",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2015",
+      "origem": []
+    },
+    {
+      "id": 675,
+      "titulo": "Harry Potter e a Ordem da Fênix",
+      "titulo_original": "Harry Potter and the Order of the Phoenix",
+      "generos": [
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2007",
+      "origem": []
+    },
+    {
+      "id": 603692,
+      "titulo": "John Wick 4: Baba Yaga",
+      "titulo_original": "John Wick: Chapter 4",
+      "generos": [
+        "acao",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1213898,
+      "titulo": "Na Fronteira 2",
+      "titulo_original": "बॉर्डर २",
+      "generos": [
+        "acao",
+        "drama",
+        "guerra"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 81774,
+      "titulo": "A Iniciação",
+      "titulo_original": "Les Exploits d'un jeune Don Juan",
+      "generos": [
+        "comedia",
+        "drama"
+      ],
+      "ano": "1986",
+      "origem": []
+    },
+    {
+      "id": 73861,
+      "titulo": "A Serbian Film - Terror sem Limites",
+      "titulo_original": "Srpski film",
+      "generos": [
+        "crime",
+        "terror",
+        "suspense"
+      ],
+      "ano": "2010",
+      "origem": []
+    },
+    {
+      "id": 1396,
+      "titulo": "O Espelho",
+      "titulo_original": "Зеркало",
+      "generos": [
+        "drama",
+        "historia"
+      ],
+      "ano": "1975",
+      "origem": []
+    },
+    {
+      "id": 1401778,
+      "titulo": "Turbulência",
+      "titulo_original": "Turbulence",
+      "generos": [
+        "suspense",
+        "acao",
+        "aventura",
+        "drama",
+        "fantasia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 412117,
+      "titulo": "Pets: A Vida Secreta dos Bichos 2",
+      "titulo_original": "The Secret Life of Pets 2",
+      "generos": [
+        "familia",
+        "comedia",
+        "aventura",
+        "animacao"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 5879,
+      "titulo": "O Império dos Sentidos",
+      "titulo_original": "愛のコリーダ",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "1976",
+      "origem": []
+    },
+    {
+      "id": 1007734,
+      "titulo": "Anônimo 2",
+      "titulo_original": "Nobody 2",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1066313,
+      "titulo": "O Roteiro Assombrado",
+      "titulo_original": "Setan Alas!",
+      "generos": [
+        "ficcao_cientifica",
+        "terror"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1233728,
+      "titulo": "7일간의 스와핑",
+      "titulo_original": "7일간의 스와핑",
+      "generos": [
+        "romance"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1611398,
+      "titulo": "Un hombre por semana",
+      "titulo_original": "Un hombre por semana",
+      "generos": [
+        "comedia",
+        "romance",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 11036,
+      "titulo": "Diário de uma Paixão",
+      "titulo_original": "The Notebook",
+      "generos": [
+        "romance",
+        "drama"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 1145758,
+      "titulo": "Birder",
+      "titulo_original": "Birder",
+      "generos": [
+        "suspense",
+        "drama"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1495,
+      "titulo": "Cruzada",
+      "titulo_original": "Kingdom of Heaven",
+      "generos": [
+        "drama",
+        "acao",
+        "aventura",
+        "historia",
+        "guerra"
+      ],
+      "ano": "2005",
+      "origem": []
+    },
+    {
+      "id": 271110,
+      "titulo": "Capitão América: Guerra Civil",
+      "titulo_original": "Captain America: Civil War",
+      "generos": [
+        "aventura",
+        "acao",
+        "ficcao_cientifica"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 985939,
+      "titulo": "A Queda",
+      "titulo_original": "Fall",
+      "generos": [
+        "suspense"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 10681,
+      "titulo": "WALL-E",
+      "titulo_original": "WALL·E",
+      "generos": [
+        "animacao",
+        "familia",
+        "ficcao_cientifica"
+      ],
+      "ano": "2008",
+      "origem": []
+    },
+    {
+      "id": 39254,
+      "titulo": "Gigantes de Aço",
+      "titulo_original": "Real Steel",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "drama"
+      ],
+      "ano": "2011",
+      "origem": []
+    },
+    {
+      "id": 1403735,
+      "titulo": "Laila",
+      "titulo_original": "లైలా",
+      "generos": [
+        "comedia",
+        "romance"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1071585,
+      "titulo": "M3GAN 2.0",
+      "titulo_original": "M3GAN 2.0",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 2288,
+      "titulo": "Closer: Perto Demais",
+      "titulo_original": "Closer",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 967941,
+      "titulo": "Wicked: Parte II",
+      "titulo_original": "Wicked: For Good",
+      "generos": [
+        "fantasia",
+        "aventura",
+        "romance"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1135873,
+      "titulo": "GGS - Ganteng-Ganteng Sange",
+      "titulo_original": "GGS - Ganteng-Ganteng Sange",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 573435,
+      "titulo": "Bad Boys: Até o Fim",
+      "titulo_original": "Bad Boys: Ride or Die",
+      "generos": [
+        "acao",
+        "comedia",
+        "crime"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1317149,
+      "titulo": "I Swear",
+      "titulo_original": "I Swear",
+      "generos": [
+        "drama",
+        "historia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 14160,
+      "titulo": "Up: Altas Aventuras",
+      "titulo_original": "Up",
+      "generos": [
+        "animacao",
+        "comedia",
+        "familia",
+        "aventura"
+      ],
+      "ano": "2009",
+      "origem": []
+    },
+    {
+      "id": 866398,
+      "titulo": "Beekeeper: Rede de Vingança",
+      "titulo_original": "The Beekeeper",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 9769,
+      "titulo": "Lolita",
+      "titulo_original": "Lolita",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "1997",
+      "origem": []
+    },
+    {
+      "id": 246,
+      "titulo": "Zatoichi",
+      "titulo_original": "座頭市",
+      "generos": [
+        "aventura",
+        "drama",
+        "acao"
+      ],
+      "ano": "2003",
+      "origem": []
+    },
+    {
+      "id": 1035259,
+      "titulo": "Corra Que a Polícia Vem Aí!",
+      "titulo_original": "The Naked Gun",
+      "generos": [
+        "acao",
+        "comedia",
+        "crime"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 28468,
+      "titulo": "A Chave",
+      "titulo_original": "La chiave",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "1983",
+      "origem": []
+    },
+    {
+      "id": 337167,
+      "titulo": "Cinquenta Tons de Liberdade",
+      "titulo_original": "Fifty Shades Freed",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "2018",
+      "origem": []
+    },
+    {
+      "id": 539,
+      "titulo": "Psicose",
+      "titulo_original": "Psycho",
+      "generos": [
+        "terror",
+        "suspense",
+        "misterio"
+      ],
+      "ano": "1960",
+      "origem": []
+    },
+    {
+      "id": 1252309,
+      "titulo": "Peça-me o Que Quiser",
+      "titulo_original": "Pídeme lo que quieras",
+      "generos": [
+        "romance",
+        "drama"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 4232,
+      "titulo": "Pânico",
+      "titulo_original": "Scream",
+      "generos": [
+        "crime",
+        "terror",
+        "misterio"
+      ],
+      "ano": "1996",
+      "origem": []
+    },
+    {
+      "id": 128,
+      "titulo": "Princesa Mononoke",
+      "titulo_original": "もののけ姫",
+      "generos": [
+        "aventura",
+        "fantasia",
+        "animacao"
+      ],
+      "ano": "1997",
+      "origem": []
+    },
+    {
+      "id": 346,
+      "titulo": "Os Sete Samurais",
+      "titulo_original": "七人の侍",
+      "generos": [
+        "acao",
+        "drama"
+      ],
+      "ano": "1954",
+      "origem": []
+    },
+    {
+      "id": 280,
+      "titulo": "O Exterminador do Futuro 2: O Julgamento Final",
+      "titulo_original": "Terminator 2: Judgment Day",
+      "generos": [
+        "acao",
+        "suspense",
+        "ficcao_cientifica"
+      ],
+      "ano": "1991",
+      "origem": []
+    },
+    {
+      "id": 986056,
+      "titulo": "Thunderbolts*",
+      "titulo_original": "Thunderbolts*",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 744,
+      "titulo": "Top Gun - Ases Indomáveis",
+      "titulo_original": "Top Gun",
+      "generos": [
+        "acao",
+        "drama",
+        "romance"
+      ],
+      "ano": "1986",
+      "origem": []
+    },
+    {
+      "id": 290098,
+      "titulo": "A Criada",
+      "titulo_original": "아가씨",
+      "generos": [
+        "suspense",
+        "drama",
+        "romance"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 1575337,
+      "titulo": "Kaguya: A Princesa Espacial",
+      "titulo_original": "超かぐや姫！",
+      "generos": [
+        "animacao",
+        "fantasia",
+        "musica",
+        "ficcao_cientifica"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 637649,
+      "titulo": "Infiltrado",
+      "titulo_original": "Wrath of Man",
+      "generos": [
+        "suspense",
+        "crime",
+        "drama"
+      ],
+      "ano": "2021",
+      "origem": []
+    },
+    {
+      "id": 16859,
+      "titulo": "O Serviço de Entregas da Kiki",
+      "titulo_original": "魔女の宅急便",
+      "generos": [
+        "animacao",
+        "familia",
+        "fantasia"
+      ],
+      "ano": "1989",
+      "origem": []
+    },
+    {
+      "id": 106,
+      "titulo": "O Predador",
+      "titulo_original": "Predator",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "aventura",
+        "suspense"
+      ],
+      "ano": "1987",
+      "origem": []
+    },
+    {
+      "id": 823219,
+      "titulo": "Flow",
+      "titulo_original": "Straume",
+      "generos": [
+        "animacao",
+        "aventura",
+        "fantasia",
+        "familia"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 9502,
+      "titulo": "Kung Fu Panda",
+      "titulo_original": "Kung Fu Panda",
+      "generos": [
+        "animacao",
+        "familia",
+        "drama",
+        "comedia",
+        "acao"
+      ],
+      "ano": "2008",
+      "origem": []
+    },
+    {
+      "id": 313369,
+      "titulo": "La La Land: Cantando Estações",
+      "titulo_original": "La La Land",
+      "generos": [
+        "comedia",
+        "drama",
+        "romance"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 1100988,
+      "titulo": "Extermínio: A Evolução",
+      "titulo_original": "28 Years Later",
+      "generos": [
+        "terror",
+        "suspense",
+        "ficcao_cientifica"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 82693,
+      "titulo": "O Lado Bom da Vida",
+      "titulo_original": "Silver Linings Playbook",
+      "generos": [
+        "drama",
+        "comedia",
+        "romance"
+      ],
+      "ano": "2012",
+      "origem": []
+    },
+    {
+      "id": 695721,
+      "titulo": "Jogos Vorazes: A Cantiga dos Pássaros e das Serpentes",
+      "titulo_original": "The Hunger Games: The Ballad of Songbirds & Snakes",
+      "generos": [
+        "ficcao_cientifica",
+        "acao"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 59,
+      "titulo": "Marcas da Violência",
+      "titulo_original": "A History of Violence",
+      "generos": [
+        "drama",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2005",
+      "origem": []
+    },
+    {
+      "id": 418578,
+      "titulo": "齐天大性II大破盘丝洞",
+      "titulo_original": "齐天大性II大破盘丝洞",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2005",
+      "origem": []
+    },
+    {
+      "id": 812,
+      "titulo": "Aladdin",
+      "titulo_original": "Aladdin",
+      "generos": [
+        "animacao",
+        "familia",
+        "aventura",
+        "fantasia",
+        "romance"
+      ],
+      "ano": "1992",
+      "origem": []
+    },
+    {
+      "id": 1327862,
+      "titulo": "Se Não Fosse Você",
+      "titulo_original": "Regretting You",
+      "generos": [
+        "romance",
+        "drama"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1220522,
+      "titulo": "డెకాయిట్",
+      "titulo_original": "డెకాయిట్",
+      "generos": [
+        "acao",
+        "romance",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 62,
+      "titulo": "2001: Uma Odisséia no Espaço",
+      "titulo_original": "2001: A Space Odyssey",
+      "generos": [
+        "ficcao_cientifica",
+        "misterio",
+        "aventura"
+      ],
+      "ano": "1968",
+      "origem": []
+    },
+    {
+      "id": 16869,
+      "titulo": "Bastardos Inglórios",
+      "titulo_original": "Inglourious Basterds",
+      "generos": [
+        "drama",
+        "suspense",
+        "guerra"
+      ],
+      "ano": "2009",
+      "origem": []
+    },
+    {
+      "id": 19404,
+      "titulo": "Dilwale vai levar a noiva",
+      "titulo_original": "दिलवाले दुल्हनिया ले जायेंगे",
+      "generos": [
+        "comedia",
+        "drama",
+        "romance"
+      ],
+      "ano": "1995",
+      "origem": []
+    },
+    {
+      "id": 786892,
+      "titulo": "Furiosa: Uma Saga Mad Max",
+      "titulo_original": "Furiosa: A Mad Max Saga",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 439079,
+      "titulo": "A Freira",
+      "titulo_original": "The Nun",
+      "generos": [
+        "terror"
+      ],
+      "ano": "2018",
+      "origem": []
+    },
+    {
+      "id": 1248226,
+      "titulo": "Um Dia Fora de Controle",
+      "titulo_original": "Playdate",
+      "generos": [
+        "acao",
+        "comedia",
+        "familia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1245347,
+      "titulo": "Twinless - Um Gêmeo a Menos",
+      "titulo_original": "Twinless",
+      "generos": [
+        "comedia",
+        "drama"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 857,
+      "titulo": "O Resgate do Soldado Ryan",
+      "titulo_original": "Saving Private Ryan",
+      "generos": [
+        "guerra",
+        "drama",
+        "historia"
+      ],
+      "ano": "1998",
+      "origem": []
+    },
+    {
+      "id": 453395,
+      "titulo": "Doutor Estranho no Multiverso da Loucura",
+      "titulo_original": "Doctor Strange in the Multiverse of Madness",
+      "generos": [
+        "fantasia",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 694,
+      "titulo": "O Iluminado",
+      "titulo_original": "The Shining",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "1980",
+      "origem": []
+    },
+    {
+      "id": 38757,
+      "titulo": "Enrolados",
+      "titulo_original": "Tangled",
+      "generos": [
+        "animacao",
+        "familia",
+        "aventura"
+      ],
+      "ano": "2010",
+      "origem": []
+    },
+    {
+      "id": 646385,
+      "titulo": "Pânico",
+      "titulo_original": "Scream",
+      "generos": [
+        "terror",
+        "misterio"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 934433,
+      "titulo": "Pânico VI",
+      "titulo_original": "Scream VI",
+      "generos": [
+        "terror",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1011477,
+      "titulo": "Karatê Kid: Lendas",
+      "titulo_original": "Karate Kid: Legends",
+      "generos": [
+        "acao",
+        "aventura",
+        "drama"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1097549,
+      "titulo": "Babygirl",
+      "titulo_original": "Babygirl",
+      "generos": [
+        "romance",
+        "suspense"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 140638,
+      "titulo": "Uma Gatinha Por Dia",
+      "titulo_original": "Pussycat, Pussycat, I Love You",
+      "generos": [
+        "comedia"
+      ],
+      "ano": "1970",
+      "origem": []
+    },
+    {
+      "id": 2105,
+      "titulo": "American Pie: A Primeira Vez é Inesquecível",
+      "titulo_original": "American Pie",
+      "generos": [
+        "comedia",
+        "romance"
+      ],
+      "ano": "1999",
+      "origem": []
+    },
+    {
+      "id": 539972,
+      "titulo": "Kraven: O Caçador",
+      "titulo_original": "Kraven the Hunter",
+      "generos": [
+        "acao",
+        "aventura",
+        "suspense"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 823464,
+      "titulo": "Godzilla e Kong: O Novo Império",
+      "titulo_original": "Godzilla x Kong: The New Empire",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1542995,
+      "titulo": "বনলতা এক্সপ্রেস",
+      "titulo_original": "বনলতা এক্সপ্রেস",
+      "generos": [
+        "drama",
+        "comedia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1180831,
+      "titulo": "O Troll da Montanha 2",
+      "titulo_original": "Troll 2",
+      "generos": [
+        "acao",
+        "fantasia",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 425,
+      "titulo": "A Era do Gelo",
+      "titulo_original": "Ice Age",
+      "generos": [
+        "animacao",
+        "comedia",
+        "familia",
+        "aventura"
+      ],
+      "ano": "2002",
+      "origem": []
+    },
+    {
+      "id": 1231914,
+      "titulo": "여직원들 : 직장 연애사 3",
+      "titulo_original": "여직원들 : 직장 연애사 3",
+      "generos": [
+        "romance"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 1198984,
+      "titulo": "Enterramos os Mortos",
+      "titulo_original": "We Bury the Dead",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 49051,
+      "titulo": "O Hobbit: Uma Jornada Inesperada",
+      "titulo_original": "The Hobbit: An Unexpected Journey",
+      "generos": [
+        "aventura",
+        "fantasia",
+        "acao"
+      ],
+      "ano": "2012",
+      "origem": []
+    },
+    {
+      "id": 198663,
+      "titulo": "Maze Runner: Correr ou Morrer",
+      "titulo_original": "The Maze Runner",
+      "generos": [
+        "acao",
+        "misterio",
+        "ficcao_cientifica",
+        "suspense"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 466272,
+      "titulo": "Era Uma Vez em… Hollywood",
+      "titulo_original": "Once Upon a Time... in Hollywood",
+      "generos": [
+        "comedia",
+        "drama",
+        "suspense"
+      ],
+      "ano": "2019",
+      "origem": []
+    },
+    {
+      "id": 20352,
+      "titulo": "Meu Malvado Favorito",
+      "titulo_original": "Despicable Me",
+      "generos": [
+        "familia",
+        "comedia",
+        "animacao",
+        "ficcao_cientifica",
+        "crime"
+      ],
+      "ano": "2010",
+      "origem": []
+    },
+    {
+      "id": 1654429,
+      "titulo": "扫恶",
+      "titulo_original": "扫恶",
+      "generos": [
+        "acao",
+        "crime"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 447365,
+      "titulo": "Guardiões da Galáxia: Vol. 3",
+      "titulo_original": "Guardians of the Galaxy Vol. 3",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura",
+        "acao"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 24,
+      "titulo": "Kill Bill: Volume 1",
+      "titulo_original": "Kill Bill: Vol. 1",
+      "generos": [
+        "acao",
+        "crime"
+      ],
+      "ano": "2003",
+      "origem": []
+    },
+    {
+      "id": 545611,
+      "titulo": "Tudo em Todo o Lugar ao Mesmo Tempo",
+      "titulo_original": "Everything Everywhere All at Once",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2022",
+      "origem": []
+    },
+    {
+      "id": 10379,
+      "titulo": "Um Sonho Chamado Fred",
+      "titulo_original": "Drop Dead Fred",
+      "generos": [
+        "comedia",
+        "fantasia",
+        "familia"
+      ],
+      "ano": "1991",
+      "origem": []
+    },
+    {
+      "id": 1406657,
+      "titulo": "Scarlet",
+      "titulo_original": "果てしなきスカーレット",
+      "generos": [
+        "animacao",
+        "acao",
+        "drama",
+        "ficcao_cientifica"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 578,
+      "titulo": "Tubarão",
+      "titulo_original": "Jaws",
+      "generos": [
+        "terror",
+        "suspense",
+        "aventura"
+      ],
+      "ano": "1975",
+      "origem": []
+    },
+    {
+      "id": 209112,
+      "titulo": "Batman vs Superman: A Origem da Justiça",
+      "titulo_original": "Batman v Superman: Dawn of Justice",
+      "generos": [
+        "acao",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 28,
+      "titulo": "Apocalypse Now",
+      "titulo_original": "Apocalypse Now",
+      "generos": [
+        "drama",
+        "guerra"
+      ],
+      "ano": "1979",
+      "origem": []
+    },
+    {
+      "id": 103,
+      "titulo": "Taxi Driver: Motorista de Táxi",
+      "titulo_original": "Taxi Driver",
+      "generos": [
+        "crime",
+        "drama"
+      ],
+      "ano": "1976",
+      "origem": []
+    },
+    {
+      "id": 4348,
+      "titulo": "Orgulho e Preconceito",
+      "titulo_original": "Pride & Prejudice",
+      "generos": [
+        "drama",
+        "romance"
+      ],
+      "ano": "2005",
+      "origem": []
+    },
+    {
+      "id": 43347,
+      "titulo": "Amor e Outras Drogas",
+      "titulo_original": "Love & Other Drugs",
+      "generos": [
+        "drama",
+        "comedia",
+        "romance"
+      ],
+      "ano": "2010",
+      "origem": []
+    },
+    {
+      "id": 510,
+      "titulo": "Um Estranho no Ninho",
+      "titulo_original": "One Flew Over the Cuckoo's Nest",
+      "generos": [
+        "drama"
+      ],
+      "ano": "1975",
+      "origem": []
+    },
+    {
+      "id": 105864,
+      "titulo": "O Bom Dinossauro",
+      "titulo_original": "The Good Dinosaur",
+      "generos": [
+        "aventura",
+        "animacao",
+        "familia"
+      ],
+      "ano": "2015",
+      "origem": []
+    },
+    {
+      "id": 64641,
+      "titulo": "La ragazzina",
+      "titulo_original": "La ragazzina",
+      "generos": [
+        "romance",
+        "drama"
+      ],
+      "ano": "1974",
+      "origem": []
+    },
+    {
+      "id": 283995,
+      "titulo": "Guardiões da Galáxia - Vol. 2",
+      "titulo_original": "Guardians of the Galaxy Vol. 2",
+      "generos": [
+        "ficcao_cientifica",
+        "aventura",
+        "acao"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 8392,
+      "titulo": "Meu Amigo Totoro",
+      "titulo_original": "となりのトトロ",
+      "generos": [
+        "fantasia",
+        "animacao",
+        "familia"
+      ],
+      "ano": "1988",
+      "origem": []
+    },
+    {
+      "id": 4247,
+      "titulo": "Todo Mundo em Pânico",
+      "titulo_original": "Scary Movie",
+      "generos": [
+        "comedia"
+      ],
+      "ano": "2000",
+      "origem": []
+    },
+    {
+      "id": 926393,
+      "titulo": "O Protetor: Capítulo Final",
+      "titulo_original": "The Equalizer 3",
+      "generos": [
+        "acao",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 297762,
+      "titulo": "Mulher-Maravilha",
+      "titulo_original": "Wonder Woman",
+      "generos": [
+        "acao",
+        "aventura",
+        "fantasia"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 452073,
+      "titulo": "어린 형수 2",
+      "titulo_original": "어린 형수 2",
+      "generos": [
+        "romance"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 1215106,
+      "titulo": "หมู่บ้านโคกะโหลก",
+      "titulo_original": "หมู่บ้านโคกะโหลก",
+      "generos": [
+        "comedia",
+        "terror"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 138843,
+      "titulo": "Invocação do Mal",
+      "titulo_original": "The Conjuring",
+      "generos": [
+        "terror",
+        "suspense"
+      ],
+      "ano": "2013",
+      "origem": []
+    },
+    {
+      "id": 47971,
+      "titulo": "xXx: Reativado",
+      "titulo_original": "xXx: Return of Xander Cage",
+      "generos": [
+        "acao",
+        "aventura",
+        "crime"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 812583,
+      "titulo": "Vivo ou Morto: Um Mistério Knives Out",
+      "titulo_original": "Wake Up Dead Man: A Knives Out Mystery",
+      "generos": [
+        "suspense",
+        "misterio",
+        "comedia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 940721,
+      "titulo": "Godzilla Minus One",
+      "titulo_original": "ゴジラ-1.0",
+      "generos": [
+        "ficcao_cientifica",
+        "terror",
+        "acao"
+      ],
+      "ano": "2023",
+      "origem": []
+    },
+    {
+      "id": 447273,
+      "titulo": "Branca de Neve",
+      "titulo_original": "Snow White",
+      "generos": [
+        "familia",
+        "fantasia"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 423,
+      "titulo": "O Pianista",
+      "titulo_original": "The Pianist",
+      "generos": [
+        "drama",
+        "guerra"
+      ],
+      "ano": "2002",
+      "origem": []
+    },
+    {
+      "id": 1124,
+      "titulo": "O Grande Truque",
+      "titulo_original": "The Prestige",
+      "generos": [
+        "drama",
+        "misterio",
+        "ficcao_cientifica"
+      ],
+      "ano": "2006",
+      "origem": []
+    },
+    {
+      "id": 953,
+      "titulo": "Madagascar",
+      "titulo_original": "Madagascar",
+      "generos": [
+        "animacao",
+        "aventura",
+        "comedia",
+        "familia"
+      ],
+      "ano": "2005",
+      "origem": []
+    },
+    {
+      "id": 161,
+      "titulo": "Onze Homens e um Segredo",
+      "titulo_original": "Ocean's Eleven",
+      "generos": [
+        "suspense",
+        "crime"
+      ],
+      "ano": "2001",
+      "origem": []
+    },
+    {
+      "id": 698700,
+      "titulo": "어린 처제",
+      "titulo_original": "어린 처제",
+      "generos": [
+        "romance"
+      ],
+      "ano": "2018",
+      "origem": []
+    },
+    {
+      "id": 329865,
+      "titulo": "A Chegada",
+      "titulo_original": "Arrival",
+      "generos": [
+        "drama",
+        "ficcao_cientifica",
+        "misterio"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 1284460,
+      "titulo": "Alpha",
+      "titulo_original": "Alpha",
+      "generos": [
+        "terror",
+        "drama",
+        "ficcao_cientifica"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 945961,
+      "titulo": "Alien: Romulus",
+      "titulo_original": "Alien: Romulus",
+      "generos": [
+        "terror",
+        "ficcao_cientifica"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1242501,
+      "titulo": "Icefall",
+      "titulo_original": "Icefall",
+      "generos": [
+        "acao",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 809,
+      "titulo": "Shrek 2",
+      "titulo_original": "Shrek 2",
+      "generos": [
+        "animacao",
+        "familia",
+        "comedia",
+        "fantasia",
+        "romance"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 696506,
+      "titulo": "Mickey 17",
+      "titulo_original": "Mickey 17",
+      "generos": [
+        "ficcao_cientifica",
+        "comedia",
+        "aventura"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1300968,
+      "titulo": "Jogos Vorazes: Amanhecer na Colheita",
+      "titulo_original": "The Hunger Games: Sunrise on the Reaping",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "aventura"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 300668,
+      "titulo": "Aniquilação",
+      "titulo_original": "Annihilation",
+      "generos": [
+        "ficcao_cientifica",
+        "terror"
+      ],
+      "ano": "2018",
+      "origem": []
+    },
+    {
+      "id": 639988,
+      "titulo": "A Única Saída",
+      "titulo_original": "어쩔수가없다",
+      "generos": [
+        "comedia",
+        "crime",
+        "suspense"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 269955,
+      "titulo": "Perigosa Obsessão",
+      "titulo_original": "인간중독",
+      "generos": [
+        "drama"
+      ],
+      "ano": "2014",
+      "origem": []
+    },
+    {
+      "id": 82690,
+      "titulo": "Detona Ralph",
+      "titulo_original": "Wreck-It Ralph",
+      "generos": [
+        "familia",
+        "animacao",
+        "comedia",
+        "aventura"
+      ],
+      "ano": "2012",
+      "origem": []
+    },
+    {
+      "id": 863,
+      "titulo": "Toy Story 2",
+      "titulo_original": "Toy Story 2",
+      "generos": [
+        "animacao",
+        "comedia",
+        "familia"
+      ],
+      "ano": "1999",
+      "origem": []
+    },
+    {
+      "id": 1091,
+      "titulo": "O Enigma de Outro Mundo",
+      "titulo_original": "The Thing",
+      "generos": [
+        "terror",
+        "misterio",
+        "ficcao_cientifica"
+      ],
+      "ano": "1982",
+      "origem": []
+    },
+    {
+      "id": 822119,
+      "titulo": "Capitão América: Admirável Mundo Novo",
+      "titulo_original": "Captain America: Brave New World",
+      "generos": [
+        "acao",
+        "suspense",
+        "ficcao_cientifica"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 637,
+      "titulo": "A Vida é Bela",
+      "titulo_original": "La vita è bella",
+      "generos": [
+        "comedia",
+        "drama"
+      ],
+      "ano": "1997",
+      "origem": []
+    },
+    {
+      "id": 10193,
+      "titulo": "Toy Story 3",
+      "titulo_original": "Toy Story 3",
+      "generos": [
+        "animacao",
+        "familia",
+        "comedia"
+      ],
+      "ano": "2010",
+      "origem": []
+    },
+    {
+      "id": 1439112,
+      "titulo": "Farejando Vingança 2: Cidade dos Lobos",
+      "titulo_original": "Muzzle: City of Wolves",
+      "generos": [
+        "acao",
+        "suspense",
+        "misterio"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 1375646,
+      "titulo": "군체",
+      "titulo_original": "군체",
+      "generos": [
+        "acao",
+        "suspense",
+        "terror",
+        "misterio"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1336770,
+      "titulo": "വാഴ II",
+      "titulo_original": "വാഴ II",
+      "generos": [
+        "comedia",
+        "drama",
+        "acao"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 49026,
+      "titulo": "Batman: O Cavaleiro das Trevas Ressurge",
+      "titulo_original": "The Dark Knight Rises",
+      "generos": [
+        "acao",
+        "crime",
+        "drama",
+        "suspense"
+      ],
+      "ano": "2012",
+      "origem": []
+    },
+    {
+      "id": 10625,
+      "titulo": "Meninas Malvadas",
+      "titulo_original": "Mean Girls",
+      "generos": [
+        "drama",
+        "comedia"
+      ],
+      "ano": "2004",
+      "origem": []
+    },
+    {
+      "id": 1368337,
+      "titulo": "A Odisseia",
+      "titulo_original": "The Odyssey",
+      "generos": [
+        "aventura",
+        "drama",
+        "fantasia"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 1359,
+      "titulo": "Psicopata Americano",
+      "titulo_original": "American Psycho",
+      "generos": [
+        "suspense",
+        "drama",
+        "crime"
+      ],
+      "ano": "2000",
+      "origem": []
+    },
+    {
+      "id": 1469458,
+      "titulo": "സംഭവം അദ്ധ്യായം ഒന്ന്",
+      "titulo_original": "സംഭവം അദ്ധ്യായം ഒന്ന്",
+      "generos": [
+        "fantasia",
+        "suspense",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 18785,
+      "titulo": "Se Beber, Não Case!",
+      "titulo_original": "The Hangover",
+      "generos": [
+        "comedia"
+      ],
+      "ano": "2009",
+      "origem": []
+    },
+    {
+      "id": 615457,
+      "titulo": "Anônimo",
+      "titulo_original": "Nobody",
+      "generos": [
+        "acao",
+        "suspense"
+      ],
+      "ano": "2021",
+      "origem": []
+    },
+    {
+      "id": 336843,
+      "titulo": "Maze Runner: A Cura Mortal",
+      "titulo_original": "Maze Runner: The Death Cure",
+      "generos": [
+        "ficcao_cientifica",
+        "acao",
+        "aventura",
+        "suspense"
+      ],
+      "ano": "2018",
+      "origem": []
+    },
+    {
+      "id": 324552,
+      "titulo": "John Wick: Um Novo Dia para Matar",
+      "titulo_original": "John Wick: Chapter 2",
+      "generos": [
+        "acao",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 1170608,
+      "titulo": "Duna: Parte Três",
+      "titulo_original": "Dune: Part Three",
+      "generos": [
+        "ficcao_cientifica",
+        "drama"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 378064,
+      "titulo": "A Voz do Silêncio",
+      "titulo_original": "映画 聲の形",
+      "generos": [
+        "animacao",
+        "drama",
+        "romance"
+      ],
+      "ano": "2016",
+      "origem": []
+    },
+    {
+      "id": 558449,
+      "titulo": "Gladiador 2",
+      "titulo_original": "Gladiator II",
+      "generos": [
+        "acao",
+        "aventura",
+        "drama"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 1120911,
+      "titulo": "Saturday Night: A Noite que Mudou a Comédia",
+      "titulo_original": "Saturday Night",
+      "generos": [
+        "comedia",
+        "drama"
+      ],
+      "ano": "2024",
+      "origem": []
+    },
+    {
+      "id": 10494,
+      "titulo": "Perfect Blue",
+      "titulo_original": "PERFECT BLUE",
+      "generos": [
+        "animacao",
+        "suspense"
+      ],
+      "ano": "1998",
+      "origem": []
+    },
+    {
+      "id": 284054,
+      "titulo": "Pantera Negra",
+      "titulo_original": "Black Panther",
+      "generos": [
+        "acao",
+        "aventura",
+        "ficcao_cientifica"
+      ],
+      "ano": "2018",
+      "origem": []
+    },
+    {
+      "id": 860410,
+      "titulo": "수리기사의 참교육",
+      "titulo_original": "수리기사의 참교육",
+      "generos": [],
+      "ano": "2017",
+      "origem": []
+    },
+    {
+      "id": 10020,
+      "titulo": "A Bela e a Fera",
+      "titulo_original": "Beauty and the Beast",
+      "generos": [
+        "romance",
+        "familia",
+        "animacao",
+        "fantasia"
+      ],
+      "ano": "1991",
+      "origem": []
+    },
+    {
+      "id": 82695,
+      "titulo": "Os Miseráveis",
+      "titulo_original": "Les Misérables",
+      "generos": [
+        "historia",
+        "drama"
+      ],
+      "ano": "2012",
+      "origem": []
+    },
+    {
+      "id": 68726,
+      "titulo": "Círculo de Fogo",
+      "titulo_original": "Pacific Rim",
+      "generos": [
+        "acao",
+        "ficcao_cientifica",
+        "aventura"
+      ],
+      "ano": "2013",
+      "origem": []
+    },
+    {
+      "id": 1119878,
+      "titulo": "Missão Resgate: Vingança",
+      "titulo_original": "Ice Road: Vengeance",
+      "generos": [
+        "acao",
+        "suspense",
+        "drama"
+      ],
+      "ano": "2025",
+      "origem": []
+    },
+    {
+      "id": 687259,
+      "titulo": "镜花风月三之螺女挑情",
+      "titulo_original": "镜花风月三之螺女挑情",
+      "generos": [
+        "terror"
+      ],
+      "ano": "1982",
+      "origem": []
+    },
+    {
+      "id": 64348,
+      "titulo": "女機械人",
+      "titulo_original": "女機械人",
+      "generos": [
+        "acao",
+        "comedia",
+        "crime",
+        "romance",
+        "ficcao_cientifica",
+        "suspense"
+      ],
+      "ano": "1991",
+      "origem": []
+    },
+    {
+      "id": 1384216,
+      "titulo": "The Dog Stars",
+      "titulo_original": "The Dog Stars",
+      "generos": [
+        "aventura",
+        "ficcao_cientifica",
+        "suspense"
+      ],
+      "ano": "2026",
+      "origem": []
+    },
+    {
+      "id": 348893,
+      "titulo": "Boyka: O Imbatível",
+      "titulo_original": "Boyka: Undisputed IV",
+      "generos": [
+        "acao",
+        "drama",
+        "suspense",
+        "crime"
+      ],
+      "ano": "2016",
+      "origem": []
+    }
+  ],
+  "pessoas": [
+    {
+      "id": 5531949,
+      "nome": "河北彩伽",
+      "popularidade": 5.775,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5556098,
+      "nome": "河北彩花",
+      "popularidade": 1.1219,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3904236,
+      "nome": "Azi Acosta",
+      "popularidade": 4.0739,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2349944,
+      "nome": "유정",
+      "popularidade": 0.1517,
+      "departamento": "Acting"
+    },
+    {
+      "id": 6087840,
+      "nome": "波多野结衣",
+      "popularidade": 0.7389,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5748284,
+      "nome": "桃乃木香奈",
+      "popularidade": 1.2478,
+      "departamento": null
+    },
+    {
+      "id": 85450,
+      "nome": "Mithun Chakraborty",
+      "popularidade": 3.1626,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5925677,
+      "nome": "相泽南",
+      "popularidade": 0.4458,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3164807,
+      "nome": "윤율",
+      "popularidade": 9.8876,
+      "departamento": "Acting"
+    },
+    {
+      "id": 6121029,
+      "nome": "Melody Marks",
+      "popularidade": 0.4167,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5330762,
+      "nome": "凪光",
+      "popularidade": 1.0027,
+      "departamento": null
+    },
+    {
+      "id": 976,
+      "nome": "Jason Statham",
+      "popularidade": 15.4927,
+      "departamento": "Acting"
+    },
+    {
+      "id": 945130,
+      "nome": "青山知可子",
+      "popularidade": 6.9242,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5344586,
+      "nome": "石川澪",
+      "popularidade": 0.3948,
+      "departamento": null
+    },
+    {
+      "id": 58021,
+      "nome": "Tinto Brass",
+      "popularidade": 5.8279,
+      "departamento": "Directing"
+    },
+    {
+      "id": 1252318,
+      "nome": "IU",
+      "popularidade": 4.5871,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1688124,
+      "nome": "Park Joo-bin",
+      "popularidade": 2.6966,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1689516,
+      "nome": "Ko Won",
+      "popularidade": 3.4367,
+      "departamento": "Acting"
+    },
+    {
+      "id": 25645,
+      "nome": "Hirokazu Kore-eda",
+      "popularidade": 2.6298,
+      "departamento": "Directing"
+    },
+    {
+      "id": 31,
+      "nome": "Tom Hanks",
+      "popularidade": 13.0763,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1622390,
+      "nome": "Lee Chae-dam",
+      "popularidade": 5.485,
+      "departamento": "Acting"
+    },
+    {
+      "id": 287,
+      "nome": "Brad Pitt",
+      "popularidade": 10.304,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5392874,
+      "nome": "楓ふうあ",
+      "popularidade": 0.2226,
+      "departamento": null
+    },
+    {
+      "id": 1781425,
+      "nome": "서원",
+      "popularidade": 3.9611,
+      "departamento": "Acting"
+    },
+    {
+      "id": 500,
+      "nome": "Tom Cruise",
+      "popularidade": 14.358,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1472733,
+      "nome": "可愛かずみ",
+      "popularidade": 7.5731,
+      "departamento": "Acting"
+    },
+    {
+      "id": 6193,
+      "nome": "Leonardo DiCaprio",
+      "popularidade": 8.6966,
+      "departamento": "Acting"
+    },
+    {
+      "id": 6103779,
+      "nome": "河北彩花",
+      "popularidade": 1.0358,
+      "departamento": "Acting"
+    },
+    {
+      "id": 206,
+      "nome": "Jim Carrey",
+      "popularidade": 6.5859,
+      "departamento": "Acting"
+    },
+    {
+      "id": 212208,
+      "nome": "Taylor Swift",
+      "popularidade": 1.7668,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1152083,
+      "nome": "Sabrina Carpenter",
+      "popularidade": 6.7306,
+      "departamento": "Acting"
+    },
+    {
+      "id": 138,
+      "nome": "Quentin Tarantino",
+      "popularidade": 4.8912,
+      "departamento": "Directing"
+    },
+    {
+      "id": 18050,
+      "nome": "Elle Fanning",
+      "popularidade": 12.5241,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2484644,
+      "nome": "Kim Hee-jeong",
+      "popularidade": 6.2885,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5292,
+      "nome": "Denzel Washington",
+      "popularidade": 5.5583,
+      "departamento": "Acting"
+    },
+    {
+      "id": 488,
+      "nome": "Steven Spielberg",
+      "popularidade": 5.18,
+      "departamento": "Directing"
+    },
+    {
+      "id": 115440,
+      "nome": "Sydney Sweeney",
+      "popularidade": 37.0009,
+      "departamento": "Acting"
+    },
+    {
+      "id": 16620,
+      "nome": "Hulk Hogan",
+      "popularidade": 1.4988,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2227,
+      "nome": "Nicole Kidman",
+      "popularidade": 10.3887,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2413513,
+      "nome": "Billie Eilish",
+      "popularidade": 2.0708,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2888,
+      "nome": "Will Smith",
+      "popularidade": 7.8046,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1647345,
+      "nome": "이은미",
+      "popularidade": 1.958,
+      "departamento": "Acting"
+    },
+    {
+      "id": 19292,
+      "nome": "Adam Sandler",
+      "popularidade": 6.4828,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5235257,
+      "nome": "김선영",
+      "popularidade": 8.8933,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2093355,
+      "nome": "유설영",
+      "popularidade": 2.8847,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5200434,
+      "nome": "水卜櫻",
+      "popularidade": 0.2454,
+      "departamento": "Acting"
+    },
+    {
+      "id": 54693,
+      "nome": "Emma Stone",
+      "popularidade": 7.6695,
+      "departamento": "Acting"
+    },
+    {
+      "id": 83487,
+      "nome": "谢苗",
+      "popularidade": 4.7746,
+      "departamento": "Acting"
+    },
+    {
+      "id": 525,
+      "nome": "Christopher Nolan",
+      "popularidade": 6.3931,
+      "departamento": "Directing"
+    },
+    {
+      "id": 6028826,
+      "nome": "佐山爱",
+      "popularidade": 0.3541,
+      "departamento": "Acting"
+    },
+    {
+      "id": 18897,
+      "nome": "Jackie Chan",
+      "popularidade": 18.1626,
+      "departamento": "Acting"
+    },
+    {
+      "id": 6021361,
+      "nome": "明里䌷",
+      "popularidade": 0.2946,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2790319,
+      "nome": "Joo Ah",
+      "popularidade": 1.5783,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3223,
+      "nome": "Robert Downey Jr.",
+      "popularidade": 8.0347,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3149,
+      "nome": "Marilyn Monroe",
+      "popularidade": 1.7458,
+      "departamento": "Acting"
+    },
+    {
+      "id": 505710,
+      "nome": "Zendaya",
+      "popularidade": 9.3623,
+      "departamento": "Acting"
+    },
+    {
+      "id": 115128,
+      "nome": "Bo Burnham",
+      "popularidade": 0.8704,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5165492,
+      "nome": "Aliya Raymundo",
+      "popularidade": 4.9015,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2963,
+      "nome": "Nicolas Cage",
+      "popularidade": 6.8033,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2472212,
+      "nome": "Sae Bom",
+      "popularidade": 1.6556,
+      "departamento": "Acting"
+    },
+    {
+      "id": 72129,
+      "nome": "Jennifer Lawrence",
+      "popularidade": 5.9206,
+      "departamento": "Acting"
+    },
+    {
+      "id": 73457,
+      "nome": "Chris Pratt",
+      "popularidade": 5.0931,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1995527,
+      "nome": "Kim Ji-yeon",
+      "popularidade": 3.0113,
+      "departamento": "Acting"
+    },
+    {
+      "id": 8635,
+      "nome": "Buster Keaton",
+      "popularidade": 1.2282,
+      "departamento": "Directing"
+    },
+    {
+      "id": 6968,
+      "nome": "Hugh Jackman",
+      "popularidade": 4.0456,
+      "departamento": "Acting"
+    },
+    {
+      "id": 10859,
+      "nome": "Ryan Reynolds",
+      "popularidade": 5.5355,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1136406,
+      "nome": "Tom Holland",
+      "popularidade": 7.6155,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5748317,
+      "nome": "桃乃木香奈",
+      "popularidade": 0.6781,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3430137,
+      "nome": "藤浦惠 Megu Fujiura",
+      "popularidade": 0.2427,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2710789,
+      "nome": "채승하",
+      "popularidade": 1.7404,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1813,
+      "nome": "Anne Hathaway",
+      "popularidade": 14.1512,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1217865,
+      "nome": "Erica Luttrell",
+      "popularidade": 0.3151,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1032,
+      "nome": "Martin Scorsese",
+      "popularidade": 4.3206,
+      "departamento": "Directing"
+    },
+    {
+      "id": 16483,
+      "nome": "Sylvester Stallone",
+      "popularidade": 8.1454,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1190668,
+      "nome": "Timothée Chalamet",
+      "popularidade": 9.5415,
+      "departamento": "Acting"
+    },
+    {
+      "id": 556356,
+      "nome": "Vanessa Kirby",
+      "popularidade": 4.2699,
+      "departamento": "Acting"
+    },
+    {
+      "id": 35742,
+      "nome": "शाहरुख़ ख़ान",
+      "popularidade": 4.9111,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2461,
+      "nome": "Mel Gibson",
+      "popularidade": 8.3748,
+      "departamento": "Acting"
+    },
+    {
+      "id": 86543,
+      "nome": "David Attenborough",
+      "popularidade": 1.4348,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2553497,
+      "nome": "태희",
+      "popularidade": 5.4419,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1907997,
+      "nome": "민도윤",
+      "popularidade": 11.2742,
+      "departamento": "Acting"
+    },
+    {
+      "id": 6384,
+      "nome": "Keanu Reeves",
+      "popularidade": 12.0346,
+      "departamento": "Acting"
+    },
+    {
+      "id": 18918,
+      "nome": "Dwayne Johnson",
+      "popularidade": 6.4135,
+      "departamento": "Acting"
+    },
+    {
+      "id": 524,
+      "nome": "Natalie Portman",
+      "popularidade": 7.3171,
+      "departamento": "Acting"
+    },
+    {
+      "id": 11701,
+      "nome": "Angelina Jolie",
+      "popularidade": 11.4218,
+      "departamento": "Acting"
+    },
+    {
+      "id": 30614,
+      "nome": "Ryan Gosling",
+      "popularidade": 11.962,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2372,
+      "nome": "Ron Perlman",
+      "popularidade": 5.6701,
+      "departamento": "Acting"
+    },
+    {
+      "id": 18277,
+      "nome": "Sandra Bullock",
+      "popularidade": 7.6566,
+      "departamento": "Acting"
+    },
+    {
+      "id": 16828,
+      "nome": "Chris Evans",
+      "popularidade": 6.5748,
+      "departamento": "Acting"
+    },
+    {
+      "id": 19537,
+      "nome": "Megan Fox",
+      "popularidade": 10.0661,
+      "departamento": "Acting"
+    },
+    {
+      "id": 62,
+      "nome": "Bruce Willis",
+      "popularidade": 5.3898,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3424435,
+      "nome": "유지현",
+      "popularidade": 4.2747,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5901602,
+      "nome": "佐山愛",
+      "popularidade": 0.2471,
+      "departamento": "Acting"
+    },
+    {
+      "id": 234352,
+      "nome": "Margot Robbie",
+      "popularidade": 8.7516,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1158,
+      "nome": "Al Pacino",
+      "popularidade": 4.6046,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3,
+      "nome": "Harrison Ford",
+      "popularidade": 4.5951,
+      "departamento": "Acting"
+    },
+    {
+      "id": 12799,
+      "nome": "Jeremy Piven",
+      "popularidade": 2.5244,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3426519,
+      "nome": "Lee Ah-in",
+      "popularidade": 0.4303,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5224764,
+      "nome": "星宫一花",
+      "popularidade": 0.1737,
+      "departamento": null
+    },
+    {
+      "id": 553325,
+      "nome": "高倉美貴",
+      "popularidade": 2.5177,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1413939,
+      "nome": "Lia Beldam",
+      "popularidade": 0.3398,
+      "departamento": "Acting"
+    },
+    {
+      "id": 52176,
+      "nome": "Herbert Rawlinson",
+      "popularidade": 0.2528,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1997928,
+      "nome": "진주",
+      "popularidade": 5.4997,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5121466,
+      "nome": "神木優",
+      "popularidade": 0.1292,
+      "departamento": "Acting"
+    },
+    {
+      "id": 6941,
+      "nome": "Cameron Diaz",
+      "popularidade": 4.8533,
+      "departamento": "Acting"
+    },
+    {
+      "id": 10850,
+      "nome": "Kevin Feige",
+      "popularidade": 1.5833,
+      "departamento": "Production"
+    },
+    {
+      "id": 90633,
+      "nome": "Gal Gadot",
+      "popularidade": 3.8751,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2037,
+      "nome": "Cillian Murphy",
+      "popularidade": 6.6223,
+      "departamento": "Acting"
+    },
+    {
+      "id": 85,
+      "nome": "Johnny Depp",
+      "popularidade": 7.4139,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2231,
+      "nome": "Samuel L. Jackson",
+      "popularidade": 6.4942,
+      "departamento": "Acting"
+    },
+    {
+      "id": 190,
+      "nome": "Clint Eastwood",
+      "popularidade": 6.1691,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3371806,
+      "nome": "Robb Guinto",
+      "popularidade": 2.1004,
+      "departamento": "Acting"
+    },
+    {
+      "id": 10990,
+      "nome": "Emma Watson",
+      "popularidade": 6.3567,
+      "departamento": "Acting"
+    },
+    {
+      "id": 7399,
+      "nome": "Ben Stiller",
+      "popularidade": 3.8081,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5066876,
+      "nome": "苍井空",
+      "popularidade": 0.2887,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3194176,
+      "nome": "Angeli Khang",
+      "popularidade": 2.1156,
+      "departamento": "Acting"
+    },
+    {
+      "id": 133398,
+      "nome": "Quentin Dupieux",
+      "popularidade": 0.8986,
+      "departamento": "Directing"
+    },
+    {
+      "id": 9642,
+      "nome": "Jude Law",
+      "popularidade": 3.8763,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1336,
+      "nome": "Jet Li",
+      "popularidade": 5.019,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1951775,
+      "nome": "Caitlin Machak",
+      "popularidade": 0.0776,
+      "departamento": "Camera"
+    },
+    {
+      "id": 3937164,
+      "nome": "Audrey Avila",
+      "popularidade": 4.3759,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5655,
+      "nome": "Wes Anderson",
+      "popularidade": 2.3687,
+      "departamento": "Directing"
+    },
+    {
+      "id": 2374721,
+      "nome": "Han Seo-ah",
+      "popularidade": 5.8123,
+      "departamento": "Acting"
+    },
+    {
+      "id": 4857772,
+      "nome": "Kim Soo-ji",
+      "popularidade": 5.2886,
+      "departamento": "Acting"
+    },
+    {
+      "id": 82702,
+      "nome": "Michael Jackson",
+      "popularidade": 2.0472,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1397778,
+      "nome": "Anya Taylor-Joy",
+      "popularidade": 14.0127,
+      "departamento": "Acting"
+    },
+    {
+      "id": 8167,
+      "nome": "Paul Walker",
+      "popularidade": 4.171,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1372,
+      "nome": "Karl Urban",
+      "popularidade": 10.8914,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5977498,
+      "nome": "彩月七绪",
+      "popularidade": 0.1119,
+      "departamento": "Acting"
+    },
+    {
+      "id": 4450888,
+      "nome": "White Sugar",
+      "popularidade": 3.2978,
+      "departamento": "Acting"
+    },
+    {
+      "id": 23880,
+      "nome": "Steven Seagal",
+      "popularidade": 3.2854,
+      "departamento": "Acting"
+    },
+    {
+      "id": 4845074,
+      "nome": "Joo Ye-bin",
+      "popularidade": 4.8141,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5756283,
+      "nome": "桃乃木かな",
+      "popularidade": 0.2581,
+      "departamento": "Acting"
+    },
+    {
+      "id": 4762,
+      "nome": "Paul Thomas Anderson",
+      "popularidade": 1.8966,
+      "departamento": "Directing"
+    },
+    {
+      "id": 1706911,
+      "nome": "김지아",
+      "popularidade": 6.4144,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1892,
+      "nome": "Matt Damon",
+      "popularidade": 8.3646,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1437984,
+      "nome": "Han Se-Ah",
+      "popularidade": 1.2783,
+      "departamento": "Acting"
+    },
+    {
+      "id": 112,
+      "nome": "Cate Blanchett",
+      "popularidade": 5.0399,
+      "departamento": "Acting"
+    },
+    {
+      "id": 4370510,
+      "nome": "Guilherme César",
+      "popularidade": 0.0286,
+      "departamento": null
+    },
+    {
+      "id": 11288,
+      "nome": "Robert Pattinson",
+      "popularidade": 5.1414,
+      "departamento": "Acting"
+    },
+    {
+      "id": 7467,
+      "nome": "David Fincher",
+      "popularidade": 2.6675,
+      "departamento": "Directing"
+    },
+    {
+      "id": 1245,
+      "nome": "Scarlett Johansson",
+      "popularidade": 18.0198,
+      "departamento": "Acting"
+    },
+    {
+      "id": 51329,
+      "nome": "Bradley Cooper",
+      "popularidade": 3.9353,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5934363,
+      "nome": "相澤南,相沢みなみ",
+      "popularidade": 0.0604,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3027,
+      "nome": "Stephen King",
+      "popularidade": 1.8242,
+      "departamento": "Writing"
+    },
+    {
+      "id": 955,
+      "nome": "Penélope Cruz",
+      "popularidade": 3.4122,
+      "departamento": "Acting"
+    },
+    {
+      "id": 578,
+      "nome": "Ridley Scott",
+      "popularidade": 3.139,
+      "departamento": "Directing"
+    },
+    {
+      "id": 5224788,
+      "nome": "叶山小百合",
+      "popularidade": 0.2438,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5064,
+      "nome": "Meryl Streep",
+      "popularidade": 4.8671,
+      "departamento": "Acting"
+    },
+    {
+      "id": 131519,
+      "nome": "Rihanna",
+      "popularidade": 1.4874,
+      "departamento": "Acting"
+    },
+    {
+      "id": 139,
+      "nome": "Uma Thurman",
+      "popularidade": 4.5996,
+      "departamento": "Acting"
+    },
+    {
+      "id": 237405,
+      "nome": "Lady Gaga",
+      "popularidade": 2.007,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1204,
+      "nome": "Julia Roberts",
+      "popularidade": 5.1232,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1172108,
+      "nome": "Mckenna Grace",
+      "popularidade": 7.434,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1442978,
+      "nome": "دانش تیمور",
+      "popularidade": 2.1284,
+      "departamento": "Acting"
+    },
+    {
+      "id": 8452,
+      "nome": "Andrei Tarkovsky",
+      "popularidade": 1.6101,
+      "departamento": "Directing"
+    },
+    {
+      "id": 192,
+      "nome": "Morgan Freeman",
+      "popularidade": 11.2745,
+      "departamento": "Acting"
+    },
+    {
+      "id": 608,
+      "nome": "Hayao Miyazaki",
+      "popularidade": 4.4138,
+      "departamento": "Directing"
+    },
+    {
+      "id": 37917,
+      "nome": "Kristen Stewart",
+      "popularidade": 5.4931,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1468490,
+      "nome": "Kang Eun-hye",
+      "popularidade": 3.528,
+      "departamento": "Acting"
+    },
+    {
+      "id": 42802,
+      "nome": "Salman Khan",
+      "popularidade": 11.7666,
+      "departamento": "Acting"
+    },
+    {
+      "id": 74568,
+      "nome": "Chris Hemsworth",
+      "popularidade": 9.8417,
+      "departamento": "Acting"
+    },
+    {
+      "id": 224513,
+      "nome": "Ana de Armas",
+      "popularidade": 11.5495,
+      "departamento": "Acting"
+    },
+    {
+      "id": 148037,
+      "nome": "N.T. Rama Rao Jr.",
+      "popularidade": 2.6845,
+      "departamento": "Acting"
+    },
+    {
+      "id": 10222,
+      "nome": "Roger Moore",
+      "popularidade": 1.8246,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1708576,
+      "nome": "Ahn So-hee",
+      "popularidade": 5.3767,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3261706,
+      "nome": "Rion",
+      "popularidade": 0.1421,
+      "departamento": "Acting"
+    },
+    {
+      "id": 51576,
+      "nome": "Chuck Norris",
+      "popularidade": 3.7363,
+      "departamento": "Acting"
+    },
+    {
+      "id": 6112347,
+      "nome": "Sahil Arora",
+      "popularidade": 0.3625,
+      "departamento": "Acting"
+    },
+    {
+      "id": 974169,
+      "nome": "Jenna Ortega",
+      "popularidade": 9.0748,
+      "departamento": "Acting"
+    },
+    {
+      "id": 543530,
+      "nome": "Dave Bautista",
+      "popularidade": 4.518,
+      "departamento": "Acting"
+    },
+    {
+      "id": 28782,
+      "nome": "Monica Bellucci",
+      "popularidade": 7.4611,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3949943,
+      "nome": "Julia Ann",
+      "popularidade": 0.1076,
+      "departamento": null
+    },
+    {
+      "id": 226001,
+      "nome": "Ariana Grande",
+      "popularidade": 3.1207,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2590519,
+      "nome": "한이슬",
+      "popularidade": 5.4765,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2740689,
+      "nome": "Guilherme Cesar",
+      "popularidade": 0.0336,
+      "departamento": null
+    },
+    {
+      "id": 5839,
+      "nome": "Robert B. Sherman",
+      "popularidade": 0.41,
+      "departamento": "Sound"
+    },
+    {
+      "id": 204,
+      "nome": "Kate Winslet",
+      "popularidade": 5.6423,
+      "departamento": "Acting"
+    },
+    {
+      "id": 25072,
+      "nome": "Oscar Isaac",
+      "popularidade": 3.9703,
+      "departamento": "Acting"
+    },
+    {
+      "id": 325,
+      "nome": "Eminem",
+      "popularidade": 8.2332,
+      "departamento": "Acting"
+    },
+    {
+      "id": 121529,
+      "nome": "Léa Seydoux",
+      "popularidade": 3.6014,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3063,
+      "nome": "Tilda Swinton",
+      "popularidade": 2.3955,
+      "departamento": "Acting"
+    },
+    {
+      "id": 137427,
+      "nome": "Denis Villeneuve",
+      "popularidade": 2.975,
+      "departamento": "Directing"
+    },
+    {
+      "id": 6043025,
+      "nome": "hikaru nagi",
+      "popularidade": 0.1448,
+      "departamento": null
+    },
+    {
+      "id": 8293,
+      "nome": "Marion Cotillard",
+      "popularidade": 3.2119,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1846846,
+      "nome": "김인애",
+      "popularidade": 3.2622,
+      "departamento": "Acting"
+    },
+    {
+      "id": 4153819,
+      "nome": "Jeong Yoon-I",
+      "popularidade": 3.3431,
+      "departamento": "Acting"
+    },
+    {
+      "id": 4376525,
+      "nome": "Ga Won",
+      "popularidade": 1.0682,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5901601,
+      "nome": "沖田杏梨",
+      "popularidade": 0.1479,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2381985,
+      "nome": "Curry Barker",
+      "popularidade": 0.7388,
+      "departamento": "Directing"
+    },
+    {
+      "id": 1267329,
+      "nome": "Lupita Nyong'o",
+      "popularidade": 3.2235,
+      "departamento": "Acting"
+    },
+    {
+      "id": 1905,
+      "nome": "Vincent Price",
+      "popularidade": 1.5825,
+      "departamento": "Acting"
+    },
+    {
+      "id": 380,
+      "nome": "Robert De Niro",
+      "popularidade": 6.0865,
+      "departamento": "Acting"
+    },
+    {
+      "id": 510,
+      "nome": "Tim Burton",
+      "popularidade": 3.9987,
+      "departamento": "Directing"
+    },
+    {
+      "id": 73249,
+      "nome": "Lee Jung-jae",
+      "popularidade": 2.9271,
+      "departamento": "Acting"
+    },
+    {
+      "id": 78110,
+      "nome": "Scott Adkins",
+      "popularidade": 4.8681,
+      "departamento": "Acting"
+    },
+    {
+      "id": 3896,
+      "nome": "Liam Neeson",
+      "popularidade": 6.4162,
+      "departamento": "Acting"
+    },
+    {
+      "id": 5066851,
+      "nome": "苍井空",
+      "popularidade": 0.1644,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2524,
+      "nome": "Tom Hardy",
+      "popularidade": 7.9002,
+      "departamento": "Acting"
+    },
+    {
+      "id": 2243993,
+      "nome": "민정 故",
+      "popularidade": 5.2566,
+      "departamento": "Acting"
+    }
+  ],
+  "paises_lexico": {
+    "codigo_para_termos": {
+      "BR": [
+        "brasileiro",
+        "brasileira",
+        "brasileiros",
+        "brasileiras",
+        "brasil",
+        "nacional",
+        "nacionais"
+      ],
+      "US": [
+        "americano",
+        "americana",
+        "americanos",
+        "americanas",
+        "eua",
+        "hollywood"
+      ],
+      "FR": [
+        "francês",
+        "frances",
+        "francesa",
+        "franceses",
+        "francesas",
+        "franca"
+      ],
+      "ES": [
+        "espanhol",
+        "espanhola",
+        "espanhóis",
+        "espanhois",
+        "espanholas",
+        "espanha"
+      ],
+      "IT": [
+        "italiano",
+        "italiana",
+        "italianos",
+        "italianas",
+        "italia"
+      ],
+      "JP": [
+        "japonês",
+        "japones",
+        "japonesa",
+        "japoneses",
+        "japonesas",
+        "japao",
+        "japão",
+        "anime"
+      ],
+      "KR": [
+        "coreano",
+        "coreana",
+        "coreanos",
+        "coreanas",
+        "coreia",
+        "sul-coreano"
+      ],
+      "MX": [
+        "mexicano",
+        "mexicana",
+        "mexicanos",
+        "mexicanas",
+        "mexico",
+        "méxico"
+      ],
+      "AR": [
+        "argentino",
+        "argentina",
+        "argentinos",
+        "argentinas"
+      ],
+      "IN": [
+        "indiano",
+        "indiana",
+        "indianos",
+        "indianas",
+        "bollywood"
+      ],
+      "NL": [
+        "holandês",
+        "holandes",
+        "holandesa",
+        "holandeses",
+        "holandesas",
+        "holanda",
+        "neerlandês",
+        "neerlandes"
+      ]
+    },
+    "codigo_para_rotulo": {
+      "BR": "brasileiros",
+      "US": "americanos",
+      "FR": "franceses",
+      "ES": "espanhóis",
+      "IT": "italianos",
+      "JP": "japoneses",
+      "KR": "coreanos",
+      "MX": "mexicanos",
+      "AR": "argentinos",
+      "IN": "indianos",
+      "NL": "holandeses"
+    }
+  }
+}
