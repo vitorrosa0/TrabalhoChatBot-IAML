@@ -34,6 +34,70 @@ DURACAO_FILTROS = {
     "longo": {"with_runtime.gte": 120},
 }
 
+MAPA_KEYWORDS = {
+    # 4.1 - Ficção e Futuro
+    "espaco": ["space", "outer space", "galaxy", "planet", "spaceship", "stars"],
+    "tecnologia": ["technology", "high tech", "hacker", "internet", "computer", "virtual reality"],
+    "viagem_no_tempo": ["time travel", "time loop", "time machine", "changing the past"],
+    "inteligencia_artificial": ["artificial intelligence", "ai", "machine learning", "cyborg", "android", "computer program"],
+    "distopia": ["dystopia", "dystopian", "totalitarianism", "oppression", "new world order"],
+    "pos_apocalitico": ["post-apocalyptic", "apocalypse", "end of the world", "ruins", "wasteland", "post-apocalyptic future"],
+    "cyberpunk": ["cyberpunk", "hacker", "netrunner", "mega corporation"],
+    "aliens": ["alien", "extraterrestrial", "alien invasion", "ufo", "alien planet", "martian"],
+    "futuro": ["future", "futurism", "futuristic", "22nd century", "21st century"],
+    "robos": ["robot", "robotics", "mecha", "automaton", "cyborg", "android"],
+
+    # 4.2 - Conflito e Crime
+    "batalha": ["battle", "epic battle", "combat", "fight", "warfare"],
+    "guerra": ["war", "world war", "civil war", "soldier", "military"],
+    "crime": ["crime", "criminal", "murder", "robbery", "heist", "underworld"],
+    "investigacao": ["investigation", "detective", "police investigation", "clue", "whodunit", "mystery"],
+    "espionagem": ["espionage", "spy", "secret agent", "cia", "kgb", "mi6", "undercover"],
+    "vinganca": ["revenge", "vengeance", "avenger", "vendetta", "payback"],
+    "assalto": ["heist", "bank robbery", "thief", "steal", "burglary", "robbery"],
+    "prisao": ["prison", "jail", "prisoner", "prison escape", "behind bars"],
+    "serial_killer": ["serial killer", "psychopath", "mass murderer", "sociopath", "killer"],
+    "gangsters": ["gangster", "mafia", "mobster", "yakuza", "triad", "gang"],
+    "tribunal": ["court", "courtroom", "trial", "lawyer", "judge", "legal"],
+    "mafia": ["mafia", "organized crime", "mob", "cosa nostra", "cartel"],
+
+    # 4.3 - Fantasia e Medo
+    "magia": ["magic", "wizard", "spell", "witchcraft", "sorcery"],
+    "sobrenatural": ["supernatural", "paranormal", "occult", "spirit", "curse"],
+    "vampiros": ["vampire", "dracula", "bloodsucker", "vampirism", "undead", "vampires"],
+    "zumbis": ["zombie", "living dead", "zombie apocalypse", "infected", "undead", "zombies"],
+    "monstros": ["monster", "creature", "kaiju", "beast", "giant monster"],
+    "fantasmas": ["ghost", "haunted house", "spirit", "poltergeist", "apparition", "ghosts"],
+    "mitologia": ["mythology", "greek mythology", "norse mythology", "gods", "myth"],
+    "bruxas": ["witch", "witchcraft", "coven", "witches", "sorceress"],
+    "demonios": ["demon", "devil", "hell", "possession", "exorcism", "demons"],
+    "slasher": ["slasher", "teen slasher", "gore", "body count", "slasher movie"],
+    "terror_psicologico": ["psychological thriller", "paranoia", "hallucination", "madness", "mind game", "psychological horror"],
+
+    # 4.4 - Ação e Estilo
+    "super_heroi": ["superhero", "marvel", "dc comics", "mutant", "comic book"],
+    "artes_marciais": ["martial arts", "kung fu", "karate", "ninja", "taekwondo", "martial artist"],
+    "carros": ["car", "car race", "car chase", "street racing", "auto racing", "cars"],
+    "samurai": ["samurai", "ronin", "feudal japan", "katana", "sword fight"],
+    "faroeste": ["western", "cowboy", "wild west", "spaghetti western", "outlaw"],
+    "noir": ["noir", "film noir", "detective", "femme fatale", "cynicism"],
+    "neo_noir": ["neo-noir", "modern noir", "hardboiled", "urban decay"],
+    "sobrevivencia": ["survival", "stranded", "wilderness", "survival horror", "marooned"],
+    "esportes": ["sports", "athlete", "competition", "tournament", "coach", "sport"],
+
+    # 4.5 - Temas e Vida
+    "baseado_em_fatos": ["based on true story", "true story", "based on real events", "historical event", "real life", "based on a true story"],
+    "biografico": ["biography", "biopic", "life story", "historical figure"],
+    "musical": ["musical", "singing", "dance", "broadway", "music"],
+    "comedia_romantica": ["romantic comedy", "rom-com", "love", "meet cute", "romance"],
+    "satira": ["satire", "dark comedy", "parody", "mockumentary", "irony"],
+    "drama_familiar": ["family drama", "dysfunctional family", "parent child relationship", "family conflict", "domestic"],
+    "natureza": ["nature", "wilderness", "forest", "jungle", "ocean", "wildlife"],
+    "animais": ["animal", "dog", "wild animal", "pet", "creature", "animals"],
+    "politica": ["politics", "political", "president", "election", "government"],
+    "coming_of_age": ["coming of age", "teenager", "high school", "growing up", "youth"]
+}
+
 
 def _get(endpoint, params={}):
     params = dict(params)
@@ -354,3 +418,36 @@ def buscar_filmes_por_genero_e_ator(genero, pessoa_id, quantidade=3, excluir_tit
         if len(filmes) >= quantidade:
             break
     return filmes
+
+
+def buscar_keywords_filme(filme_id):
+    """
+    Busca as keywords de um filme específico pelo seu ID no TMDB.
+    """
+    dados = _get(f"/movie/{filme_id}/keywords")
+    if not dados or not dados.get("keywords"):
+        return []
+        
+    keywords_ingles = []
+    for k in dados.get("keywords", []):
+        nome = k.get("name")
+        if nome:
+            keywords_ingles.append(nome.lower().strip())
+            
+    return keywords_ingles
+
+
+def normalizar_keywords(lista_keywords_ingles):
+    """
+    Constrói um dicionário para mapear as inúmeras keywords brutas (em inglês)
+    do TMDB para um léxico interno, com 50 tags base (em português).
+    Retorna apenas as tags que existirem e sem duplicatas.
+    """
+    tags_encontradas = set()
+    for kw in lista_keywords_ingles:
+        kw_clean = kw.lower().strip()
+        for tag, keywords_mapeadas in MAPA_KEYWORDS.items():
+            if kw_clean in keywords_mapeadas:
+                tags_encontradas.add(tag)
+                
+    return list(tags_encontradas)
