@@ -13,7 +13,8 @@ from src.core.session_manager import (
     deve_recomendar, proximo_campo_vazio, sessao_completa,
     adicionar_filmes_recomendados, filmes_ja_recomendados, PERGUNTAS,
     generos_banidos, travar_genero, genero_esta_travado,
-    set_genero_recomendado, set_referencia, get_referencia, set_pais, get_pais
+    set_genero_recomendado, set_referencia, get_referencia, set_pais, get_pais,
+    obter_tags_dominantes
 )
 
 
@@ -84,7 +85,8 @@ def _montar_resposta_filmes(sid):
     disposicao  = sessao.get("disposicao") or "curtir"
     banidos     = generos_banidos(sid)
 
-    genero_j48, genero_lmt = recomendar_com_ambos(genero_pedido, humor, acompanhado, duracao, disposicao)
+    tags_usuario = obter_tags_dominantes(sid)
+    genero_j48, genero_lmt = recomendar_com_ambos(genero_pedido, humor, acompanhado, duracao, disposicao, tags_usuario=tags_usuario)
 
     nota_ml, genero_final = _resolver_genero_e_nota(
         genero_pedido, genero_j48, genero_lmt, banidos, genero_esta_travado(sid)
@@ -109,7 +111,7 @@ def _montar_resposta_filmes(sid):
     resposta = cabecalho + nota_ml + formatar_lista_filmes(filmes)
 
     if sessao_completa(sid):
-        salvar_exemplo(genero_pedido, humor, acompanhado, duracao, disposicao, genero_final)
+        salvar_exemplo(genero_pedido, humor, acompanhado, duracao, disposicao, genero_final, tags_usuario=tags_usuario)
         encerrar_sessao(sid)
         return resposta + "Espero que curta! 🍿 Se quiser mais recomendações, é só pedir."
 
