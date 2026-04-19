@@ -10,6 +10,7 @@ from src.data.ml_recomendador import recomendar_com_ambos, salvar_exemplo, MINIM
 from src.api.tmdb import (
     buscar_filmes_por_genero, buscar_filmes_similares,
     buscar_filmes_por_ator, buscar_filmes_por_genero_e_ator,
+    buscar_keywords_filme, normalizar_keywords,
 )
 from src.data.knowledge import identificar_entidade_camadas
 from src.core.session_manager import (
@@ -20,6 +21,7 @@ from src.core.session_manager import (
     banir_genero, generos_banidos, travar_genero,
     genero_esta_travado, set_genero_recomendado,
     set_referencia, get_referencia, set_pais, get_pais,
+    registrar_interesse_tags,
 )
 from src.core.state import ConversationState
 from src.core.action_classifier import ActionClassifier
@@ -69,6 +71,51 @@ _classifier = ActionClassifier()
 _registry   = _build_registry()
 
 
+def _processar_enriquecimento_perfil(contexto, sid, sessao):
+    if not sid or not sessao:
+        return ""
+        
+    tipo_ref = contexto.get("tipo_ref")
+    nome_ref = contexto.get("nome_ref")
+    
+    if tipo_ref != "filme" or not nome_ref:
+        return ""
+        
+    nome_ref_lower = nome_ref.lower()
+    if sessao.get("ultimo_filme_tag") == nome_ref_lower:
+        return ""
+        
+    entidade = identificar_entidade_camadas(nome_ref, "filme")
+    if not entidade or entidade.get("tipo") != "filme":
+        return ""
+        
+    kws = buscar_keywords_filme(entidade.get("id"))
+    tags = normalizar_keywords(kws)
+    
+    if not tags:
+        return ""
+        
+    registrar_interesse_tags(sid, tags)
+    sessao["ultimo_filme_tag"] = nome_ref_lower
+    
+    tags_str = " e ".join(tags[:2])
+    return f"Anotado! Adoro filmes com {tags_str}."
+
+
+def _combinar_respostas(tags_msg, resposta_base, action):
+    if not tags_msg:
+        return resposta_base
+        
+    if action in ("PEDIR_PROXIMO_CAMPO", "PEDIR_GENERO") and resposta_base:
+        resp_lower = resposta_base[0].lower() + resposta_base[1:]
+        return f"{tags_msg} Além disso, {resp_lower}"
+        
+    if resposta_base:
+        return f"{tags_msg}\n\n{resposta_base}"
+        
+    return tags_msg
+
+
 def gerar_resposta(mensagem_usuario, sid=None):
     tokens, lemas       = preprocessar(mensagem_usuario)
     intencao            = detectar_intencao(mensagem_usuario)
@@ -88,8 +135,12 @@ def gerar_resposta(mensagem_usuario, sid=None):
         banir_genero(sid, genero_negado)
         sessao = obter_sessao(sid)
 
+    tags_mensagem = _processar_enriquecimento_perfil(contexto, sid, sessao)
+
     state  = ConversationState.from_session(sessao)
     action = _classifier.classify(state, intencao, contexto)
     print(f"[ActionClassifier] action={action} | campos={state.campos_preenchidos}")
 
-    return _registry.get(action).execute(contexto, sid)
+    resposta_base = _registry.get(action).execute(contexto, sid)
+
+    return _combinar_respostas(tags_mensagem, resposta_base, action)
