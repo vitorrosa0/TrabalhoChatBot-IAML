@@ -22,6 +22,7 @@ def criar_sessao():
     _sessoes[sid]["genero_recomendado"]  = None
     _sessoes[sid]["referencia"]          = None
     _sessoes[sid]["pais"]                = None
+    _sessoes[sid]["perfil_tags"]         = {}
     return sid
 
 def obter_sessao(sid):
@@ -103,3 +104,15 @@ def set_pais(sid, pais):
 
 def get_pais(sid):
     return _sessoes.get(sid, {}).get("pais")
+
+def registrar_interesse_tags(sid, lista_tags):
+    if sid in _sessoes:
+        perfil = _sessoes[sid].setdefault("perfil_tags", {})
+        for tag in lista_tags:
+            perfil[tag] = perfil.get(tag, 0) + 1
+
+def obter_tags_dominantes(sid, limite=1):
+    if sid in _sessoes:
+        perfil = _sessoes[sid].get("perfil_tags", {})
+        return [tag for tag, valor in perfil.items() if valor >= limite]
+    return []
