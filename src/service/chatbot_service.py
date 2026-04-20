@@ -122,9 +122,9 @@ class ChatbotService:
 
     def _handle_other(self, text: str) -> str:
         responses = [
-            "Sou o CinemaBot! Fui criado para conversar sobre filmes — posso recomendar, falar de diretores, gêneros e mais. O que você quer explorar?",
-            "Meu criador me fez com muito amor e muita lista de filmes. 😄 Me pergunta algo sobre cinema!",
-            "Cinema é minha especialidade. Quer uma recomendação ou quer papo sobre algum filme específico?",
+            "Sou o **CinemaBot**! 🎬 Um assistente especializado em cinema, criado para conversar sobre filmes, diretores e gêneros. Me pergunta algo sobre cinema!",
+            "Me chamo **CinemaBot** — fui criado para ser seu guia no mundo do cinema. Posso recomendar filmes, falar de diretores, gêneros e curiosidades. O que você quer explorar?",
+            "Sou o **CinemaBot**, seu companheiro cinéfilo! 🍿 Tenho um catálogo enorme de filmes. Quer uma recomendação ou quer papo sobre algum filme específico?",
         ]
         return random.choice(responses)
 
@@ -210,40 +210,48 @@ class ChatbotService:
         )
 
     def _handle_director(self, text: str) -> str:
-        person_name = self._extractor.extract_person_name(text)
+        try:
+            person_name = self._extractor.extract_person_name(text)
 
-        if not person_name:
-            top_directors = self._people.find_most_popular_directors(5)
-            if top_directors:
-                names = ", ".join(d.nome for d in top_directors)
+            if not person_name:
+                top_directors = self._people.find_most_popular_directors(5)
+                if top_directors:
+                    names = ", ".join(d.nome for d in top_directors)
+                    return (
+                        f"Posso te falar sobre vários diretores! Alguns dos mais populares "
+                        f"no catálogo: **{names}**. Qual te interessa?"
+                    )
+                return "Qual diretor você quer conhecer? Me diz o nome!"
+
+            person = self._people.find_by_name(person_name)
+            if not person:
                 return (
-                    f"Posso te falar sobre vários diretores! Alguns dos mais populares no "
-                    f"catálogo: **{names}**. Qual te interessa?"
+                    f"Não encontrei **{person_name}** no meu catálogo ainda. "
+                    f"Tenta outro nome ou me pede uma recomendação!"
                 )
-            return "Qual diretor você quer conhecer? Me diz o nome!"
 
-        person = self._people.find_by_name(person_name)
-        if not person:
+            role_label = "diretor" if person.is_director else "ator/atriz"
+
+            # busca filmes pelo nome do diretor no repositório de filmes
+            filmes_do_diretor = self._movies.find_by_director(person.nome)
+            if filmes_do_diretor:
+                titles = ", ".join(f"*{m.titulo}* ({m.ano})" for m in filmes_do_diretor[:4])
+                films_str = f"No catálogo, dirigiu: {titles}."
+            elif person.filmes_conhecidos:
+                movies = [self._movies.find_by_id(mid) for mid in person.filmes_conhecidos]
+                movies = [m for m in movies if m]
+                titles = ", ".join(f"*{m.titulo}* ({m.ano})" for m in movies)
+                films_str = f"No catálogo, aparece em: {titles}."
+            else:
+                films_str = "Ainda não tenho filmes vinculados a essa pessoa no catálogo."
+
             return (
-                f"Não encontrei **{person_name}** no meu catálogo ainda. "
-                f"Tenta outro nome ou me pede uma recomendação!"
+                f"**{person.nome}** é um renomado {role_label} com popularidade "
+                f"{person.popularidade:.1f}/10. {films_str} "
+                f"Quer saber mais ou que eu recomende um filme?"
             )
-
-        role_label = "diretor" if person.is_director else "ator/atriz"
-
-        if person.filmes_conhecidos:
-            movies = [self._movies.find_by_id(mid) for mid in person.filmes_conhecidos]
-            movies = [m for m in movies if m]
-            titles = ", ".join(f"*{m.titulo}* ({m.ano})" for m in movies)
-            films_str = f"No catálogo, aparece em: {titles}."
-        else:
-            films_str = "Ainda não tenho filmes vinculados a essa pessoa no catálogo."
-
-        return (
-            f"**{person.nome}** é um renomado {role_label} com popularidade "
-            f"{person.popularidade:.1f}/10 no catálogo. {films_str} "
-            f"Quer saber mais ou que eu recomende um filme?"
-        )
+        except Exception as e:
+            return "Não consegui buscar essa informação agora. Tenta de novo ou me pergunta outra coisa!"
 
     def _handle_movie_info(self, text: str) -> str:
         title = self._extractor.extract_movie_title(text, self._all_titles)
@@ -300,7 +308,7 @@ class ChatbotService:
             codes  = self._lexicon.all_codes()
             labels = [self._lexicon.get_country_label(c) for c in codes]
             return (
-                f"Me diz de qual país você quer ver filmes! Tenho produções "
+                f"Me diz de qual país você quer ver filmes! Conheço produções "
                 f"{', '.join(labels[:6])} e mais."
             )
 
@@ -308,7 +316,15 @@ class ChatbotService:
         label  = self._lexicon.get_country_label(country)
 
         if not movies:
-            return f"Ainda não tenho filmes **{label}** no catálogo. Em breve terei mais!"
+            # avisa que o campo origem pode estar vazio no dataset
+            sample = self._movies.find_random(3)
+            lines  = "\n".join(f"• *{m.titulo}* ({m.ano})" for m in sample)
+            return (
+                f"Não encontrei filmes **{label}** com origem cadastrada no dataset. "
+                f"O campo `origem` pode estar vazio nos dados. "
+                f"Mas posso recomendar aleatoriamente:\n\n{lines}\n\n"
+                f"Quer que eu recomende algo por gênero?"
+            )
 
         sample = random.sample(movies, min(3, len(movies)))
         lines  = "\n".join(
@@ -318,7 +334,7 @@ class ChatbotService:
         )
 
         return (
-            f"Cinema **{label}** tem muito a oferecer! Alguns filmes que tenho:\n\n"
+            f"Cinema **{label}** tem muito a oferecer! Alguns filmes:\n\n"
             f"{lines}\n\n"
             f"Quer saber mais sobre algum, ou que eu recomende um?"
         )

@@ -83,6 +83,8 @@ class IntentClassifier:
         ("quais diretores estão no catálogo", "buscar_diretor"),
         ("diretores populares", "buscar_diretor"),
         ("me fala sobre o spielberg", "buscar_diretor"),
+        ("me fala sobre o tarantino", "buscar_diretor"),
+        ("quem é o tim burton", "buscar_diretor"),
 
         # buscar_filme
         ("fala sobre cidade de deus", "buscar_filme"),
@@ -153,6 +155,12 @@ class IntentClassifier:
         ("o que você faz", "outro"),
         ("como você funciona", "outro"),
         ("me ajuda", "outro"),
+        ("quem é você", "outro"),
+        ("você é uma ia", "outro"),
+        ("como você foi feito", "outro"),
+        ("o que é o cinemabot", "outro"),
+        ("qual é o seu nome", "outro"),
+        ("você é um robô", "outro"),
     ]
 
     def __init__(self):
