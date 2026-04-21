@@ -369,10 +369,20 @@ class ChatbotService:
             person_name = self._extractor.extract_person_name(text)
 
             if not person_name:
-                top = self._people.find_most_popular(5)
+                t = text.lower()
+                if any(w in t for w in ["diretor", "diretores"]):
+                    top = self._people.find_most_popular_directors(5)
+                    label = "diretores"
+                elif any(w in t for w in ["ator", "atriz", "atores", "atrizes"]):
+                    top = self._people.find_most_popular_actors(5)
+                    label = "atores"
+                else:
+                    top = self._people.find_most_popular(5)
+                    label = "atores e diretores"
+
                 if top:
                     names = ", ".join(p.nome for p in top)
-                    return f"Algumas pessoas populares no catálogo: **{names}**. Quer saber sobre alguma?"
+                    return f"Aqui estão alguns {label} populares no catálogo: **{names}**. Quer saber sobre algum deles?"
                 return "Qual ator ou diretor você quer conhecer? Me diz o nome!"
 
             person = self._people.find_by_name(person_name)
