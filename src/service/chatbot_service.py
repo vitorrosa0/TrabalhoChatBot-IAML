@@ -271,10 +271,10 @@ class ChatbotService:
                     return random.choice(UNKNOWNS)
                 return self._format_recommendation(movie, intro=f"Um filme de {year} que vale:")
 
-        top  = self._movies.find_top_rated(10)
-        pool = top if top else self._movies.find_random(5)
-        movie = random.choice(pool)
-        return self._format_recommendation(movie, intro="Que tal um dos mais bem avaliados:")
+        return (
+            f"Não encontrei nada com esse título no catálogo. 😕\n"
+            f"Tente me dizer um gênero, país ou diretor que eu te ajudo!"
+        )
 
     def _handle_recommend_by_director_context(self, text: str) -> str:
         person_name = self._ctx.last_director
@@ -369,20 +369,10 @@ class ChatbotService:
             person_name = self._extractor.extract_person_name(text)
 
             if not person_name:
-                t = text.lower()
-                if any(w in t for w in ["diretor", "diretores"]):
-                    top = self._people.find_most_popular_directors(5)
-                    label = "diretores"
-                elif any(w in t for w in ["ator", "atriz", "atores", "atrizes"]):
-                    top = self._people.find_most_popular_actors(5)
-                    label = "atores"
-                else:
-                    top = self._people.find_most_popular(5)
-                    label = "atores e diretores"
-
+                top = self._people.find_most_popular(5)
                 if top:
                     names = ", ".join(p.nome for p in top)
-                    return f"Aqui estão alguns {label} populares no catálogo: **{names}**. Quer saber sobre algum deles?"
+                    return f"Algumas pessoas populares no catálogo: **{names}**. Quer saber sobre alguma?"
                 return "Qual ator ou diretor você quer conhecer? Me diz o nome!"
 
             person = self._people.find_by_name(person_name)
