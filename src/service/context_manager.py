@@ -1,27 +1,71 @@
+"""
+service/context_manager.py
+"""
 from typing import Optional
 
 
 class ConversationContext:
 
-    def __init__(self, max_turns: int = 5):
+    # Frases que significam "me dá mais do mesmo"
+    MORE_OF_SAME_REFS = [
+        "quero outro", "me dá outro", "outro filme", "mais um",
+        "próximo", "proximo", "não gostei", "nao gostei",
+        "passa", "outra opção", "outra opcao", "diferente",
+        "mais algum", "tem mais", "quero mais", "me indica outro",
+        "não curti", "nao curti", "esse não", "esse nao",
+    ]
+
+    # Frases que significam "me fala mais sobre o último filme"
+    DETAIL_REFS = [
+        "me conta mais", "mais detalhes", "me fala mais",
+        "fala sobre esse", "o que mais", "e sobre esse",
+        "me conta sobre ele", "me fala dele",
+    ]
+
+    CONFIRMATION_REFS = [
+        "sim", "yes", "pode", "quero", "vai", "claro", "manda",
+        "manda ver", "pode ser", "bora", "ok", "isso", "exato",
+        "com certeza", "por favor", "pfv", "pls", "manda um",
+    ]
+
+    def __init__(self, max_turns: int = 8):
         self._max_turns = max_turns
-        self._history: list[dict] = []  # últimas mensagens
+        self._history: list[dict] = []
         self.last_director: Optional[str] = None
         self.last_movie_title: Optional[str] = None
         self.last_genre: Optional[str] = None
         self.last_country: Optional[str] = None
         self.last_person_name: Optional[str] = None
+        self.last_recommended_id: Optional[int] = None   # ← novo
+        self.last_recommended_genres: list[str] = []     # ← novo
+        self._recently_recommended: list[int] = []       # ← histórico de IDs recomendados
 
-    def update(
-        self,
-        user_message: str,
-        intent: str,
-        director: Optional[str] = None,
-        movie: Optional[str] = None,
-        genre: Optional[str] = None,
-        country: Optional[str] = None,
-        person: Optional[str] = None,
-    ):
+    def set_last_recommendation(self, movie_id: int, genres: list[str]):
+        """Registra o filme que acabou de ser recomendado."""
+        self.last_recommended_id = movie_id
+        self.last_recommended_genres = genres
+        if movie_id not in self._recently_recommended:
+            self._recently_recommended.append(movie_id)
+        # guarda só os últimos 10 recomendados para evitar repetição
+        if len(self._recently_recommended) > 10:
+            self._recently_recommended.pop(0)
+
+    def get_excluded_ids(self) -> list[int]:
+        """IDs de filmes já recomendados nessa sessão."""
+        return list(self._recently_recommended)
+
+    def is_more_of_same(self, text: str) -> bool:
+        """Detecta se o usuário quer mais do mesmo tipo."""
+        text_lower = text.lower()
+        return any(ref in text_lower for ref in self.MORE_OF_SAME_REFS)
+
+    def is_detail_request(self, text: str) -> bool:
+        """Detecta se o usuário quer mais detalhes do último filme."""
+        text_lower = text.lower()
+        return any(ref in text_lower for ref in self.DETAIL_REFS)
+
+    def update(self, user_message, intent, director=None, movie=None,
+               genre=None, country=None, person=None):
         if director:
             self.last_director = director
             self.last_person_name = director
@@ -35,77 +79,50 @@ class ConversationContext:
             self.last_person_name = person
 
         self._history.append({
-            "message": user_message,
-            "intent": intent,
-            "director": director,
-            "movie": movie,
-            "genre": genre,
-            "country": country,
+            "message": user_message, "intent": intent,
+            "director": director, "movie": movie,
+            "genre": genre, "country": country,
         })
-
-        # mantém só os últimos N turnos
         if len(self._history) > self._max_turns:
             self._history.pop(0)
 
     def resolve_director_reference(self, text: str) -> Optional[str]:
-        """
-        Resolve referências como 'dele', 'desse diretor', 'do mesmo diretor'
-        para o último diretor mencionado.
-        """
-        DIRECTOR_REFS = [
-            "dele", "desse diretor", "do mesmo diretor", "do nolan",
-            "desse cara", "desse cineasta", "deste diretor", "dele mesmo",
-            "deste cineasta", "filmes dele", "obras dele",
-        ]
+        REFS = ["dele", "desse diretor", "do mesmo diretor", "desse cara",
+                "desse cineasta", "filmes dele", "obras dele"]
         text_lower = text.lower()
-        for ref in DIRECTOR_REFS:
-            if ref in text_lower:
-                return self.last_director
+        if any(r in text_lower for r in REFS):
+            return self.last_director
         return None
 
     def resolve_movie_reference(self, text: str) -> Optional[str]:
-        """
-        Resolve 'esse filme', 'ele', 'desse', 'parecido com esse' para
-        o último filme mencionado.
-        """
-        MOVIE_REFS = [
-            "esse filme", "este filme", "parecido", "parecido com isso",
-            "algo similar", "mais desse tipo", "como esse", "como este",
-        ]
+        REFS = ["esse filme", "este filme", "parecido", "algo similar",
+                "mais desse tipo", "como esse", "como este"]
         text_lower = text.lower()
-        for ref in MOVIE_REFS:
-            if ref in text_lower:
-                return self.last_movie_title
+        if any(r in text_lower for r in REFS):
+            return self.last_movie_title
         return None
 
     def resolve_genre_reference(self, text: str) -> Optional[str]:
-        """Resolve 'desse gênero', 'mais desse tipo' para o último gênero."""
-        GENRE_REFS = [
-            "desse gênero", "desse genero", "mais desse tipo",
-            "desse estilo", "do mesmo gênero",
-        ]
+        REFS = ["desse gênero", "desse genero", "mais desse tipo",
+                "desse estilo", "do mesmo gênero"]
         text_lower = text.lower()
-        for ref in GENRE_REFS:
-            if ref in text_lower:
-                return self.last_genre
+        if any(r in text_lower for r in REFS):
+            return self.last_genre
         return None
 
     def resolve_country_reference(self, text: str) -> Optional[str]:
-        """Resolve 'desse país', 'do mesmo país' para o último país."""
-        COUNTRY_REFS = [
-            "desse país", "desse pais", "do mesmo país",
-            "do mesmo pais", "desse cinema",
-        ]
+        REFS = ["desse país", "desse pais", "do mesmo país", "do mesmo pais"]
         text_lower = text.lower()
-        for ref in COUNTRY_REFS:
-            if ref in text_lower:
-                return self.last_country
+        if any(r in text_lower for r in REFS):
+            return self.last_country
         return None
 
     def last_intent(self) -> Optional[str]:
-        if self._history:
-            return self._history[-1]["intent"]
-        return None
+        return self._history[-1]["intent"] if self._history else None
+
+    def is_confirmation(self, text: str) -> bool:
+        text_stripped = text.lower().strip().rstrip("!?.")
+        return text_stripped in self.CONFIRMATION_REFS
 
     def clear(self):
         self._history.clear()
@@ -114,3 +131,6 @@ class ConversationContext:
         self.last_genre = None
         self.last_country = None
         self.last_person_name = None
+        self.last_recommended_id = None
+        self.last_recommended_genres = []
+        self._recently_recommended = []

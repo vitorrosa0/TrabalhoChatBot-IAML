@@ -1,11 +1,9 @@
 """
 repositories/person_repository.py
-Acesso às pessoas do dataset_reconhecimento.
-Responsabilidade única: leitura e filtragem de pessoas.
 """
 import json
 from typing import List, Optional
-from src.models.person import Person
+from ..models.person import Person
 
 
 class PersonRepository:
@@ -15,17 +13,19 @@ class PersonRepository:
     def _load(self, path: str) -> List[Person]:
         with open(path, "r", encoding="utf-8") as f:
             raw = json.load(f)
-
         people = []
         for item in raw.get("pessoas", []):
             people.append(Person(
                 id=item.get("id", 0),
                 nome=item.get("nome", ""),
                 popularidade=float(item.get("popularidade", 0.0)),
-                departamento=item.get("departamento", ""),
+                departamento=item.get("departamento") or "Acting",
                 filmes_conhecidos=item.get("filmes_conhecidos", []),
             ))
         return people
+
+    def find_all(self) -> List[Person]:
+        return list(self._people)
 
     def find_by_name(self, name: str) -> Optional[Person]:
         name_lower = name.lower()

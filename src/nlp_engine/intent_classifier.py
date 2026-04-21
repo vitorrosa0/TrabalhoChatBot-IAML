@@ -85,6 +85,17 @@ class IntentClassifier:
         ("me fala sobre o spielberg", "buscar_diretor"),
         ("me fala sobre o tarantino", "buscar_diretor"),
         ("quem é o tim burton", "buscar_diretor"),
+        ("você conhece o chris evans", "buscar_diretor"),
+        ("conhece o tarantino", "buscar_diretor"),
+        ("sabe algo sobre o nolan", "buscar_diretor"),
+        ("quem é o chris evans", "buscar_diretor"),
+        ("me fala do brad pitt", "buscar_diretor"),
+        ("conhece a scarlett johansson", "buscar_diretor"),
+        ("sabe quem é a anne hathaway", "buscar_diretor"),
+        ("conhece o ator ryan gosling", "buscar_diretor"),
+        ("me fala sobre a atriz", "buscar_diretor"),
+        ("quem é esse ator", "buscar_diretor"),
+        ("você sabe quem é", "buscar_diretor"),
 
         # buscar_filme
         ("fala sobre cidade de deus", "buscar_filme"),

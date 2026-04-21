@@ -542,28 +542,30 @@
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
+  const SESSION_ID = Math.random().toString(36).substring(2);
+
   async function sendMessage() {
-    const text = inputEl.value.trim();
-    if (!text) return;
+      const text = inputEl.value.trim();
+      if (!text) return;
 
-    inputEl.value = '';
-    inputEl.style.height = 'auto';
-    appendMessage(text, 'user');
-    showTyping();
+      inputEl.value = '';
+      inputEl.style.height = 'auto';
+      appendMessage(text, 'user');
+      showTyping();
 
-    try {
-      const res  = await fetch('/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text }),
-      });
-      const data = await res.json();
-      hideTyping();
-      appendMessage(data.response, 'bot');
-    } catch {
-      hideTyping();
-      appendMessage('Ops, algo deu errado. Tenta de novo!', 'bot');
-    }
+      try {
+          const res = await fetch('/chat', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: text, session_id: SESSION_ID }), // ← adiciona
+          });
+          const data = await res.json();
+          hideTyping();
+          appendMessage(data.response, 'bot');
+      } catch {
+          hideTyping();
+          appendMessage('Ops, algo deu errado. Tenta de novo!', 'bot');
+      }
   }
 
   function send(text) {

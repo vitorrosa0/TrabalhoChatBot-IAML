@@ -88,3 +88,10 @@ class MovieRepository:
             m for m in self._movies
             if text_lower in m.titulo.lower() or text_lower in m.titulo_original.lower()
         ]
+
+    def find_by_cast_member(self, name: str) -> List[Movie]:
+        name_lower = name.lower()
+        return [
+            m for m in self._movies
+            if any(name_lower in member.lower() for member in m.elenco)
+        ]

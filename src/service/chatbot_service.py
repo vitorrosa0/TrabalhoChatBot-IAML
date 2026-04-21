@@ -72,68 +72,92 @@ class ChatbotService:
             if heuristic:
                 intent = heuristic
 
-        # ── Resolução contextual antes de despachar ──────────────────────
-        # Se o usuário usou referência anafórica, enriquece a mensagem
-        # internamente antes de processar.
+        # ── Resolução contextual SEMPRE acontece, independente da confiança ──
         intent = self._resolve_context_intent(user_message, intent)
 
         handlers = {
-            "saudacao":         self._handle_greeting,
-            "despedida":        self._handle_farewell,
-            "recomendar_filme": self._handle_recommend,
-            "buscar_diretor":   self._handle_director,
-            "buscar_filme":     self._handle_movie_info,
-            "sobre_genero":     self._handle_genre,
-            "sobre_pais":       self._handle_country,
-            "avaliacao":        self._handle_rating,
-            "curiosidade":      self._handle_curiosity,
-            "outro":            self._handle_other,
+            "saudacao":                         self._handle_greeting,
+            "despedida":                        self._handle_farewell,
+            "recomendar_filme":                 self._handle_recommend,
+            "buscar_diretor":                   self._handle_director,
+            "buscar_filme":                     self._handle_movie_info,
+            "sobre_genero":                     self._handle_genre,
+            "sobre_pais":                       self._handle_country,
+            "avaliacao":                        self._handle_rating,
+            "curiosidade":                      self._handle_curiosity,
+            "outro":                            self._handle_other,
+            "recomendar_pelo_contexto_diretor": self._handle_recommend_by_director_context,
+            "recomendar_pelo_contexto_filme":   self._handle_recommend_by_movie_context,
+            "recomendar_pelo_contexto_genero":  self._handle_recommend_by_genre_context,
+            "recomendar_pelo_contexto_pais":    self._handle_recommend_by_country_context,
+            "buscar_filme_contexto":            self._handle_movie_info_from_context,
         }
 
         handler = handlers.get(intent, self._handle_unknown)
         response = handler(user_message)
-
-        # atualiza contexto após responder
         self._update_context(user_message, intent)
-
         return response
 
-    # ── Resolução de contexto ─────────────────────────────────────────────
 
     def _resolve_context_intent(self, text: str, intent: str) -> str:
-        """
-        Detecta se o usuário está referenciando algo do contexto anterior
-        e redireciona a intenção se necessário.
-        """
-        text_lower = text.lower()
 
-        # "me recomende filmes dele / do Nolan / desse diretor"
-        if self._ctx.resolve_director_reference(text) and intent in ("recomendar_filme", "outro", "buscar_diretor"):
+        if self._ctx.is_confirmation(text):
+            # se o contexto ativo é de pessoa → recomenda filme dela
+            if self._ctx.last_director:
+                return "recomendar_pelo_contexto_diretor"
+            # se tem gênero ativo → recomenda do gênero
+            if self._ctx.last_genre:
+                return "recomendar_pelo_contexto_genero"
+            # se tem país ativo → recomenda do país
+            if self._ctx.last_country:
+                return "recomendar_pelo_contexto_pais"
+            # se tem filme ativo → recomenda similar
+            if self._ctx.last_movie_title:
+                return "recomendar_pelo_contexto_filme"
+            # sem contexto → recomendação geral
+            return "recomendar_filme"
+
+        # ── "quero outro / passa / mais um" ──────────────────────────────────
+        if self._ctx.is_more_of_same(text):
+            if self._ctx.last_director:
+                return "recomendar_pelo_contexto_diretor"
+            if self._ctx.last_genre:
+                return "recomendar_pelo_contexto_genero"
+            if self._ctx.last_country:
+                return "recomendar_pelo_contexto_pais"
+            if self._ctx.last_recommended_genres:
+                return "recomendar_pelo_contexto_filme"
+            return "recomendar_filme"
+
+        # ── "mais detalhes sobre esse" ────────────────────────────────────────
+        if self._ctx.is_detail_request(text) and self._ctx.last_movie_title:
+            return "buscar_filme_contexto"
+
+        # ── Referências anafóricas explícitas ─────────────────────────────────
+        if self._ctx.resolve_director_reference(text):
             return "recomendar_pelo_contexto_diretor"
-
-        # "me conta mais sobre esse filme" / "tem algo parecido?"
-        if self._ctx.resolve_movie_reference(text) and intent in ("recomendar_filme", "buscar_filme", "outro"):
+        if self._ctx.resolve_movie_reference(text):
             return "recomendar_pelo_contexto_filme"
-
-        # "mais filmes desse gênero"
-        if self._ctx.resolve_genre_reference(text) and intent in ("recomendar_filme", "sobre_genero", "outro"):
+        if self._ctx.resolve_genre_reference(text):
             return "recomendar_pelo_contexto_genero"
-
-        # "mais filmes desse país"
-        if self._ctx.resolve_country_reference(text) and intent in ("recomendar_filme", "sobre_pais", "outro"):
+        if self._ctx.resolve_country_reference(text):
             return "recomendar_pelo_contexto_pais"
 
         return intent
 
     def _update_context(self, text: str, intent: str):
-        """Extrai entidades da mensagem e atualiza o contexto."""
         director = self._extractor.extract_person_name(text)
         movie    = self._extractor.extract_movie_title(text, self._all_titles)
         genres   = self._extractor.extract_genres(text)
         country  = self._lexicon.resolve_country(text)
 
-        # se não extraiu diretor do texto mas é uma resposta de buscar_diretor,
-        # mantém o contexto anterior
+        # se foi uma recomendação pelo contexto de diretor, não limpa o diretor
+        # para permitir "quero outro dele" em seguida
+        # mas se o usuário mudou de assunto explicitamente, limpa
+        if intent in ("sobre_genero", "sobre_pais", "saudacao", "despedida"):
+            self._ctx.last_director = None
+            self._ctx.last_person_name = None
+
         self._ctx.update(
             user_message=text,
             intent=intent,
@@ -143,7 +167,6 @@ class ChatbotService:
             country=country,
         )
 
-    # ── Heurísticas ───────────────────────────────────────────────────────
 
     def _heuristic_intent(self, text: str) -> Optional[str]:
         t = text.lower()
@@ -198,14 +221,18 @@ class ChatbotService:
                     candidates = [self._movies.find_by_id(mid) for mid in p.filmes_conhecidos]
                     candidates = [m for m in candidates if m]
             if candidates:
-                movie = random.choice(candidates)
+                movie = self._pick_movie(candidates)
+                if not movie:
+                    return random.choice(UNKNOWNS)
                 return self._format_recommendation(movie, intro=f"Falando em {p.nome}! Que tal:")
 
         if country and genres:
             by_country = self._movies.find_by_country(country)
             candidates = [m for m in by_country if any(g in m.generos for g in genres)]
             if candidates:
-                movie = random.choice(candidates)
+                movie = self._pick_movie(candidates)
+                if not movie:
+                    return random.choice(UNKNOWNS)
                 label = self._lexicon.get_country_label(country)
                 genre_label = self._extractor.slug_to_label(genres[0])
                 return self._format_recommendation(movie, intro=f"Achei um filme {label} de {genre_label}:")
@@ -213,21 +240,27 @@ class ChatbotService:
         if country:
             candidates = self._movies.find_by_country(country)
             if candidates:
-                movie = random.choice(candidates)
+                movie = self._pick_movie(candidates)
+                if not movie:
+                    return random.choice(UNKNOWNS)
                 label = self._lexicon.get_country_label(country)
                 return self._format_recommendation(movie, intro=f"Que tal esse filme {label}?")
 
         if genres:
             candidates = self._movies.find_by_multiple_genres(genres)
             if candidates:
-                movie = random.choice(candidates)
+                movie = self._pick_movie(candidates)
+                if not movie:
+                    return random.choice(UNKNOWNS)
                 genre_label = self._extractor.slug_to_label(genres[0])
                 return self._format_recommendation(movie, intro=f"Pra quem curte {genre_label}:")
 
         if year:
             candidates = self._movies.find_by_year(year)
             if candidates:
-                movie = random.choice(candidates)
+                movie = self._pick_movie(candidates)
+                if not movie:
+                    return random.choice(UNKNOWNS)
                 return self._format_recommendation(movie, intro=f"Um filme de {year} que vale:")
 
         top  = self._movies.find_top_rated(10)
@@ -236,25 +269,31 @@ class ChatbotService:
         return self._format_recommendation(movie, intro="Que tal um dos mais bem avaliados:")
 
     def _handle_recommend_by_director_context(self, text: str) -> str:
-        director_name = self._ctx.last_director
-        if not director_name:
+        person_name = self._ctx.last_director
+        if not person_name:
             return self._handle_recommend(text)
 
-        candidates = self._movies.find_by_director(director_name)
+        # busca por diretor, elenco e filmes_conhecidos
+        candidates = self._movies.find_by_director(person_name)
+
         if not candidates:
-            p = self._people.find_by_name(director_name)
+            candidates = self._movies.find_by_cast_member(person_name)
+
+        if not candidates:
+            p = self._people.find_by_name(person_name)
             if p and p.filmes_conhecidos:
                 candidates = [self._movies.find_by_id(mid) for mid in p.filmes_conhecidos]
                 candidates = [m for m in candidates if m]
 
         if candidates:
-            movie = random.choice(candidates)
-            return self._format_recommendation(
-                movie,
-                intro=f"Claro! Um filme de **{director_name}** que você pode gostar:"
-            )
+            movie = self._pick_movie(candidates)
+            if movie:
+                return self._format_recommendation(
+                    movie,
+                    intro=f"Um filme com **{person_name}**:"
+                )
 
-        return f"Não encontrei outros filmes de **{director_name}** no catálogo. Quer que eu recomende algo parecido?"
+        return f"Não encontrei filmes com **{person_name}** no catálogo."
 
     def _handle_recommend_by_movie_context(self, text: str) -> str:
         title = self._ctx.last_movie_title
@@ -270,7 +309,9 @@ class ChatbotService:
         candidates = [m for m in candidates if m.titulo != ref_movie.titulo]
 
         if candidates:
-            movie = random.choice(candidates)
+            movie = self._pick_movie(candidates)
+            if not movie:
+                return random.choice(UNKNOWNS)
             genres_label = ", ".join(self._extractor.slug_to_label(g) for g in ref_movie.generos[:2])
             return self._format_recommendation(
                 movie,
@@ -286,7 +327,9 @@ class ChatbotService:
 
         candidates = self._movies.find_by_genre(genre)
         if candidates:
-            movie = random.choice(candidates)
+            movie = self._pick_movie(candidates)
+            if not movie:
+                return random.choice(UNKNOWNS)
             label = self._extractor.slug_to_label(genre)
             return self._format_recommendation(
                 movie,
@@ -302,7 +345,9 @@ class ChatbotService:
 
         candidates = self._movies.find_by_country(country)
         if candidates:
-            movie = random.choice(candidates)
+            movie = self._pick_movie(candidates)
+            if not movie:
+                return random.choice(UNKNOWNS)
             label = self._lexicon.get_country_label(country)
             return self._format_recommendation(
                 movie,
@@ -316,34 +361,49 @@ class ChatbotService:
             person_name = self._extractor.extract_person_name(text)
 
             if not person_name:
-                top_directors = self._people.find_most_popular_directors(5)
-                if top_directors:
-                    names = ", ".join(d.nome for d in top_directors)
-                    return f"Alguns dos diretores mais populares no catálogo: **{names}**. Qual te interessa?"
-                return "Qual diretor você quer conhecer? Me diz o nome!"
+                top = self._people.find_most_popular(5)
+                if top:
+                    names = ", ".join(p.nome for p in top)
+                    return f"Algumas pessoas populares no catálogo: **{names}**. Quer saber sobre alguma?"
+                return "Qual ator ou diretor você quer conhecer? Me diz o nome!"
 
             person = self._people.find_by_name(person_name)
             if not person:
                 return f"Não encontrei **{person_name}** no catálogo. Tenta outro nome!"
 
-            role_label = "diretor" if person.is_director else "ator/atriz"
-            filmes_do_diretor = self._movies.find_by_director(person.nome)
+            role_labels = {
+                "directing": "diretor",
+                "acting": "ator/atriz",
+                "writing": "roteirista",
+                "production": "produtor",
+            }
+            role_label = role_labels.get(
+                (person.departamento or "acting").lower(), "profissional de cinema"
+            )
 
-            if filmes_do_diretor:
-                titles = ", ".join(f"*{m.titulo}* ({m.ano})" for m in filmes_do_diretor[:4])
-                films_str = f"No catálogo, dirigiu: {titles}."
-            elif person.filmes_conhecidos:
-                movies = [self._movies.find_by_id(mid) for mid in person.filmes_conhecidos]
-                movies = [m for m in movies if m]
-                titles = ", ".join(f"*{m.titulo}* ({m.ano})" for m in movies)
-                films_str = f"No catálogo, aparece em: {titles}."
+            # 1. tenta pelo campo diretor dos filmes
+            filmes = self._movies.find_by_director(person.nome)
+
+            # 2. tenta pelo campo elenco dos filmes
+            if not filmes:
+                filmes = self._movies.find_by_cast_member(person.nome)
+
+            # 3. tenta pelos IDs em filmes_conhecidos
+            if not filmes and person.filmes_conhecidos:
+                filmes = [self._movies.find_by_id(mid) for mid in person.filmes_conhecidos]
+                filmes = [m for m in filmes if m]
+
+            if filmes:
+                titles = ", ".join(f"*{m.titulo}* ({m.ano})" for m in filmes[:5])
+                verbo  = "dirigiu" if person.is_director else "aparece em"
+                films_str = f"No catálogo, {verbo}: {titles}."
             else:
-                films_str = "Ainda não tenho filmes vinculados a essa pessoa."
+                films_str = "Ainda não tenho filmes vinculados a essa pessoa no catálogo."
 
             return (
-                f"**{person.nome}** é um renomado {role_label} com popularidade "
-                f"{person.popularidade:.1f}/10. {films_str} "
-                f"Quer que eu recomende um filme dele?"
+                f"**{person.nome}** é um(a) renomado(a) {role_label} "
+                f"com popularidade {person.popularidade:.1f}/10. "
+                f"{films_str} Quer que eu recomende um filme?"
             )
         except Exception:
             return "Não consegui buscar essa informação. Tenta de novo!"
@@ -355,6 +415,15 @@ class ChatbotService:
         movie = self._movies.find_by_title(title)
         if not movie:
             return f"Não encontrei *{title}* no catálogo."
+        return self._format_movie_detail(movie)
+
+    def _handle_movie_info_from_context(self, text: str) -> str:
+        title = self._ctx.last_movie_title
+        if not title:
+            return self._handle_movie_info(text)
+        movie = self._movies.find_by_title(title)
+        if not movie:
+            return self._handle_movie_info(text)
         return self._format_movie_detail(movie)
 
     def _handle_genre(self, text: str) -> str:
@@ -421,6 +490,10 @@ class ChatbotService:
     # ── Formatação ────────────────────────────────────────────────────────
 
     def _format_recommendation(self, movie: Movie, intro: str) -> str:
+        # registra no contexto para evitar repetição e resolver "quero outro"
+        self._ctx.set_last_recommendation(movie.id, movie.generos)
+        self._ctx.last_movie_title = movie.titulo
+
         genres_label = ", ".join(self._extractor.slug_to_label(g) for g in movie.generos) or "Não informado"
         origem_label = ", ".join(self._lexicon.get_country_label_plural(o) for o in movie.origem) if movie.origem else "Não informada"
         rating_str   = f"⭐ {movie.avaliacao}/10" if movie.avaliacao else "sem avaliação"
@@ -432,8 +505,33 @@ class ChatbotService:
             f"**Gênero:** {genres_label} | **Origem:** {origem_label}\n"
             f"**Avaliação:** {rating_str}"
             f"{sinopse_str}\n\n"
-            f"O que achou? Quer outro tipo de indicação ou mais detalhes?"
+            f"O que achou? Quer outro ou mais detalhes?"
         )
+
+    def _pick_movie(self, candidates: list) -> Optional[Movie]:
+        """
+        Escolhe um filme priorizando qualidade:
+        1. Remove já recomendados nessa sessão
+        2. Ordena por avaliação decrescente
+        3. Sorteia entre os top 10 para ter variedade
+        """
+        excluded = self._ctx.get_excluded_ids()
+        fresh = [m for m in candidates if m.id not in excluded]
+
+        # se todos já foram recomendados, reseta histórico
+        if not fresh:
+            self._ctx._recently_recommended.clear()
+            fresh = candidates
+
+        if not fresh:
+            return None
+
+        # ordena por avaliação, filmes sem nota vão pro final
+        fresh_sorted = sorted(fresh, key=lambda m: m.avaliacao or 0, reverse=True)
+
+        # sorteia entre os top 10 para não ser sempre o mesmo
+        pool = fresh_sorted[:10]
+        return random.choice(pool)
 
     def _format_movie_detail(self, movie: Movie) -> str:
         genres_label = ", ".join(self._extractor.slug_to_label(g) for g in movie.generos) or "Não informado"
