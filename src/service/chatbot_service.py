@@ -47,6 +47,12 @@ UNKNOWNS = [
     "Hmm, não entendi bem. Você pode me perguntar sobre filmes, diretores, gêneros ou pedir uma recomendação!",
     "Não peguei essa. Tenta me perguntar sobre algum filme, gênero ou diretor — sou especialista nisso! 😄",
     "Essa eu não soube responder. Mas se falar de cinema, eu estou aqui!",
+    "Puxa, acho que saímos um pouco do roteiro. Que tal a gente voltar a falar sobre cinema?",
+    "Hmm, sobre isso eu ainda não tenho muito o que dizer. Mas se o assunto for filmes, pode mandar!",
+    "Ops, me pegou de surpresa! Minha especialidade é a sétima arte. Quer uma indicação de filme?",
+    "Acho que essa informação não está no meu script... mas se quiser falar sobre diretores ou gêneros, estou por aqui!",
+    "Essa eu vou ficar devendo! Que tal mudarmos de assunto e explorarmos alguma recomendação de filme?",
+    "Confesso que me perdi um pouco agora. Vamos voltar a falar de cinema? Me pede uma sugestão de filme!",
 ]
 
 
@@ -71,6 +77,8 @@ class ChatbotService:
             heuristic = self._heuristic_intent(user_message)
             if heuristic:
                 intent = heuristic
+            else:
+                intent = "desconhecido" # <- Forçamos a ser desconhecido
 
         # ── Resolução contextual SEMPRE acontece, independente da confiança ──
         intent = self._resolve_context_intent(user_message, intent)
