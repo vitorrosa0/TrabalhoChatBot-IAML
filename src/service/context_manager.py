@@ -8,11 +8,21 @@ class ConversationContext:
 
     # Frases que significam "me dá mais do mesmo"
     MORE_OF_SAME_REFS = [
+        # já existentes
         "quero outro", "me dá outro", "outro filme", "mais um",
         "próximo", "proximo", "não gostei", "nao gostei",
         "passa", "outra opção", "outra opcao", "diferente",
         "mais algum", "tem mais", "quero mais", "me indica outro",
         "não curti", "nao curti", "esse não", "esse nao",
+        # ── novas variações ──
+        "tem outro", "tem mais algum", "tem outra opção",
+        "outro", "outra", "mais alguma opção", "mais opções",
+        "me manda outro", "me indica mais", "quero ver outro",
+        "não quero esse", "nao quero esse", "me dá uma outra opção",
+        "próxima opção", "proxima opcao", "e mais?", "tem mais?",
+        "mais um filme", "manda outro", "me sugere outro",
+        "me recomenda outro", "e agora?", "qual mais",
+        "tem mais alguma coisa", "o que mais tem",
     ]
 
     # Frases que significam "me fala mais sobre o último filme"
@@ -56,8 +66,28 @@ class ConversationContext:
 
     def is_more_of_same(self, text: str) -> bool:
         """Detecta se o usuário quer mais do mesmo tipo."""
-        text_lower = text.lower()
-        return any(ref in text_lower for ref in self.MORE_OF_SAME_REFS)
+        text_lower = text.lower().strip().rstrip("!?.")
+
+        # match exato na lista
+        if any(ref in text_lower for ref in self.MORE_OF_SAME_REFS):
+            return True
+
+        # se há contexto ativo e a mensagem é curta e vaga,
+        # palavras isoladas como "outro", "mais", "outra" bastam
+        has_active_context = any([
+            self.last_director, self.last_genre,
+            self.last_country, self.last_recommended_genres,
+        ])
+        if has_active_context:
+            SHORT_TRIGGERS = [
+                "outro", "outra", "mais", "próximo", "proximo",
+                "next", "diferente", "muda", "troca", "passa",
+                "e aí", "e ai", "continua", "e mais", "tem",
+            ]
+            if any(text_lower == t or text_lower.startswith(t + " ") for t in SHORT_TRIGGERS):
+                return True
+
+        return False
 
     def is_detail_request(self, text: str) -> bool:
         """Detecta se o usuário quer mais detalhes do último filme."""

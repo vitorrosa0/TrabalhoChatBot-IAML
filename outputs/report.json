@@ -1,0 +1,40 @@
+{
+  "melhor_algoritmo": "SVM Linear",
+  "algoritmos": {
+    "Naive Bayes (MultinomialNB)": {
+      "acuracia_media": 0.4828,
+      "desvio_padrao": 0.1112,
+      "f1_macro": 0.4372
+    },
+    "Naive Bayes (ComplementNB)": {
+      "acuracia_media": 0.4759,
+      "desvio_padrao": 0.1009,
+      "f1_macro": 0.4196
+    },
+    "Árvore de Decisão (J48 / CART)": {
+      "acuracia_media": 0.3241,
+      "desvio_padrao": 0.064,
+      "f1_macro": 0.2446
+    },
+    "Random Forest": {
+      "acuracia_media": 0.3793,
+      "desvio_padrao": 0.0786,
+      "f1_macro": 0.2878
+    },
+    "Regressão Logística (LMT)": {
+      "acuracia_media": 0.4207,
+      "desvio_padrao": 0.0828,
+      "f1_macro": 0.2996
+    },
+    "SVM Linear": {
+      "acuracia_media": 0.5103,
+      "desvio_padrao": 0.0935,
+      "f1_macro": 0.4688
+    },
+    "Gradient Boosting": {
+      "acuracia_media": 0.4414,
+      "desvio_padrao": 0.1279,
+      "f1_macro": 0.3523
+    }
+  }
+}
