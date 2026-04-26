@@ -513,7 +513,7 @@ class ChatbotService:
             f"**Gênero:** {genres_label} | **Origem:** {origem_label}\n"
             f"**Avaliação:** {rating_str}"
             f"{sinopse_str}\n\n"
-            f"O que achou? Quer outro ou mais detalhes?"
+            f"O que achou? Caso queira mais recomendações desse estilo ou algum outro a sua escolha é só dizer!"
         )
 
     def _pick_movie(self, candidates: list) -> Optional[Movie]:
