@@ -273,7 +273,7 @@ class ChatbotService:
 
         return (
             f"Não encontrei nada com esse título no catálogo. 😕\n"
-            f"Tente me dizer um gênero, país ou diretor que eu te ajudo!"
+            f"Tente me dizer um gênero, país, diretor ou algum outro filme que eu te ajudo!"
         )
 
     def _handle_recommend_by_director_context(self, text: str) -> str:
