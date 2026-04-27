@@ -58,12 +58,22 @@ class MovieRepository:
         return [m for m in self._movies if name_lower in m.diretor.lower()]
 
     def find_by_title(self, title: str) -> Optional[Movie]:
-        title_lower = title.lower()
-        return next(
-            (m for m in self._movies
-             if title_lower in m.titulo.lower() or title_lower in m.titulo_original.lower()),
-            None
-        )
+        title_lower = title.lower().strip()
+
+        for m in self._movies:
+            if m.titulo.lower() == title_lower or m.titulo_original.lower() == title_lower:
+                return m
+
+        if len(title_lower) > 10:
+            for m in self._movies:
+                if title_lower in m.titulo.lower() or title_lower in m.titulo_original.lower():
+                    return m
+
+        for m in self._movies:
+            if title_lower in m.titulo.lower() or title_lower in m.titulo_original.lower():
+                return m
+
+        return None
 
     def find_top_rated(self, limit: int = 5) -> List[Movie]:
         with_rating = [m for m in self._movies if m.avaliacao > 0]

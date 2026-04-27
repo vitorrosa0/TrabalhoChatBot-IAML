@@ -1,20 +1,14 @@
-"""
-service/context_manager.py
-"""
 from typing import Optional
 
 
 class ConversationContext:
 
-    # Frases que significam "me dá mais do mesmo"
     MORE_OF_SAME_REFS = [
-        # já existentes
         "quero outro", "me dá outro", "outro filme", "mais um",
         "próximo", "proximo", "não gostei", "nao gostei",
         "passa", "outra opção", "outra opcao", "diferente",
         "mais algum", "tem mais", "quero mais", "me indica outro",
         "não curti", "nao curti", "esse não", "esse nao",
-        # ── novas variações ──
         "tem outro", "tem mais algum", "tem outra opção",
         "outro", "outra", "mais alguma opção", "mais opções",
         "me manda outro", "me indica mais", "quero ver outro",
@@ -25,7 +19,6 @@ class ConversationContext:
         "tem mais alguma coisa", "o que mais tem",
     ]
 
-    # Frases que significam "me fala mais sobre o último filme"
     DETAIL_REFS = [
         "me conta mais", "mais detalhes", "me fala mais",
         "fala sobre esse", "o que mais", "e sobre esse",
@@ -46,34 +39,27 @@ class ConversationContext:
         self.last_genre: Optional[str] = None
         self.last_country: Optional[str] = None
         self.last_person_name: Optional[str] = None
-        self.last_recommended_id: Optional[int] = None   # ← novo
-        self.last_recommended_genres: list[str] = []     # ← novo
-        self._recently_recommended: list[int] = []       # ← histórico de IDs recomendados
+        self.last_recommended_id: Optional[int] = None 
+        self.last_recommended_genres: list[str] = [] 
+        self._recently_recommended: list[int] = []
 
     def set_last_recommendation(self, movie_id: int, genres: list[str]):
-        """Registra o filme que acabou de ser recomendado."""
         self.last_recommended_id = movie_id
         self.last_recommended_genres = genres
         if movie_id not in self._recently_recommended:
             self._recently_recommended.append(movie_id)
-        # guarda só os últimos 10 recomendados para evitar repetição
         if len(self._recently_recommended) > 10:
             self._recently_recommended.pop(0)
 
     def get_excluded_ids(self) -> list[int]:
-        """IDs de filmes já recomendados nessa sessão."""
         return list(self._recently_recommended)
 
     def is_more_of_same(self, text: str) -> bool:
-        """Detecta se o usuário quer mais do mesmo tipo."""
         text_lower = text.lower().strip().rstrip("!?.")
 
-        # match exato na lista
         if any(ref in text_lower for ref in self.MORE_OF_SAME_REFS):
             return True
 
-        # se há contexto ativo e a mensagem é curta e vaga,
-        # palavras isoladas como "outro", "mais", "outra" bastam
         has_active_context = any([
             self.last_director, self.last_genre,
             self.last_country, self.last_recommended_genres,
@@ -90,7 +76,6 @@ class ConversationContext:
         return False
 
     def is_detail_request(self, text: str) -> bool:
-        """Detecta se o usuário quer mais detalhes do último filme."""
         text_lower = text.lower()
         return any(ref in text_lower for ref in self.DETAIL_REFS)
 
