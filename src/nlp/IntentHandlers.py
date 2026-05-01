@@ -64,7 +64,10 @@ class YearHandler(IntentHandler):
 
 class GenreHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["genero", "tipo", "categoria", "estilo", "classificacao"]
+        return [
+            "genero", "tipo", "categoria", "classificacao",
+            "estilo", "jeito",
+        ]
 
     def get_intent_name(self):
         return "ask_genre"

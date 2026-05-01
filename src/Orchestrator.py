@@ -14,6 +14,9 @@ class ChatbotOrchestrator:
     def handle_message(self, user_text: str) -> str:
         tokens, doc = self.nlp_processor.process_text(user_text)
         intent = self.intent_classifier.classify(tokens)
+
+        # print(f"[DEBUG] intent classificado: {intent}")
+        # print(f"[DEBUG] last_topic: {self.context.last_topic}")
         entities, _ = self.entity_extractor.extract(user_text)
 
         if "movie" in entities:
@@ -87,7 +90,27 @@ class ChatbotOrchestrator:
 
         if intent == "ask_year":
             return f"{movie.title} foi lançado em {movie.year}."
-        # 5. Resposta Padrão (Fallback)
+
+        if intent == "ask_genre":
+            # "estilo" é ambíguo — resolve pelo contexto
+            if any(w in tokens for w in self._stem_list(["estilo", "jeito"])):
+                if self.context.last_topic == "director":
+                    director = self.repository.get_director_by_name(movie.director_name)
+                    return f"O estilo do {director.name} foca em {director.style}."
+                # contexto é filme — cai para resposta de gênero abaixo
+            
+            genres = ", ".join(movie.genre)
+            return f"{movie.title} é um filme de {genres}."
+
+        if intent == "contextual_followup":
+            if self.context.last_topic == "director":
+                director = self.repository.get_director_by_name(movie.director_name)
+                if director:
+                    return f"O {director.name} é conhecido por {director.style}. Quer saber mais sobre a filmografia dele?"
+            if self.context.last_topic == "movie":
+                return f"Sobre {movie.title}, posso te contar a sinopse, curiosidades ou falar do diretor. O que prefere?"
+            return "Sobre o que exatamente você quer saber mais? Posso falar sobre a sinopse, diretor ou curiosidades."
+
         return "Interessante! Posso te falar sobre a sinopse, diretor ou curiosidades desse filme."
 
 
