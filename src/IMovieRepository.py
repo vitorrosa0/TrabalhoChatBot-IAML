@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional, List, Dict
-from entitys import Movie, Actor, Director
+from entities import Movie, Actor, Director
 
 # Interface abstrata (Contrato)
 class IMovieRepository(ABC):

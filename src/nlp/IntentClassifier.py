@@ -1,14 +1,17 @@
-from typing import List, Optional
+from typing import List
+from nltk.stem import RSLPStemmer
 from . import IntentHandlers
 
 class IntentClassifier:
-    def __init__(self):
+    def __init__(self, stemmer: RSLPStemmer):
         self.handlers = [
-            IntentHandlers.SynopsisHandler(),
-            IntentHandlers.DirectorHandler(),
-            IntentHandlers.ActorHandler(),
-            IntentHandlers.TriviaHandler(),
-            IntentHandlers.ContextualHandler()
+            IntentHandlers.SynopsisHandler(stemmer),
+            IntentHandlers.DirectorHandler(stemmer),  
+            IntentHandlers.ActorHandler(stemmer),
+            IntentHandlers.TriviaHandler(stemmer),
+            IntentHandlers.YearHandler(stemmer),
+            IntentHandlers.GenreHandler(stemmer),
+            IntentHandlers.ContextualHandler(stemmer),
         ]
 
     def classify(self, tokens: List[str]) -> str:

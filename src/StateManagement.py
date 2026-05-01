@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Optional, List
-from entitys import Movie, Actor, Director
+from entities import Movie, Actor, Director
 
 @dataclass
 class Message:
@@ -13,7 +13,7 @@ class ConversationContext:
         self.current_director = None
         self.current_actor = None
         self.last_topic = None
-        self.last_intent = None  # Nova variável para rastrear a repetição
+        self.last_full_intent  = None  # Nova variável para rastrear a repetição
         self.history = []
 
     def set_movie(self, movie: Movie):

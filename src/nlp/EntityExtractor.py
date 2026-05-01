@@ -1,44 +1,38 @@
-import spacy
-from spacy.pipeline import EntityRuler
+import re
 from typing import Dict
 
 
 class EntityExtractor:
     def __init__(self, repository):
-        # Carrega o modelo de linguagem (lg é mais preciso para nomes)
-        self.nlp = spacy.load("pt_core_news_lg")
         self.repository = repository
-        self._setup_entity_ruler()
+        self.movies = []
+        self.directors = []
+        self.actors = []
 
-    def _setup_entity_ruler(self):
-        """Adiciona regras baseadas na sua base de dados local."""
-        ruler = self.nlp.add_pipe("entity_ruler", before="ner")
-        patterns = []
-        # No futuro, você pode iterar por todos os filmes da base
-        # Para o piloto, buscamos os dados do repository
+        self._load_entities()
+
+    def _load_entities(self):
+        """Carrega dados do repository"""
         movie = self.repository.get_movie_by_title("Interestelar")
         if movie:
-            patterns.append({"label": "FILME", "pattern": movie.title})
+            self.movies.append(movie.title.lower())
 
         director = self.repository.get_director_by_name("Christopher Nolan")
         if director:
-            patterns.append({"label": "DIRETOR", "pattern": director.name})
+            self.directors.append(director.name.lower())
 
-        # Adiciona padrões para atores
-        # Aqui você percorreria o cast do seu JSON
-        patterns.append({"label": "ATOR", "pattern": "Matthew McConaughey"})
-
-        ruler.add_patterns(patterns)
+        self.actors.append("matthew mcconaughey")
 
     def extract(self, text: str) -> Dict[str, str]:
-        doc = self.nlp(text)
+        text_lower = text.lower()
         entities = {}
 
-        for ent in doc.ents:
-            # Mapeia as labels para chaves que seu app.py entende
-            if ent.label_ in ["FILME", "MISC"]:
-                entities["movie"] = ent.text
-            elif ent.label_ in ["DIRETOR", "ATOR", "PER"]:
-                entities["person"] = ent.text
+        for movie in self.movies:
+            if movie in text_lower:
+                entities["movie"] = movie
 
-        return entities, doc
+        for person in self.directors + self.actors:
+            if person in text_lower:
+                entities["person"] = person
+
+        return entities, text

@@ -7,29 +7,29 @@ class ChatbotOrchestrator:
     def __init__(self, repository):
         self.repository = repository
         self.nlp_processor = NLPProcessor()
-        self.intent_classifier = IntentClassifier()
+        self.intent_classifier = IntentClassifier(self.nlp_processor.stemmer)
         self.entity_extractor = EntityExtractor(repository)
         self.context = ConversationContext()
 
     def handle_message(self, user_text: str) -> str:
         tokens, doc = self.nlp_processor.process_text(user_text)
         intent = self.intent_classifier.classify(tokens)
-        entities, _ = self.entity_extractor.extract(user_text)  # Corrigido o unpack aqui
+        entities, _ = self.entity_extractor.extract(user_text)
 
         if "movie" in entities:
             movie = self.repository.get_movie_by_title(entities["movie"])
             if movie:
                 self.context.set_movie(movie)
 
-        # NOVO: Verificamos se há keywords de "detalhes extras" antes da repetição
-        is_asking_extra = any(word in tokens for word in ["outro", "filme", "fez", "estilo", "mais"])
+        # Calcula a sub-intenção antes de checar repetição
+        sub_intent = self._get_sub_intent(intent, tokens)
+        full_intent = f"{intent}:{sub_intent}"
 
-        # Só tratamos como repetição se a intenção for a mesma E não houver pedido de info extra
-        if intent == self.context.last_intent and intent != "unknown" and not is_asking_extra:
-            return f"Como eu já te contei, {self._generate_response(intent, tokens, is_repeat=True)}"
+        # Repetição só quando intent E sub-intenção forem iguais
+        is_repeat = (full_intent == self.context.last_full_intent and intent != "unknown")
 
-        response = self._generate_response(intent, tokens)
-        self.context.last_intent = intent
+        response = self._generate_response(intent, tokens, is_repeat=is_repeat)
+        self.context.last_full_intent = full_intent
         return response
 
     def _generate_response(self, intent: str, tokens: List[str], is_repeat=False) -> str:
@@ -51,22 +51,27 @@ class ChatbotOrchestrator:
                             (intent == "unknown" and any(
                                 word in tokens for word in ["diretor", "fez", "outro", "estilo", "mais"]))
 
-        if is_about_director:
+        if intent == "ask_director":
             director = self.repository.get_director_by_name(movie.director_name)
-            if director:
-                self.context.set_director(director)
+            if not director:
+                return f"Não encontrei informações sobre o diretor de {movie.title}."
+            
+            self.context.set_director(director)  # sempre seta, independente da sub-intenção
 
-                # Checagem de "Outros Filmes"
-                if any(word in tokens for word in ["outro", "fez", "filme", "dirigiu", "lista"]):
-                    obras = ", ".join(director.filmography)
-                    return f"Além de {movie.title}, {director.name} dirigiu: {obras}."
+            # Sub-intenção: filmografia
+            if any(w in tokens for w in self._stem_list(["outro", "fez", "dirigiu", "lista", "filme"])):
+                obras = ", ".join(director.filmography)
+                return f"Além de {movie.title}, {director.name} dirigiu: {obras}."
 
-                # Checagem de "Estilo"
-                if any(word in tokens for word in ["estilo", "jeito", "caracteristica"]):
-                    return f"O estilo do {director.name} foca em {director.style}."
+            # Sub-intenção: estilo
+            if any(w in tokens for w in self._stem_list(["estilo", "jeito", "caracteristica"])):
+                return f"O estilo do {director.name} foca em {director.style}."
 
-                # Resposta padrão
-                return f"O filme {movie.title} foi dirigido por {director.name}. Ele é conhecido por {director.style}."
+            # Resposta padrão
+            return (
+                f"O filme {movie.title} foi dirigido por {director.name}. "
+                f"Ele é conhecido por {director.style}."
+            )
 
         # 3. Lógica de Sinopse
         if intent == "ask_synopsis":
@@ -80,5 +85,20 @@ class ChatbotOrchestrator:
                 return f"Uma curiosidade sobre {movie.title}: {fact}"
             return "Puxa, não encontrei nenhuma curiosidade específica sobre esse filme."
 
+        if intent == "ask_year":
+            return f"{movie.title} foi lançado em {movie.year}."
         # 5. Resposta Padrão (Fallback)
         return "Interessante! Posso te falar sobre a sinopse, diretor ou curiosidades desse filme."
+
+
+    def _stem_list(self, words: List[str]) -> List[str]:
+        return [self.nlp_processor.stemmer.stem(w) for w in words]
+
+    def _get_sub_intent(self, intent: str, tokens: List[str]) -> str:
+        if intent != "ask_director":
+            return "default"
+        if any(w in tokens for w in self._stem_list(["outro", "fez", "dirigiu", "lista", "filme"])):
+            return "filmography"
+        if any(w in tokens for w in self._stem_list(["estilo", "jeito", "caracteristica"])):
+            return "style"
+        return "default"

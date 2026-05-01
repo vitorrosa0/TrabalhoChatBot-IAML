@@ -1,55 +1,78 @@
 from abc import ABC, abstractmethod
 from typing import List
-
+from nltk.stem import RSLPStemmer
 
 class IntentHandler(ABC):
-    @abstractmethod
+    def __init__(self, stemmer: RSLPStemmer):
+        self._stemmer = stemmer
+        self._stemmed_keywords = [
+            stemmer.stem(kw) for kw in self._raw_keywords()
+        ]
+
+    def _raw_keywords(self) -> List[str]:
+        raise NotImplementedError
+
     def matches(self, tokens: List[str]) -> bool:
-        pass
+        return any(word in self._stemmed_keywords for word in tokens)
 
     @abstractmethod
     def get_intent_name(self) -> str:
         pass
+
 
 class SynopsisHandler(IntentHandler):
-    def matches(self, tokens: List[str]) -> bool:
-        keywords = ["sinopse", "resumo", "historia", "enredo", "acontecer"]
-        return any(word in tokens for word in keywords)
+    def _raw_keywords(self):
+        return ["sinopse", "resumo", "historia", "enredo", "acontecer"]
 
-    def get_intent_name(self) -> str:
+    def get_intent_name(self):
         return "ask_synopsis"
 
-class DirectorHandler(IntentHandler):
-    def matches(self, tokens: List[str]) -> bool:
-        keywords = ["diretor", "dirigir", "quem fez", "direcao", "comandou"]
-        return any(word in tokens for word in keywords)
 
-    def get_intent_name(self) -> str:
+class DirectorHandler(IntentHandler):
+    def _raw_keywords(self):
+        return [
+            "diretor", "dirigir", "direcao", "comandou",
+            "outro", "fez", "dirigiu", "lista",
+            "estilo", "jeito", "caracteristica",
+        ]
+
+    def get_intent_name(self):
         return "ask_director"
 
-class ActorHandler(IntentHandler):
-    def matches(self, tokens: List[str]) -> bool:
-        keywords = ["ator", "atriz", "elenco", "atua", "personagem", "trabalhar"]
-        return any(word in tokens for word in keywords)
 
-    def get_intent_name(self) -> str:
+class ActorHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["ator", "atriz", "elenco", "atua", "personagem", "trabalhar"]
+
+    def get_intent_name(self):
         return "ask_actor"
 
-class TriviaHandler(IntentHandler):
-    def matches(self, tokens: List[str]) -> bool:
-        keywords = ["curiosidade", "trivia", "fato", "interessante", "saber mais"]
-        return any(word in tokens for word in keywords)
 
-    def get_intent_name(self) -> str:
+class TriviaHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["curiosidade", "trivia", "fato", "interessante"]
+
+    def get_intent_name(self):
         return "ask_trivia"
+
+class YearHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["ano", "lancamento", "lancou", "estreou", "quando", "lançado"]
+
+    def get_intent_name(self):
+        return "ask_year"
+
+class GenreHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["genero", "tipo", "categoria", "estilo", "classificacao"]
+
+    def get_intent_name(self):
+        return "ask_genre"
 
 
 class ContextualHandler(IntentHandler):
-    def matches(self, tokens: List[str]) -> bool:
-        # Detecta pronomes ou frases de continuação
-        continuations = ["ele", "ela", "quem", "mais", "outro"]
-        # Removemos a trava de len(tokens) <= 3 para aceitar perguntas maiores
-        return any(word in tokens for word in continuations)
+    def _raw_keywords(self):
+        return ["ele", "ela", "quem", "mais", "outro"]
 
-    def get_intent_name(self) -> str:
+    def get_intent_name(self):
         return "contextual_followup"
