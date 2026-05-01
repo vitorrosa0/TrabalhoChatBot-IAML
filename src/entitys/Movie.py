@@ -9,3 +9,4 @@ class Movie:
     synopsis: str
     trivia: List[str]
     awards: Dict[str, int]
+    director_name: str

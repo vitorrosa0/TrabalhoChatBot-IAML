@@ -9,11 +9,12 @@ class Message:
 
 class ConversationContext:
     def __init__(self):
-        self.current_movie: Optional[Movie] = None
-        self.current_director: Optional[Director] = None
-        self.current_actor: Optional[Actor] = None
-        self.last_topic: Optional[str] = None  # "movie", "director", "actor"
-        self.history: List[Message] = []
+        self.current_movie = None
+        self.current_director = None
+        self.current_actor = None
+        self.last_topic = None
+        self.last_intent = None  # Nova variável para rastrear a repetição
+        self.history = []
 
     def set_movie(self, movie: Movie):
         self.current_movie = movie
