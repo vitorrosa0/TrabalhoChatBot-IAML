@@ -1,0 +1,23 @@
+{
+  "movie": {
+    "title": "Interestelar",
+    "year": 2014,
+    "genre": ["ficção científica", "aventura", "drama"],
+    "synopsis": "Uma equipe de exploradores viaja através de um buraco de minhoca no espaço...",
+    "trivia": [
+      "A trilha sonora foi composta por Hans Zimmer.",
+      "O físico Kip Thorne foi consultor."
+    ],
+    "awards": { "oscars": 1, "nominations": 5 }
+  },
+  "director": {
+    "name": "Christopher Nolan",
+    "biography": "Cineasta britânico-americano conhecido por blockbusters complexos.",
+    "filmography": ["Memento", "Batman Begins", "Inception", "Dunkirk"],
+    "style": "Uso de efeitos práticos e estruturas narrativas não lineares."
+  },
+  "cast": [
+    { "name": "Matthew McConaughey", "role": "Cooper", "biography": "Ator vencedor do Oscar." }
+  ],
+  "similar_movies": ["Gravidade", "A Chegada", "2001: Uma Odisseia no Espaço"]
+}
