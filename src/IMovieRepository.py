@@ -29,7 +29,8 @@ class LocalJsonRepository(IMovieRepository):
     def _map_movie(self) -> Movie:
         m = self._data["movie"]
         d_name = self._data["director"]["name"]
-        return Movie(m["title"], m["year"], m["genre"], m["synopsis"], m["trivia"], m["awards"], d_name)
+        cast = self._map_cast()
+        return Movie(m["title"], m["year"], m["genre"], m["synopsis"], m["trivia"], m["awards"], d_name, cast)
 
     def _map_director(self) -> Director:
         d = self._data["director"]

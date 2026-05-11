@@ -10,3 +10,4 @@ class Movie:
     trivia: List[str]
     awards: Dict[str, int]
     director_name: str
+    cast: List[dict] = field(default_factory=list)

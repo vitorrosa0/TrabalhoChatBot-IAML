@@ -42,7 +42,7 @@ class DirectorHandler(IntentHandler):
 
 class ActorHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["ator", "atriz", "elenco", "atua", "personagem", "trabalhar"]
+        return ["ator", "atriz", "atua", "personagem", "trabalhar"]
 
     def get_intent_name(self):
         return "ask_actor"
@@ -57,7 +57,7 @@ class TriviaHandler(IntentHandler):
 
 class YearHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["ano", "lancamento", "lancou", "estreou", "quando", "lançado"]
+        return ["ano", "lancamento", "lancou", "estreou", "lançado"]
 
     def get_intent_name(self):
         return "ask_year"
@@ -71,7 +71,27 @@ class GenreHandler(IntentHandler):
 
     def get_intent_name(self):
         return "ask_genre"
+    
+class AwardsHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["premio", "oscar", "ganhou", "venceu", "indicacao", "awards"]
 
+    def get_intent_name(self):
+        return "ask_awards"
+    
+class CastHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["elenco", "papel", "interpreta", "cast"]
+
+    def get_intent_name(self):
+        return "ask_cast"
+    
+class SimilarMoviesHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["similar", "parecido", "semelhante", "recomenda", "igual"]
+
+    def get_intent_name(self):
+        return "ask_similar"
 
 class ContextualHandler(IntentHandler):
     def _raw_keywords(self):

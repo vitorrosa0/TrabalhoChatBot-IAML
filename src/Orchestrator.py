@@ -1,7 +1,6 @@
 from typing import List
-from nlp import NLPProcessor, IntentClassifier, EntityExtractor
+from nlp import NLPProcessor, IntentClassifier, EntityExtractor, ResponseEnricher
 from StateManagement import ConversationContext
-
 
 class ChatbotOrchestrator:
     def __init__(self, repository):
@@ -10,6 +9,7 @@ class ChatbotOrchestrator:
         self.intent_classifier = IntentClassifier(self.nlp_processor.stemmer)
         self.entity_extractor = EntityExtractor(repository)
         self.context = ConversationContext()
+        self.enricher = ResponseEnricher()
 
     def handle_message(self, user_text: str) -> str:
         tokens, doc = self.nlp_processor.process_text(user_text)
@@ -32,6 +32,7 @@ class ChatbotOrchestrator:
         is_repeat = (full_intent == self.context.last_full_intent and intent != "unknown")
 
         response = self._generate_response(intent, tokens, is_repeat=is_repeat)
+        response = self.enricher.enrich(intent, response, self.context.current_movie)
         self.context.last_full_intent = full_intent
         return response
 
@@ -101,6 +102,31 @@ class ChatbotOrchestrator:
             
             genres = ", ".join(movie.genre)
             return f"{movie.title} é um filme de {genres}."
+        
+        if intent == "ask_awards":
+            awards = movie.awards
+            if not awards:
+                return f"Não tenho informações sobre prêmios de {movie.title}."
+            oscars = awards.get("oscars", 0)
+            nominations = awards.get("nominations", 0)
+            if oscars > 0:
+                return f"{movie.title} ganhou {oscars} Oscar(s) e teve {nominations} indicações."
+            return f"{movie.title} não ganhou Oscars, mas teve {nominations} indicações."
+
+        if intent == "ask_cast":
+            if not movie.cast:
+                return f"Não tenho informações sobre o elenco de {movie.title}."
+            membros = ", ".join(
+                f"{membro.name} como {membro.role}" for membro in movie.cast
+            )
+            return f"O elenco de {movie.title} inclui: {membros}."
+        
+        if intent == "ask_similar":
+            similares = self.repository.get_similar_movies()
+            if not similares:
+                return f"Não tenho recomendações de filmes parecidos com {movie.title}."
+            lista = ", ".join(similares)
+            return f"Se você gostou de {movie.title}, talvez curta também: {lista}."
 
         if intent == "contextual_followup":
             if self.context.last_topic == "director":
