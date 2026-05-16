@@ -8,7 +8,7 @@ Se a pergunta não for sobre filmes, redirecione educadamente para o tema."""
 
 
 class HuggingFaceFallback(ILLMFallback):
-    def init(self, token: str, model: str = "meta-llama/Llama-3.1-8B-Instruct"):
+    def __init__(self, token: str, model: str = "meta-llama/Llama-3.1-8B-Instruct"):
         self._client = InferenceClient(
             provider="auto",
             api_key=token,

@@ -31,5 +31,5 @@ def main():
         resposta = bot.handle_message(user_input)
         print(f"Bot: {resposta}\n")
 
-if name == "main":
+if __name__ == "__main__":
     main()
