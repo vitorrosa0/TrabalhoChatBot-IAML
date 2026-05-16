@@ -1,14 +1,24 @@
 import json
+from dotenv import load_dotenv
+import os
+
 from IMovieRepository import LocalJsonRepository
+from learningModel.ILLMFallback import ILLMFallback
+from learningModel.HuggingFaceFallback import HuggingFaceFallback
 from Orchestrator import ChatbotOrchestrator
 
+load_dotenv()
 
 def main():
     with open('dataset.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
 
     repository = LocalJsonRepository(data)
-    bot = ChatbotOrchestrator(repository)
+
+    token = os.getenv("HF_TOKEN")
+    fallback = HuggingFaceFallback(token=token)
+
+    bot = ChatbotOrchestrator(repository, fallback=fallback)
 
     print("--- Bem-vindo ao CinemaBot (Beta) ---")
     print("Digite 'sair' para encerrar.\n")
@@ -21,6 +31,5 @@ def main():
         resposta = bot.handle_message(user_input)
         print(f"Bot: {resposta}\n")
 
-
-if __name__ == "__main__":
+if name == "main":
     main()

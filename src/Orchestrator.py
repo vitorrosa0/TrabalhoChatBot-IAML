@@ -1,10 +1,12 @@
 from typing import List
 from nlp import NLPProcessor, IntentClassifier, EntityExtractor, ResponseEnricher
 from StateManagement import ConversationContext
+from learningModel.ILLMFallback import ILLMFallback
 
 class ChatbotOrchestrator:
-    def __init__(self, repository):
+    def __init__(self, repository, fallback: ILLMFallback = None):
         self.repository = repository
+        self.fallback = fallback
         self.nlp_processor = NLPProcessor()
         self.intent_classifier = IntentClassifier(self.nlp_processor.stemmer)
         self.entity_extractor = EntityExtractor(repository)
@@ -16,6 +18,7 @@ class ChatbotOrchestrator:
         tokens, doc = self.nlp_processor.process_text(user_text)
         intent = self.intent_classifier.classify(tokens)
 
+        # print(f"[DEBUG] tokens: {tokens}")
         # print(f"[DEBUG] intent classificado: {intent}")
         # print(f"[DEBUG] last_topic: {self.context.last_topic}")
         entities, _ = self.entity_extractor.extract(user_text)
@@ -33,9 +36,33 @@ class ChatbotOrchestrator:
         is_repeat = (full_intent == self.context.last_full_intent and intent != "unknown")
 
         response = self._generate_response(intent, tokens, is_repeat=is_repeat)
+
+        if self._should_use_fallback(intent, response) and self.fallback:
+            context_summary = self._build_context_summary()
+            response = self.fallback.answer(user_text, context_summary)
+
         response = self.enricher.enrich(intent, response, self.context.current_movie)
         self.context.last_full_intent = full_intent
         return response
+
+    def _should_use_fallback(self, intent: str, response: str) -> bool:
+        """Decide se o fallback deve ser acionado."""
+        if intent == "unknown":
+            return True
+        return False
+
+    def _build_context_summary(self) -> str:
+        """Monta um resumo do contexto atual para enviar ao LLM."""
+        parts = []
+        if self.context.current_movie:
+            parts.append(f"Filme em contexto: {self.context.current_movie.title}")
+        if self.context.current_director:
+            parts.append(f"Diretor em contexto: {self.context.current_director.name}")
+        if self.context.last_topic:
+            parts.append(f"Último tópico discutido: {self.context.last_topic}")
+        if not parts:
+            return "Nenhum contexto de conversa disponível ainda."
+        return " | ".join(parts)
 
     def _generate_response(self, intent: str, tokens: List[str], is_repeat=False) -> str:
         import random
