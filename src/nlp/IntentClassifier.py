@@ -12,7 +12,7 @@ class IntentClassifier:
             IntentHandlers.YearHandler(stemmer),
             IntentHandlers.GenreHandler(stemmer),
             IntentHandlers.AwardsHandler(stemmer),
-            IntentHandlers.CastHandler(stemmer),
+            IntentHandlers.CastHandler(stemmer), 
             IntentHandlers.SimilarMoviesHandler(stemmer),
             IntentHandlers.ContextualHandler(stemmer),
         ]
