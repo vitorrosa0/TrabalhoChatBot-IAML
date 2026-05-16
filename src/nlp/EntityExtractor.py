@@ -1,7 +1,7 @@
 import re
 from difflib import SequenceMatcher
 from typing import Dict
-
+from typing import Dict, Optional
 
 def _similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, a, b).ratio()
@@ -34,7 +34,7 @@ class EntityExtractor:
             if director_lower not in self.directors:
                 self.directors.append(director_lower)
 
-    def _find_in_text(self, text_lower: str, candidates: list) -> str | None:
+    def _find_in_text(self, text_lower: str, candidates: list) -> Optional[str]:
         """
         Tenta encontrar um candidato no texto de duas formas:
         1. Substring exata (rápido e preciso)

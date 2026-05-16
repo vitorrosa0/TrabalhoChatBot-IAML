@@ -8,3 +8,11 @@ class ILLMFallback(ABC):
         Retorna a resposta gerada pelo LLM.
         """
         pass
+
+    @abstractmethod
+    def refine(self, question: str, raw_response: str) -> str:
+        """
+        Recebe a resposta anterior e um feedback do usuário.
+        Retorna uma resposta refinada com base no feedback.
+        """
+        pass

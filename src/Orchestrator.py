@@ -40,6 +40,8 @@ class ChatbotOrchestrator:
         if self._should_use_fallback(intent, response) and self.fallback:
             context_summary = self._build_context_summary()
             response = self.fallback.answer(user_text, context_summary)
+        elif self.fallback and intent not in ["ask_greeting", "ask_affirmation"]:
+            response = self.fallback.refine(user_text, response)
 
         response = self.enricher.enrich(intent, response, self.context.current_movie)
         self.context.last_full_intent = full_intent
