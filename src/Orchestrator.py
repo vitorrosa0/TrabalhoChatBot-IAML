@@ -196,7 +196,7 @@ class ChatbotOrchestrator:
             return f"O elenco de {movie.title} inclui: {membros}."
         
         if intent == "ask_similar":
-            similares = self.repository.get_similar_movies()
+            similares = self.repository.get_similar_movies(movie.title)
             if not similares:
                 return f"Não tenho recomendações de filmes parecidos com {movie.title}."
             lista = ", ".join(similares)

@@ -1,23 +1,55 @@
 {
-  "movie": {
-    "title": "Interestelar",
-    "year": 2014,
-    "genre": ["ficção científica", "aventura", "drama"],
-    "synopsis": "Uma equipe de exploradores viaja através de um buraco de minhoca no espaço...",
-    "trivia": [
-      "A trilha sonora foi composta por Hans Zimmer.",
-      "O físico Kip Thorne foi consultor."
-    ],
-    "awards": { "oscars": 1, "nominations": 5 }
-  },
-  "director": {
-    "name": "Christopher Nolan",
-    "biography": "Cineasta britânico-americano conhecido por blockbusters complexos.",
-    "filmography": ["Memento", "Batman Begins", "Inception", "Dunkirk"],
-    "style": "Uso de efeitos práticos e estruturas narrativas não lineares."
-  },
-  "cast": [
-    { "name": "Matthew McConaughey", "role": "Cooper", "biography": "Ator vencedor do Oscar." }
-  ],
-  "similar_movies": ["Gravidade", "A Chegada", "2001: Uma Odisseia no Espaço"]
+  "movies": [
+    {
+      "movie": {
+        "title": "Interestelar",
+        "year": 2014,
+        "genre": ["ficção científica", "aventura", "drama"],
+        "synopsis": "Uma equipe de exploradores viaja através de um buraco de minhoca no espaço em busca de um novo lar para a humanidade.",
+        "trivia": [
+          "A trilha sonora foi composta por Hans Zimmer.",
+          "O físico Kip Thorne foi consultor científico do filme.",
+          "As imagens do buraco negro foram tão precisas que geraram um artigo científico."
+        ],
+        "awards": { "oscars": 1, "nominations": 5 },
+        "similar_movies": ["Gravidade", "A Chegada", "2001: Uma Odisseia no Espaço"]
+      },
+      "director": {
+        "name": "Christopher Nolan",
+        "biography": "Cineasta britânico-americano conhecido por blockbusters complexos.",
+        "filmography": ["Memento", "Batman Begins", "Inception", "Dunkirk", "Oppenheimer"],
+        "style": "uso de efeitos práticos e estruturas narrativas não lineares"
+      },
+      "cast": [
+        { "name": "Matthew McConaughey", "role": "Cooper", "biography": "Ator vencedor do Oscar por O Quarto de Jack." },
+        { "name": "Anne Hathaway", "role": "Dra. Brand", "biography": "Atriz vencedora do Oscar por Os Miseráveis." }
+      ]
+    },
+    {
+      "movie": {
+        "title": "O Poderoso Chefão",
+        "year": 1972,
+        "genre": ["crime", "drama"],
+        "synopsis": "A família mafiosa Corleone luta para manter seu império do crime enquanto enfrenta rivais e conflitos internos.",
+        "trivia": [
+          "Marlon Brando enfiou algodão na boca para dar voz rouca ao Don Corleone.",
+          "O gato que aparece na cena de abertura foi encontrado no estúdio por acaso.",
+          "O diretor Francis Ford Coppola era contra a escalação de Al Pacino inicialmente."
+        ],
+        "awards": { "oscars": 3, "nominations": 10 },
+        "similar_movies": ["O Poderoso Chefão II", "Goodfellas", "Os Intocáveis"]
+      },
+      "director": {
+        "name": "Francis Ford Coppola",
+        "biography": "Diretor americano considerado um dos maiores cineastas da história do cinema.",
+        "filmography": ["Apocalypse Now", "O Poderoso Chefão II", "Drácula de Bram Stoker"],
+        "style": "narrativas épicas com foco em conflitos familiares e morais"
+      },
+      "cast": [
+        { "name": "Marlon Brando", "role": "Don Vito Corleone", "biography": "Lendário ator americano, vencedor de dois Oscars." },
+        { "name": "Al Pacino", "role": "Michael Corleone", "biography": "Ator americano icônico, indicado ao Oscar diversas vezes." },
+        { "name": "James Caan", "role": "Sonny Corleone", "biography": "Ator americano conhecido por papéis intensos." }
+      ]
+    }
+  ]
 }

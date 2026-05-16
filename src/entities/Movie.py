@@ -11,3 +11,4 @@ class Movie:
     awards: Dict[str, int]
     director_name: str
     cast: List[dict] = field(default_factory=list)
+    similar_movies: List[str] = field(default_factory=list)

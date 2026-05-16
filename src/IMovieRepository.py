@@ -13,42 +13,63 @@ class IMovieRepository(ABC):
         pass
 
     @abstractmethod
-    def get_similar_movies(self) -> List[str]:
+    def get_similar_movies(self, title: str = None) -> List[str]:
         pass
 
+    @abstractmethod
+    def get_all_movies(self) -> List[Movie]:
+        pass
+
+    @abstractmethod
+    def get_all_directors(self) -> List[Director]:
+        pass
 
 
 # Implementação concreta que lê o seu JSON
 class LocalJsonRepository(IMovieRepository):
     def __init__(self, data: Dict):
-        self._data = data
-        self._movie = self._map_movie()
-        self._director = self._map_director()
-        self._cast = self._map_cast()
+        self._movies: List[Movie] = []
+        self._directors: List[Director] = []
 
-    def _map_movie(self) -> Movie:
-        m = self._data["movie"]
-        d_name = self._data["director"]["name"]
-        cast = self._map_cast()
-        return Movie(m["title"], m["year"], m["genre"], m["synopsis"], m["trivia"], m["awards"], d_name, cast)
+        for entry in data["movies"]:
+            cast = [Actor(a["name"], a["role"], a["biography"]) for a in entry["cast"]]
+            m = entry["movie"]
+            d = entry["director"]
+            movie = Movie(m["title"], m["year"], m["genre"], m["synopsis"], m["trivia"], m["awards"], d["name"], cast, m.get("similar_movies", []))
+            director = Director(d["name"], d["biography"], d["filmography"], d["style"])
+            self._movies.append(movie)
+            self._directors.append(director)
 
-    def _map_director(self) -> Director:
-        d = self._data["director"]
-        return Director(d["name"], d["biography"], d["filmography"], d["style"])
-
-    def _map_cast(self) -> List[Actor]:
-        return [Actor(a["name"], a["role"], a["biography"]) for a in self._data["cast"]]
-
-    # Implementação dos métodos do contrato
     def get_movie_by_title(self, title: str) -> Optional[Movie]:
-        if title.lower() in self._movie.title.lower():
-            return self._movie
+        for movie in self._movies:
+            if title.lower() in movie.title.lower():
+                return movie
         return None
 
     def get_director_by_name(self, name: str) -> Optional[Director]:
-        if name.lower() in self._director.name.lower():
-            return self._director
+        for director in self._directors:
+            if name.lower() in director.name.lower():
+                return director
         return None
 
-    def get_similar_movies(self) -> List[str]:
-        return self._data.get("similar_movies", [])
+    def get_similar_movies(self, title: str = None) -> list:
+        # Se um título for passado, retorna apenas os similares daquele filme
+        if title:
+            for movie in self._movies:
+                if title.lower() in movie.title.lower():
+                    return movie.similar_movies
+        # Sem título: retorna todos sem duplicata (fallback)
+        seen = set()
+        result = []
+        for movie in self._movies:
+            for s in movie.similar_movies:
+                if s not in seen:
+                    seen.add(s)
+                    result.append(s)
+        return result
+
+    def get_all_movies(self) -> List[Movie]:
+        return self._movies
+
+    def get_all_directors(self) -> List[Director]:
+        return self._directors
