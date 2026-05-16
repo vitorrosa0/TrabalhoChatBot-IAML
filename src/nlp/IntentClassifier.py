@@ -1,10 +1,14 @@
 from typing import List
 from nltk.stem import RSLPStemmer
 from . import IntentHandlers
+from .GreetingMLHandler import GreetingMLHandler
+from .AffirmationHandler import AffirmationHandler
 
 class IntentClassifier:
     def __init__(self, stemmer: RSLPStemmer):
         self.handlers = [
+            GreetingMLHandler(stemmer), 
+            AffirmationHandler(stemmer),
             IntentHandlers.SynopsisHandler(stemmer),
             IntentHandlers.DirectorHandler(stemmer),  
             IntentHandlers.ActorHandler(stemmer),
@@ -16,6 +20,11 @@ class IntentClassifier:
             IntentHandlers.SimilarMoviesHandler(stemmer),
             IntentHandlers.ContextualHandler(stemmer),
         ]
+
+    def get_affirmation_handler(self) -> "AffirmationHandler":
+        for h in self.handlers:
+            if isinstance(h, AffirmationHandler):
+                return h
 
     def classify(self, tokens: List[str]) -> str:
      for handler in self.handlers:

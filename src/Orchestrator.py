@@ -10,6 +10,7 @@ class ChatbotOrchestrator:
         self.entity_extractor = EntityExtractor(repository)
         self.context = ConversationContext()
         self.enricher = ResponseEnricher()
+        self.affirmation_handler = self.intent_classifier.get_affirmation_handler()
 
     def handle_message(self, user_text: str) -> str:
         tokens, doc = self.nlp_processor.process_text(user_text)
@@ -37,6 +38,54 @@ class ChatbotOrchestrator:
         return response
 
     def _generate_response(self, intent: str, tokens: List[str], is_repeat=False) -> str:
+        import random
+
+        if intent == "ask_greeting":
+            saudacoes = [
+                "Olá! Sou o CineBot. Posso te falar sobre sinopse, diretor, elenco ou curiosidades do Interestelar. O que prefere?",
+                "Oi! Estou aqui para conversar sobre o Interestelar. Quer saber a sinopse, quem dirigiu ou alguma curiosidade?",
+                "Olá! Pronto para falar de cinema. Pergunte sobre o Interestelar!",
+             ]
+            despedidas = [
+                "Até logo! Foi um prazer conversar sobre cinema.",
+                "Tchau! Volte quando quiser saber mais sobre o Interestelar.",
+                "Até mais! Boas sessões de cinema!",
+            ]
+            tokens_despedida = {"tchau", "xau", "ate", "falou", "flw", "logo", "amanha"}
+            if any(t in tokens for t in tokens_despedida):
+                return random.choice(despedidas)
+            return random.choice(saudacoes)
+        
+        if intent == "ask_affirmation":
+            rotulo = self.affirmation_handler.get_label()
+            ultimo = self.context.last_full_intent or ""
+
+            if rotulo == "afirmacao":
+                if "ask_trivia" in ultimo:
+                    return self._generate_response("ask_trivia", tokens)
+                if "ask_director" in ultimo:
+                    return self._generate_response("ask_director", tokens)
+                if "ask_awards" in ultimo:
+                    return self._generate_response("ask_awards", tokens)
+                if "ask_cast" in ultimo:
+                    return self._generate_response("ask_cast", tokens)
+                if "ask_synopsis" in ultimo:
+                    return self._generate_response("ask_synopsis", tokens)
+                return "Claro! Sobre o que você quer saber? Posso falar de sinopse, diretor, elenco ou curiosidades."
+ 
+            else:
+                topicos = {
+                    "ask_synopsis":  "Quer saber uma curiosidade ou falar do diretor?",
+                    "ask_director":  "Que tal conhecer o elenco ou ver os prêmios que o filme ganhou?",
+                    "ask_trivia":    "Posso falar do elenco ou dos prêmios que o filme recebeu. O que prefere?",
+                    "ask_awards":    "Posso falar do diretor ou contar uma curiosidade dos bastidores. Qual prefere?",
+                    "ask_cast":      "Que tal a sinopse ou algumas curiosidades de bastidores?",
+                }
+                for chave, sugestao in topicos.items():
+                    if chave in ultimo:
+                        return sugestao
+                return "Tudo bem! Posso falar de sinopse, diretor, elenco ou curiosidades. O que prefere?"
+
         movie = self.context.current_movie
         if not movie:
             return "Sobre qual filme você gostaria de conversar? Conheço bem o Interestelar."
@@ -77,11 +126,9 @@ class ChatbotOrchestrator:
                 f"Ele é conhecido por {director.style}."
             )
 
-        # 3. Lógica de Sinopse
         if intent == "ask_synopsis":
             return f"A sinopse de {movie.title} é: {movie.synopsis}"
 
-        # 4. Lógica de Curiosidade (Restaurada!)
         if intent == "ask_trivia":
             import random
             if movie.trivia:
