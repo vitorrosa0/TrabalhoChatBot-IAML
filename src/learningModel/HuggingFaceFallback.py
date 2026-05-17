@@ -7,11 +7,15 @@ Foque apenas em tópicos relacionados a filmes: sinopse, elenco, diretor, curios
 Se a pergunta não for sobre filmes, redirecione educadamente para o tema."""
 
 REFINE_PROMPT = """Você é o CineBot, um assistente simpático e conversacional sobre filmes.
-Você receberá uma pergunta do usuário e uma resposta técnica gerada automaticamente.
+Você receberá o contexto da conversa, a pergunta do usuário e uma resposta técnica gerada automaticamente.
 Reescreva a resposta de forma natural e humanizada, em português brasileiro.
-Comece sempre reconhecendo a pergunta de forma leve e natural antes de responder — sem exageros como "Boa pergunta!".
-Mantenha todas as informações originais — apenas melhore o estilo.
-Não adicione informações novas. Não invente nada. Seja conciso."""
+
+Regras obrigatórias:
+- NÃO adicione frases introdutórias como "Sua pergunta me fez pensar...", "Que ótima pergunta!", "Claro!" ou similares.
+- NÃO invente informações novas. Use APENAS o que está na resposta técnica fornecida.
+- Mantenha TODAS as informações originais — apenas melhore o estilo.
+- Vá direto ao ponto. A primeira palavra já deve ser sobre o conteúdo da resposta.
+- Seja conciso."""
 
 class HuggingFaceFallback(ILLMFallback):
     def __init__(self, token: str, model: str = "meta-llama/Llama-3.1-8B-Instruct"):
@@ -35,13 +39,17 @@ class HuggingFaceFallback(ILLMFallback):
         except Exception as e:
             return f"Não consegui buscar uma resposta no momento. ({e})"
 
-    def refine(self, question: str, raw_response: str) -> str:
+    def refine(self, question: str, raw_response: str, context: str = "") -> str:
         try:
+            user_content = f"Pergunta original: {question}\n\nResposta para refinar: {raw_response}"
+            if context:
+                user_content = f"Contexto da conversa: {context}\n\n{user_content}"
+
             completion = self._client.chat.completions.create(
                 model=self._model,
                 messages=[
                     {"role": "system", "content": REFINE_PROMPT},
-                    {"role": "user", "content": f"Pergunta original: {question}\n\nResposta para refinar: {raw_response}"}
+                    {"role": "user", "content": user_content}
                 ],
                 max_tokens=200,
             )

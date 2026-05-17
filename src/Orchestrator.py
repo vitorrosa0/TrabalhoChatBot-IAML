@@ -41,7 +41,8 @@ class ChatbotOrchestrator:
             context_summary = self._build_context_summary()
             response = self.fallback.answer(user_text, context_summary)
         elif self.fallback and intent not in ["ask_greeting", "ask_affirmation"]:
-            response = self.fallback.refine(user_text, response)
+            context_summary = self._build_context_summary()
+            response = self.fallback.refine(user_text, response, context_summary)
 
         response = self.enricher.enrich(intent, response, self.context.current_movie)
         self.context.last_full_intent = full_intent
@@ -71,13 +72,13 @@ class ChatbotOrchestrator:
 
         if intent == "ask_greeting":
             saudacoes = [
-                "Olá! Sou o CineBot. Posso te falar sobre sinopse, diretor, elenco ou curiosidades do Interestelar. O que prefere?",
-                "Oi! Estou aqui para conversar sobre o Interestelar. Quer saber a sinopse, quem dirigiu ou alguma curiosidade?",
-                "Olá! Pronto para falar de cinema. Pergunte sobre o Interestelar!",
+                "Olá! Sou o CineBot. Posso te falar sobre sinopse, diretor, elenco ou curiosidades de filmes. O que prefere?",
+                "Oi! Estou aqui para conversar sobre filmes. Quer saber a sinopse, quem dirigiu ou alguma curiosidade?",
+                "Olá! Pronto para falar de cinema. Sobre qual filme você quer conversar?",
              ]
             despedidas = [
                 "Até logo! Foi um prazer conversar sobre cinema.",
-                "Tchau! Volte quando quiser saber mais sobre o Interestelar.",
+                "Tchau! Volte quando quiser saber mais sobre algum filme.",
                 "Até mais! Boas sessões de cinema!",
             ]
             tokens_despedida = {"tchau", "xau", "ate", "falou", "flw", "logo", "amanha"}
@@ -117,7 +118,7 @@ class ChatbotOrchestrator:
 
         movie = self.context.current_movie
         if not movie:
-            return "Sobre qual filme você gostaria de conversar? Conheço bem o Interestelar."
+            return "Sobre qual filme você gostaria de conversar?"
 
         # 1. Tratamento de Repetição
         if is_repeat:
