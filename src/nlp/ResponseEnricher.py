@@ -1,4 +1,5 @@
 import random
+from typing import Tuple, Optional
 
 class ResponseEnricher:
     HOOKS = {
@@ -55,7 +56,7 @@ class ResponseEnricher:
         "ask_similar":   "ask_trivia",
     }
 
-    def enrich(self, intent: str, base_response: str, movie) -> tuple[str, str | None]:
+    def enrich(self, intent: str, base_response: str, movie) -> Tuple[str, Optional[str]]:
         hooks = self.HOOKS.get(intent)
         if not hooks:
             return base_response, None

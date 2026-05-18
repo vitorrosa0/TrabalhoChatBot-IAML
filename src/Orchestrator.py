@@ -45,15 +45,15 @@ class ChatbotOrchestrator:
             response = self.fallback.refine(user_text, response, context_summary)
 
         
-        print(f"[DEBUG] intent={intent}")
-        print(f"[DEBUG] last_resolved_intent={self.context.last_resolved_intent}")
-        print(f"[DEBUG] last_hook_intent={self.context.last_hook_intent}")
+        # print(f"[DEBUG] intent={intent}")
+        # print(f"[DEBUG] last_resolved_intent={self.context.last_resolved_intent}")
+        # print(f"[DEBUG] last_hook_intent={self.context.last_hook_intent}")
         effective_intent = self.context.last_resolved_intent or intent
         self.context.last_resolved_intent = None
-        print(f"[DEBUG] effective_intent={effective_intent}")
+        # print(f"[DEBUG] effective_intent={effective_intent}")
         response, hook_intent = self.enricher.enrich(effective_intent, response, self.context.current_movie)
         self.context.last_hook_intent = hook_intent
-        print(f"[DEBUG] hook_intent={hook_intent}")
+        # print(f"[DEBUG] hook_intent={hook_intent}")
         self.context.last_full_intent = f"{effective_intent}:default" if intent == "ask_affirmation" else full_intent
         return response
 
