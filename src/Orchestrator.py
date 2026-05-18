@@ -44,8 +44,17 @@ class ChatbotOrchestrator:
             context_summary = self._build_context_summary()
             response = self.fallback.refine(user_text, response, context_summary)
 
-        response = self.enricher.enrich(intent, response, self.context.current_movie)
-        self.context.last_full_intent = full_intent
+        
+        print(f"[DEBUG] intent={intent}")
+        print(f"[DEBUG] last_resolved_intent={self.context.last_resolved_intent}")
+        print(f"[DEBUG] last_hook_intent={self.context.last_hook_intent}")
+        effective_intent = self.context.last_resolved_intent or intent
+        self.context.last_resolved_intent = None
+        print(f"[DEBUG] effective_intent={effective_intent}")
+        response, hook_intent = self.enricher.enrich(effective_intent, response, self.context.current_movie)
+        self.context.last_hook_intent = hook_intent
+        print(f"[DEBUG] hook_intent={hook_intent}")
+        self.context.last_full_intent = f"{effective_intent}:default" if intent == "ask_affirmation" else full_intent
         return response
 
     def _should_use_fallback(self, intent: str, response: str) -> bool:
@@ -91,18 +100,25 @@ class ChatbotOrchestrator:
             ultimo = self.context.last_full_intent or ""
 
             if rotulo == "afirmacao":
+                hook = self.context.last_hook_intent
+                if hook:
+                    self.context.last_hook_intent = None
+                    self.context.last_resolved_intent = hook
+                    return self._generate_response(hook, tokens)
                 if "ask_trivia" in ultimo:
+                    self.context.last_resolved_intent = "ask_trivia" 
                     return self._generate_response("ask_trivia", tokens)
                 if "ask_director" in ultimo:
+                    self.context.last_resolved_intent = "ask_director"
                     return self._generate_response("ask_director", tokens)
                 if "ask_awards" in ultimo:
+                    self.context.last_resolved_intent = "ask_awards"
                     return self._generate_response("ask_awards", tokens)
                 if "ask_cast" in ultimo:
+                    self.context.last_resolved_intent = "ask_cast"
                     return self._generate_response("ask_cast", tokens)
-                if "ask_synopsis" in ultimo:
-                    return self._generate_response("ask_synopsis", tokens)
                 return "Claro! Sobre o que você quer saber? Posso falar de sinopse, diretor, elenco ou curiosidades."
- 
+            
             else:
                 topicos = {
                     "ask_synopsis":  "Quer saber uma curiosidade ou falar do diretor?",

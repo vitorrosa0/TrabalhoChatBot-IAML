@@ -13,7 +13,9 @@ class ConversationContext:
         self.current_director = None
         self.current_actor = None
         self.last_topic = None
-        self.last_full_intent  = None  # Nova variável para rastrear a repetição
+        self.last_full_intent  = None
+        self.last_hook_intent = None
+        self.last_resolved_intent = None
         self.history = []
 
     def set_movie(self, movie: Movie):
