@@ -6,7 +6,7 @@ Projeto desenvolvido para a disciplina de **Inteligência Artificial e Machine L
 
 ## 📌 Descrição
 
-O **CineBot** é um chatbot temático com interface web que recomenda filmes com base no gênero informado pelo usuário em linguagem natural. O sistema utiliza técnicas de Processamento de Linguagem Natural (PLN) com a biblioteca **NLTK** para interpretar as mensagens e identificar a intenção e o gênero cinematográfico desejado.
+O **CineBot** é um chatbot de linha de comando especializado em filmes. O usuário pode perguntar sobre sinopse, diretor, elenco, curiosidades, prêmios e filmes similares em linguagem natural. O sistema utiliza NLP (NLTK) para interpretar as mensagens, classifica a intenção com **Naive Bayes**, e usa um LLM (Llama 3.1 via Hugging Face) para refinar as respostas e cobrir perguntas fora do escopo local.
 
 ---
 
@@ -15,9 +15,10 @@ O **CineBot** é um chatbot temático com interface web que recomenda filmes com
 | Tecnologia | Função |
 |---|---|
 | Python 3.x | Linguagem principal |
-| NLTK | Processamento de Linguagem Natural |
-| Flask | Servidor web / Backend |
-| HTML + CSS + JS | Interface web (Frontend) |
+| NLTK + RSLPStemmer | Processamento de Linguagem Natural e stemming |
+| Naive Bayes (NLTK) | Classificação de intenções (saudação, afirmação) |
+| Hugging Face (Llama 3.1 8B) | LLM para fallback e refinamento de respostas |
+| python-dotenv | Gerenciamento de variáveis de ambiente |
 
 ---
 
@@ -25,42 +26,43 @@ O **CineBot** é um chatbot temático com interface web que recomenda filmes com
 
 ```
 TrabalhoChatBot-IAML/
-├── app.py              → Servidor Flask (rotas e API)
-├── chatbot.py          → Lógica de PLN e geração de respostas
-├── filmes.py           → Base de dados de filmes por gênero
-├── templates/
-│   └── index.html      → Interface web do chatbot
-└── README.md
+├── requirements.txt
+├── README.md
+└── src/
+    ├── app.py                  → Ponto de entrada (CLI)
+    ├── Orchestrator.py         → Coordena NLP, contexto e geração de respostas
+    ├── IMovieRepository.py     → Repositório de filmes (leitura do dataset.json)
+    ├── StateManagement.py      → Gerenciamento de contexto da conversa
+    ├── dataset.json            → Base de dados de filmes
+    ├── entities/               → Modelos de dados (Movie, Director, Actor)
+    ├── nlp/                    → Pipeline de NLP e classificadores de intenção
+    └── learningModel/          → Integração com LLM (HuggingFaceFallback)
 ```
 
 ---
 
-## 🔬 Pipeline de PLN (chatbot.py)
+## 🔬 Pipeline de NLP
 
-O módulo `chatbot.py` aplica as seguintes etapas no processamento de cada mensagem:
+Cada mensagem do usuário passa pelas seguintes etapas (em `nlp/NLPProcessor.py`):
 
 1. **Lowercase** — converte o texto para minúsculas
-2. **Remoção de pontuação** — elimina caracteres especiais
-3. **Tokenização** — divide o texto em palavras individuais (usando `word_tokenize` do NLTK)
-4. **Remoção de stopwords** — remove palavras sem valor semântico (ex: "o", "de", "que") usando a lista de stopwords em português do NLTK
-5. **Stemming** — reduz palavras à sua raiz morfológica usando o `RSLPStemmer` do NLTK (ex: "ação", "ações" → mesmo stem)
+2. **Remoção de acentos** — normalização Unicode
+3. **Remoção de pontuação** — elimina caracteres especiais
+4. **Tokenização** — divide o texto em palavras individuais
+5. **Stemming** — reduz palavras à raiz morfológica com `RSLPStemmer` (ex: "dirigiu", "diretor" → mesmo stem)
 
-Após o processamento, o sistema:
-- **Detecta a intenção** do usuário (saudação, pedido de recomendação, despedida, ajuda)
-- **Detecta o gênero** cinematográfico mencionado comparando stems das palavras com o dicionário de palavras-chave
+Após o processamento:
+- **Classificação de intenção** via regras com stems + **Naive Bayes** para saudações e afirmações
+- **Extração de entidade** — identifica o filme mencionado na mensagem
+- **Geração de resposta** local baseada na intenção e no contexto da conversa
+- **Refinamento** via LLM (Hugging Face) para tornar a resposta mais natural
 
 ---
 
-## 🎬 Gêneros Disponíveis
+## 🎬 Filmes Disponíveis no Dataset
 
-- Ação
-- Comédia
-- Drama
-- Terror
-- Romance
-- Ficção Científica
-- Animação
-- Suspense
+- Interestelar (2014)
+- O Poderoso Chefão (1972)
 
 ---
 
@@ -72,19 +74,39 @@ git clone https://github.com/SEU_USUARIO/TrabalhoChatBot-IAML.git
 cd TrabalhoChatBot-IAML
 ```
 
-### 2. Instale as dependências
+### 2. Crie e ative um ambiente virtual (recomendado)
 ```bash
-pip3 install flask nltk
+python3 -m venv venv
+source venv/bin/activate  # Linux/macOS
+venv\Scripts\activate     # Windows
 ```
 
-### 3. Execute o servidor
+### 3. Instale as dependências
 ```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure as variáveis de ambiente
+
+O arquivo `src/.env.example` serve de template, ele está no repositório e mostra quais variáveis precisam ser configuradas, mas sem valores reais.
+
+Para configurar, copie o template e preencha com o seu token:
+```bash
+# macOS/Linux
+cp src/.env.example src/.env
+
+# Windows
+copy src\.env.example src\.env
+```
+
+Abra o `src/.env` gerado e substitua `seu_token_aqui` pelo seu token pessoal do Hugging Face.
+
+> Obtenha o token (com permissão "Make calls to Inference Providers") em: https://huggingface.co/settings/tokens
+
+### 5. Execute o chatbot
+```bash
+cd src
 python3 app.py
-```
-
-### 4. Acesse no navegador
-```
-http://localhost:5000
 ```
 
 ---
@@ -93,19 +115,20 @@ http://localhost:5000
 
 | Entrada do Usuário | Resposta do Bot |
 |---|---|
-| "Oi" | Saudação + explicação dos gêneros disponíveis |
-| "Quero um filme de ação" | 3 filmes de ação com título, ano e descrição |
-| "Me recomenda uma comédia" | 3 filmes de comédia |
-| "Estou com medo, quero terror" | 3 filmes de terror |
-| "Sugere ficção científica" | 3 filmes de ficção científica |
+| "Oi" | Saudação e apresentação do CineBot |
+| "Me fala sobre Interestelar" | Inicia contexto com o filme |
+| "Qual a sinopse?" | Sinopse do filme em contexto |
+| "Quem dirigiu?" | Nome e estilo do diretor |
+| "Me conta uma curiosidade" | Curiosidade de bastidores |
+| "Quais prêmios ele ganhou?" | Oscars e indicações |
+| "Tem algum filme parecido?" | Lista de filmes similares |
 
 ---
 
 ## ⚠️ Limitações
 
-- O chatbot não possui memória de contexto entre mensagens
-- A base de filmes é estática (não consulta APIs externas)
-- O entendimento de linguagem natural é baseado em regras e palavras-chave, sem modelos de ML
+- O dataset é local e contém apenas 2 filmes (Interestelar e O Poderoso Chefão)
+- O refinamento de respostas e o fallback dependem de conexão com a API do Hugging Face e de um token válido
 - Gírias ou frases muito informais podem não ser reconhecidas corretamente
 
 ---
