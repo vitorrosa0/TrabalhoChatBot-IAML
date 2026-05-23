@@ -57,7 +57,7 @@ class ChatbotOrchestrator:
 
     def _should_use_fallback(self, intent: str, response: str) -> bool:
         """Decide se o fallback deve ser acionado."""
-        if intent == "unknown":
+        if intent == "unknown" and not self.context.current_movie:
             return True
         return False
 
