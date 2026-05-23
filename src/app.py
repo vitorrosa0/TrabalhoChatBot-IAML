@@ -29,7 +29,8 @@ def main():
             break
 
         resposta = bot.handle_message(user_input)
-        print(f"Bot: {resposta}\n")
+        origem = "[Dataset]" if resposta["source"] == "dataset" else "[LLM]"
+        print(f"Bot {origem}: {resposta['text']}\n")
 
 if __name__ == "__main__":
     main()
