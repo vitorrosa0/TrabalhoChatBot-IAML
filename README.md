@@ -145,5 +145,5 @@ python3 app.py
 
 ## 📅 Entrega
 
-**Data:** 06/04/2026 — com apresentação
+**Data:** 15/06/2026 — com apresentação
 **Disciplina:** Inteligência Artificial e Machine Learning — UniAcademia
