@@ -211,6 +211,15 @@ class ChatbotOrchestrator:
                 f"{membro.name} como {membro.role}" for membro in movie.cast
             )
             return f"O elenco de {movie.title} inclui: {membros}."
+
+        if intent == "ask_actor_filmography":
+            if not movie.cast:
+                return f"Não tenho informações sobre o elenco de {movie.title}."
+            ator = movie.cast[0]
+            if not ator.filmography:
+                return f"Não encontrei outros filmes de {ator.name}."
+            filmes = ", ".join(ator.filmography)
+            return f"Além de {movie.title}, {ator.name} participou de: {filmes}."
         
         if intent == "ask_similar":
             similares = self.repository.get_similar_movies(movie.title)

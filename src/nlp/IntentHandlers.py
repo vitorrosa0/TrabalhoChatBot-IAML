@@ -48,6 +48,14 @@ class ActorHandler(IntentHandler):
         return "ask_actor"
 
 
+class ActorFilmographyHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["ator", "atriz", "outros", "participou", "estrelou", "atuou", "filmografia"]
+
+    def get_intent_name(self):
+        return "ask_actor_filmography"
+
+
 class TriviaHandler(IntentHandler):
     def _raw_keywords(self):
         return ["curiosidade", "trivia", "fato", "interessante"]

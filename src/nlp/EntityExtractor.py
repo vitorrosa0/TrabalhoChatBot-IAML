@@ -1,14 +1,20 @@
 import re
 from difflib import SequenceMatcher
-from typing import Dict
 from typing import Dict, Optional
+
+STOPWORDS = {
+    "qual", "o", "a", "os", "as", "de", "do", "da", "dos", "das",
+    "me", "fale", "sobre", "quem", "dirigiu", "elenco", "sinopse",
+    "curiosidade", "ano", "genero", "premio", "filme", "e", "é",
+    "um", "uma", "no", "na", "por", "com", "que", "foi", "tem",
+}
 
 def _similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, a, b).ratio()
 
 
 class EntityExtractor:
-    MATCH_THRESHOLD = 0.82  # ajuste se quiser mais ou menos tolerância
+    MATCH_THRESHOLD = 0.82
 
     def __init__(self, repository):
         self.repository = repository
@@ -18,39 +24,34 @@ class EntityExtractor:
         self._load_entities()
 
     def _load_entities(self):
-        """Carrega todas as entidades do repositório, sem nomes fixos no código."""
+        """Pré-carrega entidades já no cache do repositório (útil para LocalJsonRepository)."""
         for movie in self.repository.get_all_movies():
-            title_lower = movie.title.lower()
-            if title_lower not in self.movies:
-                self.movies.append(title_lower)
-
-            for actor in movie.cast:
-                actor_lower = actor.name.lower()
-                if actor_lower not in self.actors:
-                    self.actors.append(actor_lower)
+            self._register_movie(movie)
 
         for director in self.repository.get_all_directors():
             director_lower = director.name.lower()
             if director_lower not in self.directors:
                 self.directors.append(director_lower)
 
+    def _register_movie(self, movie):
+        """Registra um filme e seu elenco na lista local."""
+        title_lower = movie.title.lower()
+        if title_lower not in self.movies:
+            self.movies.append(title_lower)
+        for actor in movie.cast:
+            actor_lower = actor.name.lower()
+            if actor_lower not in self.actors:
+                self.actors.append(actor_lower)
+
     def _find_in_text(self, text_lower: str, candidates: list) -> Optional[str]:
-        """
-        Tenta encontrar um candidato no texto de duas formas:
-        1. Substring exata (rápido e preciso)
-        2. Similaridade por janela deslizante (tolera erros de digitação)
-        """
+        """Busca exata primeiro, depois aproximada por janela deslizante."""
         for candidate in candidates:
-            # 1. Busca exata
             if candidate in text_lower:
                 return candidate
 
-            # 2. Busca aproximada — divide o candidato em palavras e
-            #    compara com janelas de mesmo tamanho no texto
             cand_words = candidate.split()
             text_words = text_lower.split()
             n = len(cand_words)
-
             for i in range(len(text_words) - n + 1):
                 window = " ".join(text_words[i:i + n])
                 if _similarity(window, candidate) >= self.MATCH_THRESHOLD:
@@ -58,14 +59,46 @@ class EntityExtractor:
 
         return None
 
+    def _extract_candidate_titles(self, text_lower: str):
+        """
+        Gera candidatos a título de filme a partir do texto,
+        removendo stopwords e tentando janelas de 1 a 4 palavras.
+        """
+        words = [w for w in text_lower.split() if w not in STOPWORDS and len(w) > 2]
+        candidates = []
+        for size in range(4, 0, -1):  # tenta frases maiores primeiro
+            for i in range(len(words) - size + 1):
+                candidates.append(" ".join(words[i:i + size]))
+        return candidates
+
+    def _try_fetch_from_api(self, text_lower: str) -> Optional[str]:
+        """
+        Quando a lista local está vazia ou não houve match,
+        tenta buscar o filme diretamente no repositório usando
+        candidatos extraídos do texto.
+        """
+        for candidate in self._extract_candidate_titles(text_lower):
+            movie = self.repository.get_movie_by_title(candidate)
+            if movie:
+                self._register_movie(movie)
+                return movie.title.lower()
+        return None
+
     def extract(self, text: str) -> Dict[str, str]:
         text_lower = text.lower()
         entities = {}
 
+        # 1. Tenta encontrar na lista local (já conhecidos)
         match = self._find_in_text(text_lower, self.movies)
+
+        # 2. Se não achou, vai na API buscar pelo texto
+        if not match:
+            match = self._try_fetch_from_api(text_lower)
+
         if match:
             entities["movie"] = match
 
+        # Pessoas: só busca na lista local (já populada após busca de filme)
         match = self._find_in_text(text_lower, self.directors + self.actors)
         if match:
             entities["person"] = match

@@ -1,19 +1,19 @@
-import json
 from dotenv import load_dotenv
 import os
 
-from IMovieRepository import LocalJsonRepository
-from learningModel.ILLMFallback import ILLMFallback
+from TMDBRepository import TMDBRepository
 from learningModel.HuggingFaceFallback import HuggingFaceFallback
 from Orchestrator import ChatbotOrchestrator
 
 load_dotenv()
 
 def main():
-    with open('dataset.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    tmdb_key = os.getenv("TMDB_API_KEY")
+    if not tmdb_key:
+        print("Erro: TMDB_API_KEY não encontrada no .env")
+        return
 
-    repository = LocalJsonRepository(data)
+    repository = TMDBRepository(api_key=tmdb_key)
 
     token = os.getenv("HF_TOKEN")
     fallback = HuggingFaceFallback(token=token)
@@ -29,7 +29,7 @@ def main():
             break
 
         resposta = bot.handle_message(user_input)
-        origem = "[Dataset]" if resposta["source"] == "dataset" else "[LLM]"
+        origem = "[TMDB]" if resposta["source"] == "dataset" else "[LLM]"
         print(f"Bot {origem}: {resposta['text']}\n")
 
 if __name__ == "__main__":

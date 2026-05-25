@@ -11,6 +11,7 @@ class IntentClassifier:
             AffirmationHandler(stemmer),
             IntentHandlers.SynopsisHandler(stemmer),
             IntentHandlers.DirectorHandler(stemmer),  
+            IntentHandlers.ActorFilmographyHandler(stemmer),
             IntentHandlers.ActorHandler(stemmer),
             IntentHandlers.TriviaHandler(stemmer),
             IntentHandlers.YearHandler(stemmer),
