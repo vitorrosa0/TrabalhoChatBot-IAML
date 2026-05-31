@@ -1,3 +1,5 @@
+from re import search
+
 import requests
 from typing import Optional, List
 from entities import Movie, Actor, Director
@@ -36,6 +38,8 @@ class TMDBRepository(IMovieRepository):
 
         # 1. Acha o ID pelo título
         search = self._get("/search/movie", {"query": title})
+        print(f"[DEBUG TMDB] query: {title}")
+        print(f"[DEBUG TMDB] primeiro resultado: {search['results'][0]['title'] if search and search.get('results') else None}")
         if not search or not search.get("results"):
             return None
 

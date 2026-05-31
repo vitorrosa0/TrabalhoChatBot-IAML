@@ -1,13 +1,6 @@
 import re
 from difflib import SequenceMatcher
-from typing import Dict, Optional
-
-STOPWORDS = {
-    "qual", "o", "a", "os", "as", "de", "do", "da", "dos", "das",
-    "me", "fale", "sobre", "quem", "dirigiu", "elenco", "sinopse",
-    "curiosidade", "ano", "genero", "premio", "filme", "e", "é",
-    "um", "uma", "no", "na", "por", "com", "que", "foi", "tem",
-}
+from typing import Dict, Optional, List
 
 def _similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, a, b).ratio()
@@ -64,7 +57,7 @@ class EntityExtractor:
         Gera candidatos a título de filme a partir do texto,
         removendo stopwords e tentando janelas de 1 a 4 palavras.
         """
-        words = [w for w in text_lower.split() if w not in STOPWORDS and len(w) > 2]
+        words = [w for w in text_lower.split() if len(w) > 2]
         candidates = []
         for size in range(4, 0, -1):  # tenta frases maiores primeiro
             for i in range(len(words) - size + 1):
@@ -104,3 +97,67 @@ class EntityExtractor:
             entities["person"] = match
 
         return entities, text
+
+    def extract_from_tokens(self, filtered_tokens: List[str], original_text: str) -> Dict[str, str]:
+        """
+        Extrai entidades usando tokens já filtrados pelo intent,
+        evitando que keywords de comando sejam confundidas com títulos.
+        """
+
+        meaningful_tokens = [t for t in filtered_tokens if len(t) >= 4]
+        
+        candidates = []
+        for size in range(len(meaningful_tokens), 0, -1):
+            for i in range(len(meaningful_tokens) - size + 1):
+                candidates.append(" ".join(meaningful_tokens[i:i + size]))
+
+        text_lower = original_text.lower()
+        entities = {}
+
+        # busca na lista local primeiro
+        match = self._find_in_text(" ".join(filtered_tokens), self.movies)
+
+        # se não achou, tenta na API com os candidatos filtrados
+        if not match:
+            for candidate in candidates:
+                movie = self.repository.get_movie_by_title(candidate)
+                if movie:
+                    self._register_movie(movie)
+                    match = movie.title.lower()
+                    break
+
+        if match:
+            entities["movie"] = match
+
+        # pessoas: busca na lista local
+        match = self._find_in_text(text_lower, self.directors + self.actors)
+        if match:
+            entities["person"] = match
+
+        return entities, original_text
+    
+    
+    def extract_title(self, clean_text: str) -> Optional[str]:
+        """
+        Busca título usando texto limpo sem stemming.
+        Tenta lista local primeiro, depois API.
+        """
+        # busca exata na lista local
+        match = self._find_in_text(clean_text, self.movies)
+        if match:
+            return match
+
+        # busca na API com o texto limpo
+        words = clean_text.split()
+        candidates = []
+        for size in range(len(words), 0, -1):
+            for i in range(len(words) - size + 1):
+                candidates.append(" ".join(words[i:i + size]))
+
+        for candidate in candidates:
+            movie = self.repository.get_movie_by_title(candidate)
+            if movie:
+                self._register_movie(movie)
+                return movie.title.lower()
+
+        return None

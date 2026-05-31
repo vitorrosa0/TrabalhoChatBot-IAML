@@ -55,3 +55,6 @@ class GreetingMLHandler(IntentHandler):
 
     def get_intent_name(self) -> str:
         return "ask_greeting"
+    
+    def get_stemmed_keywords(self) -> List[str]:
+        return []

@@ -1,4 +1,6 @@
 from typing import List
+
+from nltk import text
 from nlp import NLPProcessor, IntentClassifier, EntityExtractor, ResponseEnricher
 from StateManagement import ConversationContext
 from learningModel.ILLMFallback import ILLMFallback
@@ -18,15 +20,18 @@ class ChatbotOrchestrator:
         tokens, doc = self.nlp_processor.process_text(user_text)
         intent = self.intent_classifier.classify(tokens)
 
-        # print(f"[DEBUG] tokens: {tokens}")
-        # print(f"[DEBUG] intent classificado: {intent}")
-        # print(f"[DEBUG] last_topic: {self.context.last_topic}")
-        entities, _ = self.entity_extractor.extract(user_text)
+        # extrai título usando texto original sem stemming
+        clean_text = self._extract_title_from_text(user_text, intent)
 
-        if "movie" in entities:
-            movie = self.repository.get_movie_by_title(entities["movie"])
-            if movie:
-                self.context.set_movie(movie)
+        PRONOUNS = {"ele", "ela", "dele", "dela", "esse", "essa", "este", "esta"}
+        clean_words = set(clean_text.split())
+
+        if clean_text and not clean_words.issubset(PRONOUNS):
+            movie_title = self.entity_extractor.extract_title(clean_text)
+            if movie_title:
+                movie = self.repository.get_movie_by_title(movie_title)
+                if movie:
+                    self.context.set_movie(movie)
 
         # Calcula a sub-intenção antes de checar repetição
         sub_intent = self._get_sub_intent(intent, tokens)
@@ -42,16 +47,11 @@ class ChatbotOrchestrator:
             context_summary = self._build_context_summary()
             response = self.fallback.answer(user_text, context_summary)
             source = "llm"
-        
-        # print(f"[DEBUG] intent={intent}")
-        # print(f"[DEBUG] last_resolved_intent={self.context.last_resolved_intent}")
-        # print(f"[DEBUG] last_hook_intent={self.context.last_hook_intent}")
+
         effective_intent = self.context.last_resolved_intent or intent
         self.context.last_resolved_intent = None
-        # print(f"[DEBUG] effective_intent={effective_intent}")
         response, hook_intent = self.enricher.enrich(effective_intent, response, self.context.current_movie)
         self.context.last_hook_intent = hook_intent
-        # print(f"[DEBUG] hook_intent={hook_intent}")
         self.context.last_full_intent = f"{effective_intent}:default" if intent == "ask_affirmation" else full_intent
         return {"text": response, "source": source}
 
@@ -251,3 +251,25 @@ class ChatbotOrchestrator:
         if any(w in tokens for w in self._stem_list(["estilo", "jeito", "caracteristica"])):
             return "style"
         return "default"
+    
+    def _extract_title_from_text(self, text: str, intent: str) -> str:
+        import re
+
+        intent_keywords = set(self.intent_classifier.get_keywords_for_intent(intent))
+        
+        # palavras funcionais que nunca são títulos de filmes
+        FUNCTIONAL_WORDS = {
+            "me", "te", "se", "o", "a", "os", "as", "um", "uma",
+            "de", "do", "da", "dos", "das", "no", "na", "por",
+            "com", "que", "foi", "tem", "é", "e"
+        }
+
+        text_clean = re.sub(r'[^\w\s]', '', text.lower())
+        words = text_clean.split()
+
+        title_words = [
+            w for w in words
+            if self.nlp_processor.stemmer.stem(w) not in intent_keywords
+            and w not in FUNCTIONAL_WORDS
+        ]
+        return " ".join(title_words)

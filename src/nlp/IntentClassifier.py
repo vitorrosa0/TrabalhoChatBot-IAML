@@ -28,8 +28,14 @@ class IntentClassifier:
                 return h
 
     def classify(self, tokens: List[str]) -> str:
-     for handler in self.handlers:
-        if handler.matches(tokens):
-            # print(f"[DEBUG] match em: {handler.__class__.__name__}")
-            return handler.get_intent_name()
-     return "unknown"
+        for handler in self.handlers:
+            if handler.matches(tokens):
+                # print(f"[DEBUG] match em: {handler.__class__.__name__}")
+                return handler.get_intent_name()
+        return "unknown"
+
+    def get_keywords_for_intent(self, intent_name: str) -> List[str]:
+        for handler in self.handlers:
+            if handler.get_intent_name() == intent_name:
+                return handler.get_stemmed_keywords()
+        return []

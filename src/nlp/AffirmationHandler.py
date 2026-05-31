@@ -98,3 +98,6 @@ class AffirmationHandler(IntentHandler):
 
     def get_label(self) -> str:
         return self._ultimo_rotulo
+    
+    def get_stemmed_keywords(self) -> List[str]:
+        return []

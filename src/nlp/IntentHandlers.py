@@ -15,6 +15,9 @@ class IntentHandler(ABC):
     def matches(self, tokens: List[str]) -> bool:
         return any(word in self._stemmed_keywords for word in tokens)
 
+    def get_stemmed_keywords(self) -> List[str]:
+        return self._stemmed_keywords
+
     @abstractmethod
     def get_intent_name(self) -> str:
         pass
@@ -22,7 +25,7 @@ class IntentHandler(ABC):
 
 class SynopsisHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["sinopse", "resumo", "historia", "enredo", "acontecer"]
+        return ["sinopse", "resumo", "historia", "enredo", "acontecer", "falar", "contar", "fale", "conte", "fale sobre", "fala sobre", "conta sobre", "conte sobre", "sobre"]
 
     def get_intent_name(self):
         return "ask_synopsis"
