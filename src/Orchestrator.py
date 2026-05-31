@@ -17,6 +17,7 @@ class ChatbotOrchestrator:
         self.affirmation_handler = self.intent_classifier.get_affirmation_handler()
 
     def handle_message(self, user_text: str) -> dict:
+        self.repository.reset_turno()
         tokens, doc = self.nlp_processor.process_text(user_text)
         intent = self.intent_classifier.classify(tokens)
 
@@ -41,12 +42,14 @@ class ChatbotOrchestrator:
         is_repeat = (full_intent == self.context.last_full_intent and intent != "unknown")
 
         response = self._generate_response(intent, tokens, is_repeat=is_repeat)
-        source = "dataset"
+        source = "local"
 
         if self._should_use_fallback(intent, response) and self.fallback:
             context_summary = self._build_context_summary()
             response = self.fallback.answer(user_text, context_summary)
             source = "llm"
+        elif self.repository.foi_consultado():
+            source = "tmdb"
 
         effective_intent = self.context.last_resolved_intent or intent
         self.context.last_resolved_intent = None

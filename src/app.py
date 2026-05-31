@@ -29,8 +29,9 @@ def main():
             break
 
         resposta = bot.handle_message(user_input)
-        origem = "[TMDB]" if resposta["source"] == "dataset" else "[LLM]"
-        print(f"Bot {origem}: {resposta['text']}\n")
+        tags = {"tmdb": " [TMDB]", "llm": " [LLM]", "local": ""}
+        tag = tags.get(resposta["source"], "")
+        print(f"Bot{tag}: {resposta['text']}\n")
 
 if __name__ == "__main__":
     main()

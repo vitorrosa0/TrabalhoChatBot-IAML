@@ -24,6 +24,14 @@ class IMovieRepository(ABC):
     def get_all_directors(self) -> List[Director]:
         pass
 
+    @abstractmethod
+    def reset_turno(self):
+        pass
+
+    @abstractmethod
+    def foi_consultado(self) -> bool:
+        pass
+
 
 # Implementação concreta que lê o seu JSON
 class LocalJsonRepository(IMovieRepository):

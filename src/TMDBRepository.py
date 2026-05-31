@@ -12,6 +12,20 @@ class TMDBRepository(IMovieRepository):
     def __init__(self, api_key: str):
         self._api_key = api_key
         self._cache: dict = {}
+        self._consultado_neste_turno: bool = False
+
+    def reset_turno(self):
+        """Reseta o flag a cada novo turno da conversa."""
+        self._consultado_neste_turno = False
+
+    def foi_consultado(self) -> bool:
+        """Retorna True se a API foi chamada neste turno."""
+        return self._consultado_neste_turno
+    
+    def _fetch_movie_data(self, title: str) -> Optional[dict]:
+        self._consultado_neste_turno = True
+        if title in self._cache:
+            return self._cache[title]
 
     # ------------------------------------------------------------------
     # Requisição base
