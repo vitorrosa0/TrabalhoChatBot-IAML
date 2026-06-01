@@ -26,7 +26,8 @@ class ChatbotOrchestrator:
         PRONOUNS = {"ele", "ela", "dele", "dela", "esse", "essa", "este", "esta"}
         clean_words = set(clean_text.split())
 
-        if intent != "unknown" and clean_text and not clean_words.issubset(PRONOUNS):
+        INTENTS_SEM_FILME = {"ask_greeting", "ask_affirmation", "unknown"}
+        if intent not in INTENTS_SEM_FILME and clean_text and not clean_words.issubset(PRONOUNS):
             movie_title = self.entity_extractor.extract_title(clean_text)
             if movie_title:
                 movie = self.repository.get_movie_by_title(movie_title)
@@ -83,10 +84,10 @@ class ChatbotOrchestrator:
 
         if intent == "ask_greeting":
             saudacoes = [
-                "Olá! Sou o CineBot. Posso te falar sobre sinopse, diretor, elenco ou curiosidades de filmes. O que prefere?",
-                "Oi! Estou aqui para conversar sobre filmes. Quer saber a sinopse, quem dirigiu ou alguma curiosidade?",
-                "Olá! Pronto para falar de cinema. Sobre qual filme você quer conversar?",
-             ]
+                "Olá! 🎬 Sou o CineBot, seu assistente de filmes.\n\nMe diga sobre qual filme você quer conversar — posso te contar a sinopse, diretor, elenco, curiosidades e muito mais.",
+                "Oi! 🎬 Sou o CineBot, seu assistente de cinema.\n\nSobre qual filme você quer conversar hoje?",
+                "Olá! 🎬 Bem-vindo ao CineBot.\n\nMe diga um filme e posso te contar sinopse, diretor, elenco, curiosidades e muito mais.",
+            ]
             despedidas = [
                 "Até logo! Foi um prazer conversar sobre cinema.",
                 "Tchau! Volte quando quiser saber mais sobre algum filme.",

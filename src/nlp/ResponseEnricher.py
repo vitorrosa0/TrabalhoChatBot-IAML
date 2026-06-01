@@ -61,4 +61,4 @@ class ResponseEnricher:
         if not hooks:
             return base_response, None
         hook_intent = self.HOOK_INTENT_MAP.get(intent)
-        return base_response + random.choice(hooks), hook_intent
+        return base_response + "\n\n" + random.choice(hooks), hook_intent
