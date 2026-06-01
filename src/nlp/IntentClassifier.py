@@ -9,11 +9,11 @@ class IntentClassifier:
         self.handlers = [
             GreetingMLHandler(stemmer), 
             AffirmationHandler(stemmer),
+            IntentHandlers.TriviaHandler(stemmer),
             IntentHandlers.SynopsisHandler(stemmer),
             IntentHandlers.DirectorHandler(stemmer),  
             IntentHandlers.ActorFilmographyHandler(stemmer),
             IntentHandlers.ActorHandler(stemmer),
-            IntentHandlers.TriviaHandler(stemmer),
             IntentHandlers.YearHandler(stemmer),
             IntentHandlers.GenreHandler(stemmer),
             IntentHandlers.AwardsHandler(stemmer),

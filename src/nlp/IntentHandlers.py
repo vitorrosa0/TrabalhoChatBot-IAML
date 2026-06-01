@@ -23,6 +23,14 @@ class IntentHandler(ABC):
         pass
 
 
+class TriviaHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["curiosidade", "trivia", "fato", "interessante"]
+
+    def get_intent_name(self):
+        return "ask_trivia"
+
+
 class SynopsisHandler(IntentHandler):
     def _raw_keywords(self):
         return ["sinopse", "resumo", "historia", "enredo", "acontecer", "falar", "contar", "fale", "conte", "fale sobre", "fala sobre", "conta sobre", "conte sobre", "sobre"]
@@ -58,14 +66,6 @@ class ActorFilmographyHandler(IntentHandler):
     def get_intent_name(self):
         return "ask_actor_filmography"
 
-
-class TriviaHandler(IntentHandler):
-    def _raw_keywords(self):
-        return ["curiosidade", "trivia", "fato", "interessante"]
-
-    def get_intent_name(self):
-        return "ask_trivia"
-
 class YearHandler(IntentHandler):
     def _raw_keywords(self):
         return ["ano", "lancamento", "lancou", "estreou", "lançado"]
@@ -85,7 +85,7 @@ class GenreHandler(IntentHandler):
     
 class AwardsHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["premio", "oscar", "ganhou", "venceu", "indicacao", "awards"]
+        return ["premio", "premios", "prêmios", "oscar", "ganhou", "venceu", "indicacao", "awards"]
 
     def get_intent_name(self):
         return "ask_awards"
@@ -99,7 +99,7 @@ class CastHandler(IntentHandler):
     
 class SimilarMoviesHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["similar", "parecido", "semelhante", "recomenda", "igual"]
+        return ["similar", "parecido", "parecidos", "semelhante", "recomenda", "igual"]
 
     def get_intent_name(self):
         return "ask_similar"

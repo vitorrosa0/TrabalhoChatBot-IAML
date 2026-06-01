@@ -23,11 +23,10 @@ class ChatbotOrchestrator:
 
         # extrai título usando texto original sem stemming
         clean_text = self._extract_title_from_text(user_text, intent)
-
         PRONOUNS = {"ele", "ela", "dele", "dela", "esse", "essa", "este", "esta"}
         clean_words = set(clean_text.split())
 
-        if clean_text and not clean_words.issubset(PRONOUNS):
+        if intent != "unknown" and clean_text and not clean_words.issubset(PRONOUNS):
             movie_title = self.entity_extractor.extract_title(clean_text)
             if movie_title:
                 movie = self.repository.get_movie_by_title(movie_title)
@@ -60,7 +59,9 @@ class ChatbotOrchestrator:
 
     def _should_use_fallback(self, intent: str, response: str) -> bool:
         """Decide se o fallback deve ser acionado."""
-        if intent == "unknown" and not self.context.current_movie:
+        if intent == "unknown":
+            return True
+        if "não encontrei" in response.lower() or "não tenho informações" in response.lower():
             return True
         return False
 
@@ -205,7 +206,9 @@ class ChatbotOrchestrator:
             nominations = awards.get("nominations", 0)
             if oscars > 0:
                 return f"{movie.title} ganhou {oscars} Oscar(s) e teve {nominations} indicações."
-            return f"{movie.title} não ganhou Oscars, mas teve {nominations} indicações."
+            if nominations > 0:
+                return f"{movie.title} não ganhou Oscars, mas teve {nominations} indicações."
+            return f"Não tenho informações sobre prêmios de {movie.title}."
 
         if intent == "ask_cast":
             if not movie.cast:
@@ -264,7 +267,11 @@ class ChatbotOrchestrator:
         FUNCTIONAL_WORDS = {
             "me", "te", "se", "o", "a", "os", "as", "um", "uma",
             "de", "do", "da", "dos", "das", "no", "na", "por",
-            "com", "que", "foi", "tem", "é", "e"
+            "com", "que", "foi", "tem", "é", "e",
+            "qual", "quais", "como", "quando", "onde", "quanto", "quem",
+            "curiosidade", "curiosidades",
+            "conte", "conta", "fale", "fala", "me conta", "me fale",
+            "agora", "então", "depois", "antes", "já", "também", "filmes"
         }
 
         text_clean = re.sub(r'[^\w\s]', '', text.lower())
@@ -275,4 +282,6 @@ class ChatbotOrchestrator:
             if self.nlp_processor.stemmer.stem(w) not in intent_keywords
             and w not in FUNCTIONAL_WORDS
         ]
+        # print(f"[DEBUG] intent_keywords: {intent_keywords}")
+        # print(f"[DEBUG] title_words: {title_words}")
         return " ".join(title_words)
