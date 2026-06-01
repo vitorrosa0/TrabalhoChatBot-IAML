@@ -1,3 +1,5 @@
+from re import search
+
 import requests
 from typing import Optional, List
 from entities import Movie, Actor, Director
@@ -10,10 +12,16 @@ class TMDBRepository(IMovieRepository):
     def __init__(self, api_key: str):
         self._api_key = api_key
         self._cache: dict = {}
+        self._consultado_neste_turno: bool = False
 
-    # ------------------------------------------------------------------
-    # Requisição base
-    # ------------------------------------------------------------------
+    def reset_turno(self):
+        """Reseta o flag a cada novo turno da conversa."""
+        self._consultado_neste_turno = False
+
+    def foi_consultado(self) -> bool:
+        """Retorna True se a API foi chamada neste turno."""
+        return self._consultado_neste_turno
+    
 
     def _get(self, endpoint: str, params: dict = {}) -> Optional[dict]:
         params = {**params, "api_key": self._api_key, "language": "pt-BR"}
@@ -26,13 +34,15 @@ class TMDBRepository(IMovieRepository):
         except requests.exceptions.RequestException:
             return None
 
-    # ------------------------------------------------------------------
-    # Busca principal — tudo em 2 chamadas usando append_to_response
-    # ------------------------------------------------------------------
+
 
     def _fetch_movie_data(self, title: str) -> Optional[dict]:
         if title in self._cache:
+            self._consultado_neste_turno = True  # cache hit — dado ainda é da API
             return self._cache[title]
+
+        # chamada real à API
+        self._consultado_neste_turno = True
 
         # 1. Acha o ID pelo título
         search = self._get("/search/movie", {"query": title})
@@ -49,9 +59,8 @@ class TMDBRepository(IMovieRepository):
         if not details:
             return None
 
-        # 3. Busca filmografia do diretor e do ator principal (2 chamadas extras)
+        # 3. Busca filmografia do diretor e do ator principal
         credits = details.get("credits", {})
-
         director_entry = next(
             (p for p in credits.get("crew", []) if p["job"] == "Director"), None
         )
@@ -68,7 +77,7 @@ class TMDBRepository(IMovieRepository):
                     for m in dir_credits.get("crew", [])
                     if m.get("job") == "Director"
                     and m.get("title") != details.get("title")
-                    and m.get("vote_count", 0) > 50  # filtra filmes obscuros
+                    and m.get("vote_count", 0) > 50
                 ][:6]
 
         # 4. Filmografia do ator principal (top billing)
@@ -88,7 +97,7 @@ class TMDBRepository(IMovieRepository):
                     if m.get("title") != details.get("title")
                 ][:6]
 
-        # 5. Prêmios via IMDb ID (nota + votos como proxy — TMDB não expõe Oscar diretamente)
+        # 5. IMDb ID para trivia
         imdb_id = details.get("external_ids", {}).get("imdb_id", "")
 
         data = {
@@ -148,8 +157,8 @@ class TMDBRepository(IMovieRepository):
             trivia.append(f"Orçamento: US$ {details['budget']:,.0f}")
         if details.get("revenue", 0) > 0:
             trivia.append(f"Bilheteria mundial: US$ {details['revenue']:,.0f}")
-        if imdb_id:
-            trivia.append(f"IMDb ID: {imdb_id} — confira em imdb.com/title/{imdb_id}")
+        # if imdb_id:
+        #     trivia.append(f"IMDb ID: {imdb_id} — confira em imdb.com/title/{imdb_id}")
 
         # Prêmios: TMDB não expõe Oscar — usamos vote_average como indicador
         awards = {}

@@ -1,4 +1,6 @@
 from typing import List
+
+from nltk import text
 from nlp import NLPProcessor, IntentClassifier, EntityExtractor, ResponseEnricher
 from StateManagement import ConversationContext
 from learningModel.ILLMFallback import ILLMFallback
@@ -15,18 +17,22 @@ class ChatbotOrchestrator:
         self.affirmation_handler = self.intent_classifier.get_affirmation_handler()
 
     def handle_message(self, user_text: str) -> dict:
+        self.repository.reset_turno()
         tokens, doc = self.nlp_processor.process_text(user_text)
         intent = self.intent_classifier.classify(tokens)
 
-        # print(f"[DEBUG] tokens: {tokens}")
-        # print(f"[DEBUG] intent classificado: {intent}")
-        # print(f"[DEBUG] last_topic: {self.context.last_topic}")
-        entities, _ = self.entity_extractor.extract(user_text)
+        # extrai título usando texto original sem stemming
+        clean_text = self._extract_title_from_text(user_text, intent)
+        PRONOUNS = {"ele", "ela", "dele", "dela", "esse", "essa", "este", "esta"}
+        clean_words = set(clean_text.split())
 
-        if "movie" in entities:
-            movie = self.repository.get_movie_by_title(entities["movie"])
-            if movie:
-                self.context.set_movie(movie)
+        INTENTS_SEM_FILME = {"ask_greeting", "ask_affirmation", "unknown"}
+        if intent not in INTENTS_SEM_FILME and clean_text and not clean_words.issubset(PRONOUNS):
+            movie_title = self.entity_extractor.extract_title(clean_text)
+            if movie_title:
+                movie = self.repository.get_movie_by_title(movie_title)
+                if movie:
+                    self.context.set_movie(movie)
 
         # Calcula a sub-intenção antes de checar repetição
         sub_intent = self._get_sub_intent(intent, tokens)
@@ -36,28 +42,27 @@ class ChatbotOrchestrator:
         is_repeat = (full_intent == self.context.last_full_intent and intent != "unknown")
 
         response = self._generate_response(intent, tokens, is_repeat=is_repeat)
-        source = "dataset"
+        source = "local"
 
         if self._should_use_fallback(intent, response) and self.fallback:
             context_summary = self._build_context_summary()
             response = self.fallback.answer(user_text, context_summary)
             source = "llm"
-        
-        # print(f"[DEBUG] intent={intent}")
-        # print(f"[DEBUG] last_resolved_intent={self.context.last_resolved_intent}")
-        # print(f"[DEBUG] last_hook_intent={self.context.last_hook_intent}")
+        elif self.repository.foi_consultado():
+            source = "tmdb"
+
         effective_intent = self.context.last_resolved_intent or intent
         self.context.last_resolved_intent = None
-        # print(f"[DEBUG] effective_intent={effective_intent}")
         response, hook_intent = self.enricher.enrich(effective_intent, response, self.context.current_movie)
         self.context.last_hook_intent = hook_intent
-        # print(f"[DEBUG] hook_intent={hook_intent}")
         self.context.last_full_intent = f"{effective_intent}:default" if intent == "ask_affirmation" else full_intent
         return {"text": response, "source": source}
 
     def _should_use_fallback(self, intent: str, response: str) -> bool:
         """Decide se o fallback deve ser acionado."""
-        if intent == "unknown" and not self.context.current_movie:
+        if intent == "unknown":
+            return True
+        if "não encontrei" in response.lower() or "não tenho informações" in response.lower():
             return True
         return False
 
@@ -79,10 +84,10 @@ class ChatbotOrchestrator:
 
         if intent == "ask_greeting":
             saudacoes = [
-                "Olá! Sou o CineBot. Posso te falar sobre sinopse, diretor, elenco ou curiosidades de filmes. O que prefere?",
-                "Oi! Estou aqui para conversar sobre filmes. Quer saber a sinopse, quem dirigiu ou alguma curiosidade?",
-                "Olá! Pronto para falar de cinema. Sobre qual filme você quer conversar?",
-             ]
+                "Olá! 🎬 Sou o CineBot, seu assistente de filmes.\n\nMe diga sobre qual filme você quer conversar — posso te contar a sinopse, diretor, elenco, curiosidades e muito mais.",
+                "Oi! 🎬 Sou o CineBot, seu assistente de cinema.\n\nSobre qual filme você quer conversar hoje?",
+                "Olá! 🎬 Bem-vindo ao CineBot.\n\nMe diga um filme e posso te contar sinopse, diretor, elenco, curiosidades e muito mais.",
+            ]
             despedidas = [
                 "Até logo! Foi um prazer conversar sobre cinema.",
                 "Tchau! Volte quando quiser saber mais sobre algum filme.",
@@ -202,7 +207,9 @@ class ChatbotOrchestrator:
             nominations = awards.get("nominations", 0)
             if oscars > 0:
                 return f"{movie.title} ganhou {oscars} Oscar(s) e teve {nominations} indicações."
-            return f"{movie.title} não ganhou Oscars, mas teve {nominations} indicações."
+            if nominations > 0:
+                return f"{movie.title} não ganhou Oscars, mas teve {nominations} indicações."
+            return f"Não tenho informações sobre prêmios de {movie.title}."
 
         if intent == "ask_cast":
             if not movie.cast:
@@ -251,3 +258,31 @@ class ChatbotOrchestrator:
         if any(w in tokens for w in self._stem_list(["estilo", "jeito", "caracteristica"])):
             return "style"
         return "default"
+    
+    def _extract_title_from_text(self, text: str, intent: str) -> str:
+        import re
+
+        intent_keywords = set(self.intent_classifier.get_keywords_for_intent(intent))
+        
+        # palavras funcionais que nunca são títulos de filmes
+        FUNCTIONAL_WORDS = {
+            "me", "te", "se", "o", "a", "os", "as", "um", "uma",
+            "de", "do", "da", "dos", "das", "no", "na", "por",
+            "com", "que", "foi", "tem", "é", "e",
+            "qual", "quais", "como", "quando", "onde", "quanto", "quem",
+            "curiosidade", "curiosidades",
+            "conte", "conta", "fale", "fala", "me conta", "me fale",
+            "agora", "então", "depois", "antes", "já", "também", "filmes"
+        }
+
+        text_clean = re.sub(r'[^\w\s]', '', text.lower())
+        words = text_clean.split()
+
+        title_words = [
+            w for w in words
+            if self.nlp_processor.stemmer.stem(w) not in intent_keywords
+            and w not in FUNCTIONAL_WORDS
+        ]
+        # print(f"[DEBUG] intent_keywords: {intent_keywords}")
+        # print(f"[DEBUG] title_words: {title_words}")
+        return " ".join(title_words)

@@ -21,6 +21,7 @@ class ConversationContext:
     def set_movie(self, movie: Movie):
         self.current_movie = movie
         self.last_topic = "movie"
+        self.last_full_intent = None
     
     def set_director(self, director: Director):
         self.current_director = director

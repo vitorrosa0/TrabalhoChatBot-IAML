@@ -15,14 +15,25 @@ class IntentHandler(ABC):
     def matches(self, tokens: List[str]) -> bool:
         return any(word in self._stemmed_keywords for word in tokens)
 
+    def get_stemmed_keywords(self) -> List[str]:
+        return self._stemmed_keywords
+
     @abstractmethod
     def get_intent_name(self) -> str:
         pass
 
 
+class TriviaHandler(IntentHandler):
+    def _raw_keywords(self):
+        return ["curiosidade", "trivia", "fato", "interessante"]
+
+    def get_intent_name(self):
+        return "ask_trivia"
+
+
 class SynopsisHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["sinopse", "resumo", "historia", "enredo", "acontecer"]
+        return ["sinopse", "resumo", "historia", "enredo", "acontecer", "falar", "contar", "fale", "conte", "fale sobre", "fala sobre", "conta sobre", "conte sobre", "sobre"]
 
     def get_intent_name(self):
         return "ask_synopsis"
@@ -55,14 +66,6 @@ class ActorFilmographyHandler(IntentHandler):
     def get_intent_name(self):
         return "ask_actor_filmography"
 
-
-class TriviaHandler(IntentHandler):
-    def _raw_keywords(self):
-        return ["curiosidade", "trivia", "fato", "interessante"]
-
-    def get_intent_name(self):
-        return "ask_trivia"
-
 class YearHandler(IntentHandler):
     def _raw_keywords(self):
         return ["ano", "lancamento", "lancou", "estreou", "lançado"]
@@ -82,7 +85,7 @@ class GenreHandler(IntentHandler):
     
 class AwardsHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["premio", "oscar", "ganhou", "venceu", "indicacao", "awards"]
+        return ["premio", "premios", "prêmios", "oscar", "ganhou", "venceu", "indicacao", "awards"]
 
     def get_intent_name(self):
         return "ask_awards"
@@ -96,7 +99,7 @@ class CastHandler(IntentHandler):
     
 class SimilarMoviesHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["similar", "parecido", "semelhante", "recomenda", "igual"]
+        return ["similar", "parecido", "parecidos", "semelhante", "recomenda", "igual"]
 
     def get_intent_name(self):
         return "ask_similar"
