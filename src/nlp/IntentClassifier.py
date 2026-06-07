@@ -10,6 +10,7 @@ class IntentClassifier:
             GreetingMLHandler(stemmer), 
             AffirmationHandler(stemmer),
             IntentHandlers.GenreSearchHandler(stemmer),
+            IntentHandlers.CountrySearchHandler(stemmer),
             IntentHandlers.TriviaHandler(stemmer),
             IntentHandlers.SynopsisHandler(stemmer),
             IntentHandlers.DirectorHandler(stemmer),  

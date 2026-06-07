@@ -28,7 +28,7 @@ class ChatbotOrchestrator:
         clean_text = self._extract_title_from_text(user_text, intent)
         PRONOUNS = {"ele", "ela", "dele", "dela", "esse", "essa", "este", "esta"}
         clean_words = set(clean_text.split())
-        INTENTS_SEM_FILME = {"ask_greeting", "ask_affirmation", "ask_genre_search"}
+        INTENTS_SEM_FILME = {"ask_greeting", "ask_affirmation", "ask_genre_search", "ask_country_search"}
 
         movie_title = None
         if intent not in INTENTS_SEM_FILME and clean_text and not clean_words.issubset(PRONOUNS):
@@ -111,6 +111,15 @@ class ChatbotOrchestrator:
             rotulo = self.affirmation_handler.get_label()
             ultimo = self.context.last_full_intent or ""
 
+            if rotulo == "afirmacao" and ("ask_genre_search" in ultimo or "ask_country_search" in ultimo):
+                movie_title = self.entity_extractor.extract_title(self.context.last_user_text)
+                if movie_title:
+                    movie = self.repository.get_movie_by_title(movie_title)
+                    if movie:
+                        self.context.set_movie(movie)
+                        return f"A sinopse de {movie.title} é: {movie.synopsis}"
+                return "Qual filme da lista te interessa? Me diga o nome completo."
+
             if rotulo == "afirmacao":
                 hook = self.context.last_hook_intent
                 if hook:
@@ -161,6 +170,40 @@ class ChatbotOrchestrator:
             
             genre_display = genre_keyword.replace('acao', 'ação').replace('animacao', 'animação').replace('ficcao', 'ficção científica')
             linhas = [f"Tenho alguns filmes de {genre_display} que podem te interessar:\n"]
+            for i, (titulo, ano) in enumerate(filmes, 1):
+                linhas.append(f"{i}. **{titulo}** ({ano or '????'})")
+            linhas.append("\nAlgum te interessa? Me diga o nome e conto mais sobre ele!")
+            return "\n".join(linhas)
+        
+        if intent == "ask_country_search":
+            COUNTRY_STEMS = {
+                "brasil": "brasileiro",
+                "americ": "americano",
+                "franc": "frances",
+                "itali": "italiano",
+                "espanhol": "espanhol",
+                "core": "coreano",
+                "japon": "japones",
+            }
+            COUNTRY_DISPLAY = {
+                "brasileiro": "brasileiros",
+                "americano": "americanos",
+                "frances": "franceses",
+                "italiano": "italianos",
+                "espanhol": "espanhóis",
+                "coreano": "coreanos",
+                "japones": "japoneses",
+            }
+            country_keyword = next((COUNTRY_STEMS[t] for t in tokens if t in COUNTRY_STEMS), None)
+            if not country_keyword:
+                return "Qual país você prefere? Posso buscar filmes brasileiros, americanos, franceses e muito mais."
+            
+            filmes = self.repository.get_movies_by_country(country_keyword)
+            if not filmes:
+                return "Não encontrei filmes desse país no momento. Tente outro."
+            
+            country_display = COUNTRY_DISPLAY.get(country_keyword, country_keyword)
+            linhas = [f"Tenho alguns filmes {country_display} que podem te interessar:\n"]
             for i, (titulo, ano) in enumerate(filmes, 1):
                 linhas.append(f"{i}. **{titulo}** ({ano or '????'})")
             linhas.append("\nAlgum te interessa? Me diga o nome e conto mais sobre ele!")

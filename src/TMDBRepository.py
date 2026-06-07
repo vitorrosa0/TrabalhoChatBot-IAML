@@ -20,6 +20,15 @@ GENRE_MAP = {
     "thriller": 53,
 }
 
+COUNTRY_MAP = {
+    "brasileiro": "BR",
+    "americano": "US",
+    "frances": "FR",
+    "italiano": "IT",
+    "espanhol": "ES",
+    "coreano": "KR",
+    "japones": "JP",
+}
 
 class TMDBRepository(IMovieRepository):
     def __init__(self, api_key: str):
@@ -264,4 +273,28 @@ class TMDBRepository(IMovieRepository):
             if len(filmes) == 5:
                 break
         
+        return filmes
+    
+    def get_movies_by_country(self, country_keyword: str) -> List[tuple]:
+        country_code = COUNTRY_MAP.get(country_keyword)
+        if not country_code:
+            return []
+        result = self._get("/discover/movie", {
+            "with_origin_country": country_code,
+            "sort_by": "popularity.desc",
+            "language": "pt-BR",
+            "page": 1,
+            "vote_count.gte": 100,
+        })
+        if not result or not result.get("results"):
+            return []
+        
+        filmes = []
+        for m in result["results"]:
+            titulo = m["title"]
+            ano = m.get("release_date", "")[:4]
+            if titulo.isascii() or all(ord(c) < 1000 for c in titulo):
+                filmes.append((titulo, ano))
+            if len(filmes) == 5:
+                break
         return filmes

@@ -125,3 +125,18 @@ class GenreSearchHandler(IntentHandler):
 
     def get_intent_name(self):
         return "ask_genre_search"
+    
+class CountrySearchHandler(IntentHandler):
+    def _raw_keywords(self):
+        return [
+            "brasileiro", "brasileira", "brasil",
+            "americano", "americana",
+            "frances", "francesa",
+            "italiano", "italiana",
+            "espanhol", "espanhola",
+            "coreano", "coreana",
+            "japones", "japonesa",
+        ]
+
+    def get_intent_name(self):
+        return "ask_country_search"

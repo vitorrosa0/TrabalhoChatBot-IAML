@@ -17,6 +17,7 @@ class ConversationContext:
         self.last_hook_intent = None
         self.last_resolved_intent = None
         self.history = []
+        self.last_user_text = ""
 
     def set_movie(self, movie: Movie):
         self.current_movie = movie
