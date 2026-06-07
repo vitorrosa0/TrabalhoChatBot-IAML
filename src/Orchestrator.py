@@ -18,6 +18,7 @@ class ChatbotOrchestrator:
 
     def handle_message(self, user_text: str) -> dict:
         self.repository.reset_turno()
+        self.context.last_user_text = user_text
         tokens, doc = self.nlp_processor.process_text(user_text)
         intent = self.intent_classifier.classify(tokens)
 
@@ -32,11 +33,15 @@ class ChatbotOrchestrator:
 
         movie_title = None
         if intent not in INTENTS_SEM_FILME and clean_text and not clean_words.issubset(PRONOUNS):
-            movie_title = self.entity_extractor.extract_title(clean_text)
-            if movie_title:
-                movie = self.repository.get_movie_by_title(movie_title)
-                if movie:
-                    self.context.set_movie(movie)
+            # se intent é unknown e já tem filme no contexto, não tenta extrair título
+            if intent == "unknown" and self.context.current_movie:
+                pass
+            else:
+                movie_title = self.entity_extractor.extract_title(clean_text)
+                if movie_title:
+                    movie = self.repository.get_movie_by_title(movie_title)
+                    if movie:
+                        self.context.set_movie(movie)
 
         # print(f"[DEBUG] clean_text: {clean_text}")
         # print(f"[DEBUG] movie_title: {movie_title}")
@@ -50,6 +55,9 @@ class ChatbotOrchestrator:
         is_repeat = (full_intent == self.context.last_full_intent and intent != "unknown")
 
         response = self._generate_response(intent, tokens, is_repeat=is_repeat)
+
+        print(f"[DEBUG] response: {response}")
+        print(f"[DEBUG] should_fallback: {self._should_use_fallback(intent, response)}")
         source = "local"
 
         if self._should_use_fallback(intent, response) and self.fallback:
@@ -112,7 +120,14 @@ class ChatbotOrchestrator:
             ultimo = self.context.last_full_intent or ""
 
             if rotulo == "afirmacao" and ("ask_genre_search" in ultimo or "ask_country_search" in ultimo):
-                movie_title = self.entity_extractor.extract_title(self.context.last_user_text)
+                texto_limpo = self.context.last_user_text
+                for prefixo in ["sim, ", "sim ", "quero ", "quero ver ", "gostei do ", "o "]:
+                    if texto_limpo.lower().startswith(prefixo):
+                        texto_limpo = texto_limpo[len(prefixo):]
+                        break
+                print(f"[DEBUG] texto_limpo para extração: {texto_limpo}")
+                movie_title = self.entity_extractor.extract_title(texto_limpo)
+                print(f"[DEBUG] movie_title extraído: {movie_title}")
                 if movie_title:
                     movie = self.repository.get_movie_by_title(movie_title)
                     if movie:
@@ -238,12 +253,10 @@ class ChatbotOrchestrator:
                 if director.filmography:
                     obras = ", ".join(director.filmography)
                     return f"Além de {movie.title}, {director.name} dirigiu: {obras}."
-                return f"Não encontrei a filmografia de {director.name}."
 
             if any(w in tokens for w in self._stem_list(["estilo", "jeito", "caracteristica"])):
                 if director.style:
                     return f"O estilo do {director.name} foca em {director.style}."
-                return f"Não tenho informações sobre o estilo de {director.name}."
 
             style_info = f" Ele é conhecido por {director.style}." if director.style else ""
             return f"O filme {movie.title} foi dirigido por {director.name}.{style_info}"
@@ -349,6 +362,7 @@ class ChatbotOrchestrator:
             "conte", "conta", "fale", "fala",
             "filmes", "agora", "então", "depois", "antes", "já", "também",
             "está", "sim", "não",
+            "algo", "nada", "tudo", "ele", "ela",
         }
 
         text_clean = re.sub(r'[^\w\s]', '', text.lower())

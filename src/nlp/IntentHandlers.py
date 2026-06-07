@@ -111,7 +111,7 @@ class SimilarMoviesHandler(IntentHandler):
 
 class ContextualHandler(IntentHandler):
     def _raw_keywords(self):
-        return ["ele", "ela", "mais", "outro"]
+        return ["ela", "mais", "outro"]
 
     def get_intent_name(self):
         return "contextual_followup"
