@@ -7,6 +7,19 @@ from IMovieRepository import IMovieRepository
 
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
+GENRE_MAP = {
+    "acao":    28,
+    "comedia": 35,
+    "drama":   18,
+    "terror":  27,
+    "suspense": 53,
+    "romance": 10749,
+    "animacao": 16,
+    "ficcao":  878,
+    "aventura": 12,
+    "thriller": 53,
+}
+
 
 class TMDBRepository(IMovieRepository):
     def __init__(self, api_key: str):
@@ -226,3 +239,29 @@ class TMDBRepository(IMovieRepository):
 
     def get_all_directors(self) -> List[Director]:
         return [d for d in (self._build_director(data) for data in self._cache.values()) if d]
+    
+    def get_movies_by_genre(self, genre_keyword: str) -> List[tuple]:
+        genre_id = GENRE_MAP.get(genre_keyword)
+        if not genre_id:
+            return []
+        result = self._get("/discover/movie", {
+            "with_genres": genre_id,
+            "sort_by": "popularity.desc",
+            "language": "pt-BR",
+            "page": 1,
+            "vote_count.gte": 500,
+        })
+        if not result or not result.get("results"):
+            return []
+        
+        filmes = []
+        for m in result["results"]:
+            titulo = m["title"]
+            ano = m.get("release_date", "")[:4]
+
+            if titulo.isascii() or all(ord(c) < 1000 for c in titulo):
+                filmes.append((titulo, ano))
+            if len(filmes) == 5:
+                break
+        
+        return filmes

@@ -8,6 +8,6 @@ def normalize(text):
 
 s = RSLPStemmer()
 
-palavras = ["quem", "faz", "parte", "do", "elenco"]
+palavras = ["ação", "comédia", "drama", "terror", "suspense", "romance", "animação", "ficção"]
 for p in palavras:
     print(f"{p} → {s.stem(normalize(p))}")

@@ -13,7 +13,12 @@ class IntentHandler(ABC):
         raise NotImplementedError
 
     def matches(self, tokens: List[str]) -> bool:
-        return any(word in self._stemmed_keywords for word in tokens)
+        result = any(word in self._stemmed_keywords for word in tokens)
+        # if self.__class__.__name__ == "GenreSearchHandler":
+        #     print(f"[DEBUG GenreSearch] tokens: {tokens}")
+        #     print(f"[DEBUG GenreSearch] keywords: {self._stemmed_keywords}")
+        #     print(f"[DEBUG GenreSearch] match: {result}")
+        return result
 
     def get_stemmed_keywords(self) -> List[str]:
         return self._stemmed_keywords
@@ -110,3 +115,13 @@ class ContextualHandler(IntentHandler):
 
     def get_intent_name(self):
         return "contextual_followup"
+    
+class GenreSearchHandler(IntentHandler):
+    def _raw_keywords(self):
+        return [
+            "acao", "comedia", "drama", "terror", "suspense",
+            "romance", "animacao", "ficcao", "aventura", "thriller"
+        ]
+
+    def get_intent_name(self):
+        return "ask_genre_search"

@@ -81,3 +81,7 @@ class LocalJsonRepository(IMovieRepository):
 
     def get_all_directors(self) -> List[Director]:
         return self._directors
+    
+    @abstractmethod
+    def get_movies_by_genre(self, genre_keyword: str) -> List[str]:
+        pass

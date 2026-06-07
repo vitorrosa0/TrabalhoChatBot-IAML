@@ -21,18 +21,26 @@ class ChatbotOrchestrator:
         tokens, doc = self.nlp_processor.process_text(user_text)
         intent = self.intent_classifier.classify(tokens)
 
+        print(f"[DEBUG] tokens: {tokens}")
+        print(f"[DEBUG] intent: {intent}")
+
         # extrai título usando texto original sem stemming
         clean_text = self._extract_title_from_text(user_text, intent)
         PRONOUNS = {"ele", "ela", "dele", "dela", "esse", "essa", "este", "esta"}
         clean_words = set(clean_text.split())
+        INTENTS_SEM_FILME = {"ask_greeting", "ask_affirmation", "ask_genre_search"}
 
-        INTENTS_SEM_FILME = {"ask_greeting", "ask_affirmation", "unknown"}
+        movie_title = None
         if intent not in INTENTS_SEM_FILME and clean_text and not clean_words.issubset(PRONOUNS):
             movie_title = self.entity_extractor.extract_title(clean_text)
             if movie_title:
                 movie = self.repository.get_movie_by_title(movie_title)
                 if movie:
                     self.context.set_movie(movie)
+
+        # print(f"[DEBUG] clean_text: {clean_text}")
+        # print(f"[DEBUG] movie_title: {movie_title}")
+        # print(f"[DEBUG] current_movie: {self.context.current_movie.title if self.context.current_movie else None}")
 
         # Calcula a sub-intenção antes de checar repetição
         sub_intent = self._get_sub_intent(intent, tokens)
@@ -59,8 +67,9 @@ class ChatbotOrchestrator:
         return {"text": response, "source": source}
 
     def _should_use_fallback(self, intent: str, response: str) -> bool:
-        """Decide se o fallback deve ser acionado."""
         if intent == "unknown":
+            if self.context.current_movie and self.repository.foi_consultado():
+                return False
             return True
         if "não encontrei" in response.lower() or "não tenho informações" in response.lower():
             return True
@@ -134,7 +143,29 @@ class ChatbotOrchestrator:
                     if chave in ultimo:
                         return sugestao
                 return "Tudo bem! Posso falar de sinopse, diretor, elenco ou curiosidades. O que prefere?"
-
+            
+        if intent == "ask_genre_search":
+            GENRE_STEMS = {
+                "aca": "acao", "comed": "comedia", "dram": "drama",
+                "terr": "terror", "suspens": "suspense", "romanc": "romance",
+                "animaca": "animacao", "ficca": "ficcao", "avent": "aventura",
+                "thrill": "thriller",
+            }
+            genre_keyword = next((GENRE_STEMS[t] for t in tokens if t in GENRE_STEMS), None)
+            if not genre_keyword:
+                return "Qual gênero você prefere? Posso buscar ação, drama, comédia, terror e muito mais."
+            
+            filmes = self.repository.get_movies_by_genre(genre_keyword)
+            if not filmes:
+                return "Não encontrei filmes desse gênero no momento. Tente outro gênero."
+            
+            genre_display = genre_keyword.replace('acao', 'ação').replace('animacao', 'animação').replace('ficcao', 'ficção científica')
+            linhas = [f"Tenho alguns filmes de {genre_display} que podem te interessar:\n"]
+            for i, (titulo, ano) in enumerate(filmes, 1):
+                linhas.append(f"{i}. **{titulo}** ({ano or '????'})")
+            linhas.append("\nAlgum te interessa? Me diga o nome e conto mais sobre ele!")
+            return "\n".join(linhas)
+        
         movie = self.context.current_movie
         if not movie:
             return "Sobre qual filme você gostaria de conversar?"
@@ -158,22 +189,21 @@ class ChatbotOrchestrator:
             if not director:
                 return f"Não encontrei informações sobre o diretor de {movie.title}."
             
-            self.context.set_director(director)  # sempre seta, independente da sub-intenção
+            self.context.set_director(director)
 
-            # Sub-intenção: filmografia
             if any(w in tokens for w in self._stem_list(["outro", "fez", "dirigiu", "lista", "filme"])):
-                obras = ", ".join(director.filmography)
-                return f"Além de {movie.title}, {director.name} dirigiu: {obras}."
+                if director.filmography:
+                    obras = ", ".join(director.filmography)
+                    return f"Além de {movie.title}, {director.name} dirigiu: {obras}."
+                return f"Não encontrei a filmografia de {director.name}."
 
-            # Sub-intenção: estilo
             if any(w in tokens for w in self._stem_list(["estilo", "jeito", "caracteristica"])):
-                return f"O estilo do {director.name} foca em {director.style}."
+                if director.style:
+                    return f"O estilo do {director.name} foca em {director.style}."
+                return f"Não tenho informações sobre o estilo de {director.name}."
 
-            # Resposta padrão
-            return (
-                f"O filme {movie.title} foi dirigido por {director.name}. "
-                f"Ele é conhecido por {director.style}."
-            )
+            style_info = f" Ele é conhecido por {director.style}." if director.style else ""
+            return f"O filme {movie.title} foi dirigido por {director.name}.{style_info}"
 
         if intent == "ask_synopsis":
             return f"A sinopse de {movie.title} é: {movie.synopsis}"
@@ -244,6 +274,9 @@ class ChatbotOrchestrator:
                 return f"Sobre {movie.title}, posso te contar a sinopse, curiosidades ou falar do diretor. O que prefere?"
             return "Sobre o que exatamente você quer saber mais? Posso falar sobre a sinopse, diretor ou curiosidades."
 
+        if intent == "unknown" and movie:
+            return f"A sinopse de {movie.title} é: {movie.synopsis}"
+
         return "Interessante! Posso te falar sobre a sinopse, diretor ou curiosidades desse filme."
 
 
@@ -264,15 +297,15 @@ class ChatbotOrchestrator:
 
         intent_keywords = set(self.intent_classifier.get_keywords_for_intent(intent))
         
-        # palavras funcionais que nunca são títulos de filmes
         FUNCTIONAL_WORDS = {
             "me", "te", "se", "o", "a", "os", "as", "um", "uma",
             "de", "do", "da", "dos", "das", "no", "na", "por",
             "com", "que", "foi", "tem", "é", "e",
             "qual", "quais", "como", "quando", "onde", "quanto", "quem",
             "curiosidade", "curiosidades",
-            "conte", "conta", "fale", "fala", "me conta", "me fale",
-            "agora", "então", "depois", "antes", "já", "também", "filmes"
+            "conte", "conta", "fale", "fala",
+            "filmes", "agora", "então", "depois", "antes", "já", "também",
+            "está", "sim", "não",
         }
 
         text_clean = re.sub(r'[^\w\s]', '', text.lower())
