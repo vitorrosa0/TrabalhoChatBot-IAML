@@ -9,11 +9,11 @@ class Message:
 
 class ConversationContext:
     def __init__(self):
-        self.current_movie = None
-        self.current_director = None
-        self.current_actor = None
-        self.last_topic = None
-        self.last_full_intent  = None
+        self.current_movie: Movie = None
+        self.current_director: Director = None
+        self.current_person: str = None
+        self.last_topic: str = None
+        self.last_full_intent = None
         self.last_hook_intent = None
         self.last_resolved_intent = None
         self.history = []
@@ -23,6 +23,7 @@ class ConversationContext:
         self.current_movie = movie
         self.last_topic = "movie"
         self.last_full_intent = None
+        self.last_hook_intent = None   # evita follow-up apontando para o filme anterior
     
     def set_director(self, director: Director):
         self.current_director = director

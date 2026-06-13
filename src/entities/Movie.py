@@ -12,3 +12,4 @@ class Movie:
     director_name: str
     cast: List[dict] = field(default_factory=list)
     similar_movies: List[str] = field(default_factory=list)
+    alternatives: List[str] = field(default_factory=list)
