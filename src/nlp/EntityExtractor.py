@@ -140,24 +140,86 @@ class EntityExtractor:
     def extract_title(self, clean_text: str) -> Optional[str]:
         """
         Busca título usando texto limpo sem stemming.
-        Tenta lista local primeiro, depois API.
+        Só aceita resultado da API se a similaridade for alta o suficiente.
         """
         # busca exata na lista local
         match = self._find_in_text(clean_text, self.movies)
         if match:
             return match
 
-        # busca na API com o texto limpo
+        # busca na API com candidatos — só aceita match com similaridade alta
         words = clean_text.split()
         candidates = []
         for size in range(len(words), 0, -1):
+            # Se clean_text tem 2 ou mais palavras, ignora candidatos de tamanho 1
+            if len(words) >= 2 and size == 1:
+                continue
             for i in range(len(words) - size + 1):
                 candidates.append(" ".join(words[i:i + size]))
 
         for candidate in candidates:
             movie = self.repository.get_movie_by_title(candidate)
             if movie:
-                self._register_movie(movie)
-                return movie.title.lower()
+                similarity = _similarity(candidate.lower(), movie.title.lower())
+                if similarity >= 0.75:
+                    self._register_movie(movie)
+                    return movie.title.lower()
+
+        return None
+
+    def extract_person_name(self, text: str) -> Optional[str]:
+        """Extrai o nome de uma pessoa (ator/diretor) a partir do texto original.
+
+        Estratégia: busca padrões como 'do/da/com/de/pelo/pela + [Nome Próprio]'
+        e retorna a sequência de palavras com inicial maiúscula após a preposição.
+
+        Exemplos:
+            "gostaria de um filme do Tom Holland" → "Tom Holland"
+            "filmes com a Isis Valverde"          → "Isis Valverde"
+            "o que o Christopher Nolan dirigiu"   → "Christopher Nolan"
+        """
+        import re
+
+        # Normaliza o texto mas preserva caixa para detectar nomes próprios
+        text_clean = re.sub(r'[^\w\s]', ' ', text).strip()
+        words = text_clean.split()
+
+        PREPOSICOES = {"do", "da", "dos", "das", "com", "de", "pelo", "pela", "sobre", "o", "a"}
+
+        # Percorre as palavras e, ao encontrar uma preposição, coleta as
+        # palavras seguintes que comecem com maiúscula (nome próprio)
+        name_tokens = []
+        collecting = False
+        for word in words:
+            word_lower = word.lower()
+            if word_lower in PREPOSICOES:
+                # reinicia coleta após a preposição
+                name_tokens = []
+                collecting = True
+                continue
+            if collecting:
+                if word[0].isupper():
+                    name_tokens.append(word)
+                else:
+                    # palavra minúscula interrompe o nome (ex: "de um filme")
+                    if name_tokens:
+                        break
+                    # ainda não começamos — continua buscando
+        
+        if len(name_tokens) >= 1:
+            return " ".join(name_tokens)
+
+        # Fallback: procura qualquer sequência de 2+ palavras com inicial maiúscula
+        # que não seja a primeira palavra da frase (provável início de frase)
+        capitalized_sequence = []
+        for i, word in enumerate(words[1:], start=1):
+            if word[0].isupper():
+                capitalized_sequence.append(word)
+            else:
+                if len(capitalized_sequence) >= 2:
+                    return " ".join(capitalized_sequence)
+                capitalized_sequence = []
+        if len(capitalized_sequence) >= 2:
+            return " ".join(capitalized_sequence)
 
         return None
