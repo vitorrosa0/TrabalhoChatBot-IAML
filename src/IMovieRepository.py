@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Tuple
 from entities import Movie, Actor, Director
 
 # Interface abstrata (Contrato)
 class IMovieRepository(ABC):
     @abstractmethod
-    def get_movie_by_title(self, title: str) -> Optional[Movie]:
+    def get_movie_by_title(self, title: str, year: str = None, lang: str = None) -> Optional[Movie]:
         pass
 
     @abstractmethod
@@ -32,6 +32,35 @@ class IMovieRepository(ABC):
     def foi_consultado(self) -> bool:
         pass
 
+    @abstractmethod
+    def get_movies_by_genre(self, genre_keyword: str) -> List[Tuple[str, str]]:
+        pass
+
+    @abstractmethod
+    def get_movies_by_country(self, country_keyword: str) -> List[Tuple[str, str]]:
+        pass
+
+    @abstractmethod
+    def search_person_movies(self, name: str) -> List[Tuple[str, str, str]]:
+        """Busca filmografia de um ator ou diretor pelo nome.
+        Retorna lista de (título, ano, personagem/função)."""
+        pass
+
+    @abstractmethod
+    def search_movie_suggestions(self, query: str) -> List[Tuple[str, str]]:
+        """Retorna sugestões de filmes para um termo de busca genérico.
+        Retorna lista de (título, ano)."""
+        pass
+
+    @abstractmethod
+    def resolve_ambiguous_query(self, query: str) -> Tuple[Optional[str], Optional[str]]:
+        """Compara popularidade na TMDB para determinar se uma query é Filme ou Pessoa.
+        Retorna:
+            ("movie", titulo_do_filme)
+            ("person", nome_da_pessoa)
+            (None, None) se não encontrar nada.
+        """
+        pass
 
 # Implementação concreta que lê o seu JSON
 class LocalJsonRepository(IMovieRepository):
@@ -48,9 +77,11 @@ class LocalJsonRepository(IMovieRepository):
             self._movies.append(movie)
             self._directors.append(director)
 
-    def get_movie_by_title(self, title: str) -> Optional[Movie]:
+    def get_movie_by_title(self, title: str, year: str = None, lang: str = None) -> Optional[Movie]:
         for movie in self._movies:
             if title.lower() in movie.title.lower():
+                if year and str(movie.year) != str(year):
+                    continue
                 return movie
         return None
 
@@ -81,7 +112,24 @@ class LocalJsonRepository(IMovieRepository):
 
     def get_all_directors(self) -> List[Director]:
         return self._directors
-    
-    @abstractmethod
-    def get_movies_by_genre(self, genre_keyword: str) -> List[str]:
-        pass
+
+    def reset_turno(self):
+        pass  # LocalJsonRepository não faz chamadas externas
+
+    def foi_consultado(self) -> bool:
+        return False
+
+    def get_movies_by_genre(self, genre_keyword: str) -> List[Tuple[str, str]]:
+        return []
+
+    def get_movies_by_country(self, country_keyword: str) -> List[Tuple[str, str]]:
+        return []
+
+    def search_person_movies(self, name: str) -> List[Tuple[str, str, str]]:
+        return []
+
+    def search_movie_suggestions(self, query: str) -> List[Tuple[str, str]]:
+        return []
+
+    def resolve_ambiguous_query(self, query: str) -> Tuple[Optional[str], Optional[str]]:
+        return None, None
