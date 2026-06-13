@@ -7,20 +7,21 @@ from .AffirmationHandler import AffirmationHandler
 class IntentClassifier:
     def __init__(self, stemmer: RSLPStemmer):
         self.handlers = [
-            GreetingMLHandler(stemmer), 
+            GreetingMLHandler(stemmer),
             AffirmationHandler(stemmer),
+            IntentHandlers.PersonSearchHandler(stemmer),   # antes de genre/country para capturar "filmes do [Nome]"
             IntentHandlers.GenreSearchHandler(stemmer),
             IntentHandlers.CountrySearchHandler(stemmer),
             IntentHandlers.TriviaHandler(stemmer),
             IntentHandlers.SynopsisHandler(stemmer),
-            IntentHandlers.DirectorHandler(stemmer),  
-            IntentHandlers.ActorFilmographyHandler(stemmer),
+            IntentHandlers.DirectorHandler(stemmer),
             IntentHandlers.ActorHandler(stemmer),
             IntentHandlers.YearHandler(stemmer),
             IntentHandlers.GenreHandler(stemmer),
             IntentHandlers.AwardsHandler(stemmer),
-            IntentHandlers.CastHandler(stemmer), 
+            IntentHandlers.CastHandler(stemmer),
             IntentHandlers.SimilarMoviesHandler(stemmer),
+            IntentHandlers.ActorFilmographyHandler(stemmer),
             IntentHandlers.ContextualHandler(stemmer),
         ]
 
@@ -29,10 +30,20 @@ class IntentClassifier:
             if isinstance(h, AffirmationHandler):
                 return h
 
-    def classify(self, tokens: List[str]) -> str:
+    def classify(self, tokens: List[str], original_text: str = "") -> str:
+        """Classifica o intent a partir dos tokens stemizados.
+
+        Para handlers que implementam matches_original() (ex: PersonSearchHandler),
+        passa também o texto original preservando a caixa das letras — necessário
+        para detectar nomes próprios por capitalização.
+        """
         for handler in self.handlers:
+            # PersonSearchHandler usa matches_original() para detectar nomes próprios
+            if isinstance(handler, IntentHandlers.PersonSearchHandler):
+                if original_text and handler.matches_original(original_text):
+                    return handler.get_intent_name()
+                continue
             if handler.matches(tokens):
-                # print(f"[DEBUG] match em: {handler.__class__.__name__}")
                 return handler.get_intent_name()
         return "unknown"
 
