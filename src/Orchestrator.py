@@ -37,10 +37,15 @@ class ChatbotOrchestrator:
             "ask_country_search", "ask_person_search",
         }
 
-        # ----- CORREÇÃO DO SEQUESTRO DE INTENT -----
-        # Se o intent é country/genre mas o clean_text ainda tem palavras sobrando
-        # (ex: "filme brasileiro Casa Grande"), o usuário quer um filme específico.
-        if intent in ["ask_country_search", "ask_genre_search"] and clean_text and not clean_words.issubset(PRONOUNS):
+       
+        if intent == "ask_person_search" and clean_text:
+            possible_title = self.entity_extractor.extract_title(clean_text)
+            if possible_title:
+                print(f"[DEBUG] ask_person_search descartado: '{clean_text}' bate como filme '{possible_title}'")
+                intent = "contextual_followup"
+
+        if intent in ["ask_country_search", "ask_genre_search"] and len(clean_words) >= 2 and not clean_words.issubset(PRONOUNS):
+            print(f"[DEBUG] SEQUESTRO: intent {intent} virou unknown por causa de clean_text='{clean_text}'")
             intent = "unknown"
             
         # Extrai ano da query
@@ -480,23 +485,17 @@ class ChatbotOrchestrator:
         intent_keywords = set(self.intent_classifier.get_keywords_for_intent(intent))
 
         FUNCTIONAL_WORDS = {
-            # Pronomes, partículas, conjunções
-            "me", "te", "se", "um", "uma", "e",
+            "me", "te", "se", "os", "as", "o", "a", "um", "uma",
             "de", "do", "da", "dos", "das", "no", "na", "por",
             "com", "que", "foi", "tem", "é",
             "qual", "quais", "como", "quando", "onde", "quanto", "quem",
             "curiosidade", "curiosidades",
             "sobre", "conte", "conta", "fale", "fala", "diga", "mostra",
             "filmes", "filme", "agora", "então", "depois", "antes", "já", "também",
-            "está", "sim", "não", "você", "voce", "conhece",
-            "quero", "queria", "gostaria", "assistir", "ver",
+            "está", "sim", "não",
             "algo", "nada", "tudo", "ele", "ela", "fez", "fizeram", "faz",
             "dirigiu", "estrelou", "atuou", "participou", "outros", "outro",
-            # Qualificadores de país/idioma — removidos para não poluir a busca
-            "brasileiro", "brasileira", "americano", "americana",
-            "francês", "francesa", "italiano", "italiana",
-            "espanhol", "espanhola", "coreano", "coreana",
-            "japonês", "japonesa", "nacional", "inglês", "inglesa",
+            "cientifica", "cientifico", "assistir",
         }
 
         text_clean = re.sub(r'[^\w\s]', '', self.nlp_processor.normalize(text))

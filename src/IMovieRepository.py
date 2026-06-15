@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 from typing import Optional, List, Dict, Tuple
 from entities import Movie, Actor, Director
 
-# Interface abstrata (Contrato)
 class IMovieRepository(ABC):
     @abstractmethod
     def get_movie_by_title(self, title: str, year: str = None, lang: str = None) -> Optional[Movie]:
@@ -62,7 +61,6 @@ class IMovieRepository(ABC):
         """
         pass
 
-# Implementação concreta que lê o seu JSON
 class LocalJsonRepository(IMovieRepository):
     def __init__(self, data: Dict):
         self._movies: List[Movie] = []

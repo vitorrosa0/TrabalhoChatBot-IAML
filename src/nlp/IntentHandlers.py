@@ -34,8 +34,7 @@ class TriviaHandler(IntentHandler):
 
 class SynopsisHandler(IntentHandler):
     def _raw_keywords(self):
-        # Removidas palavras vagas (\"sobre\", \"fale\", \"conte\") que causavam
-        # falsos positivos ao perguntar sobre diretor, elenco etc.
+
         return ["sinopse", "resumo", "historia", "enredo", "acontecer"]
 
     def get_intent_name(self):
@@ -46,7 +45,6 @@ class DirectorHandler(IntentHandler):
     def _raw_keywords(self):
         return [
             "diretor", "dirigir", "direcao", "comandou",
-            # Removido "fez" e "outro" — são ambíguos.
             "dirigiu", "lista",
             "estilo", "jeito", "caracteristica",
         ]
@@ -65,9 +63,6 @@ class ActorHandler(IntentHandler):
 
 class ActorFilmographyHandler(IntentHandler):
     def _raw_keywords(self):
-        # Removidas "ator" e "atriz" — estavam causando conflito com ActorHandler
-        # e ask_cast. Agora só dispara quando o usuário usa termos de filmografia.
-        # Removido "filme" e "filmes" - estavam causando falso positivo em todas as queries.
         return [
             "outros", "participou", "estrelou", "atuou", "filmografia",
             "trabalhos", "fez", "fizeram", "participacoes", "atuacoes"
@@ -85,10 +80,7 @@ class YearHandler(IntentHandler):
 
 class GenreHandler(IntentHandler):
     def _raw_keywords(self):
-        # Removidas "estilo" e "jeito" — estavam conflitando com DirectorHandler
-        # (que também usa essas palavras e aparece antes no classifier).
-        # "Qual o estilo do filme?" agora vai para DirectorHandler, que trata
-        # o contexto corretamente via context.last_topic.
+
         return ["genero", "tipo", "categoria", "classificacao"]
 
     def get_intent_name(self):

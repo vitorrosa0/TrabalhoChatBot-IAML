@@ -9,7 +9,7 @@ class IntentClassifier:
         self.handlers = [
             GreetingMLHandler(stemmer),
             AffirmationHandler(stemmer),
-            IntentHandlers.PersonSearchHandler(stemmer),   # antes de genre/country para capturar "filmes do [Nome]"
+            IntentHandlers.PersonSearchHandler(stemmer), 
             IntentHandlers.GenreSearchHandler(stemmer),
             IntentHandlers.CountrySearchHandler(stemmer),
             IntentHandlers.TriviaHandler(stemmer),

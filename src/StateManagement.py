@@ -4,7 +4,7 @@ from entities import Movie, Actor, Director
 
 @dataclass
 class Message:
-    role: str  # "user" ou "bot"
+    role: str
     content: str
 
 class ConversationContext:
@@ -23,7 +23,7 @@ class ConversationContext:
         self.current_movie = movie
         self.last_topic = "movie"
         self.last_full_intent = None
-        self.last_hook_intent = None   # evita follow-up apontando para o filme anterior
+        self.last_hook_intent = None  
     
     def set_director(self, director: Director):
         self.current_director = director

@@ -45,7 +45,6 @@ class TMDBRepository(IMovieRepository):
 
 
     def _get(self, endpoint: str, params: dict = None) -> Optional[dict]:
-        # Corrigido: não usa dicionário mutável como valor padrão (bug Python clássico)
         if params is None:
             params = {}
         params = {**params, "api_key": self._api_key, "language": "pt-BR"}
