@@ -68,7 +68,7 @@ class ChatbotOrchestrator:
                 lang_filter = LANG_MAP[word]
                 break
 
-        # ----- DESAMBIGUAÇÃO DINÂMICA -----
+        # DESAMBIGUAÇÃO DINÂMICA
         # Se não há keywords óbvias ou é um follow-up vago (e clean_text existe),
         # usamos o TMDB para descobrir se é pessoa ou filme
         if intent in ["unknown", "contextual_followup"] and clean_text and not clean_words.issubset(PRONOUNS):
@@ -82,7 +82,6 @@ class ChatbotOrchestrator:
                 clean_text = entity_name
                 if intent == "unknown":
                     intent = "contextual_followup"
-        # -----------------------------------
 
         print(f"[DEBUG] intent após desambiguação: {intent}")
 
@@ -257,13 +256,11 @@ class ChatbotOrchestrator:
                         return sugestao
                 return "Tudo bem! Posso falar de sinopse, diretor, elenco ou curiosidades. O que prefere?"
 
-        # ------------------------------------------------------------------
         # Busca por pessoa (ator / diretor)
-        # ------------------------------------------------------------------
         if intent == "ask_person_search":
             # Dá prioridade ao nome desambiguado; senão usa o extrator antigo
             person_name = self.context.current_person or self.entity_extractor.extract_person_name(self.context.last_user_text)
-            self.context.current_person = None  # Limpa o contexto
+            self.context.current_person = None
             if not person_name:
                 return "Não consegui identificar o nome da pessoa. Poderia repetir com o nome completo?"
 
@@ -396,7 +393,6 @@ class ChatbotOrchestrator:
                         return f"O estilo do {director.name} foca em {director.style}."
                     elif director:
                         return f"Não tenho informações detalhadas sobre o estilo de {director.name}."
-                # contexto é filme — cai para resposta de gênero abaixo
 
             genres = ", ".join(movie.genre)
             return f"{movie.title} é um filme de {genres}."

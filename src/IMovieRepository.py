@@ -112,7 +112,7 @@ class LocalJsonRepository(IMovieRepository):
         return self._directors
 
     def reset_turno(self):
-        pass  # LocalJsonRepository não faz chamadas externas
+        pass
 
     def foi_consultado(self) -> bool:
         return False

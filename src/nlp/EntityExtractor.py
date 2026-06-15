@@ -204,7 +204,6 @@ class EntityExtractor:
                     # palavra minúscula interrompe o nome (ex: "de um filme")
                     if name_tokens:
                         break
-                    # ainda não começamos — continua buscando
         
         if len(name_tokens) >= 1:
             return " ".join(name_tokens)

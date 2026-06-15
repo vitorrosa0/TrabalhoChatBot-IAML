@@ -62,7 +62,7 @@ class TMDBRepository(IMovieRepository):
         # Normaliza a chave do cache para incluir o ano e idioma (se houver)
         cache_key = f"{title.lower().strip()}_{year or ''}_{lang or ''}"
         if cache_key in self._cache:
-            self._consultado_neste_turno = True  # cache hit — dado ainda é da API
+            self._consultado_neste_turno = True  # dado ainda é da API
             return self._cache[cache_key]
 
         # chamada real à API
@@ -189,10 +189,7 @@ class TMDBRepository(IMovieRepository):
         # Fallback: retorna o primeiro resultado (mais relevante por popularidade)
         return results[0] if results else None
 
-    # ------------------------------------------------------------------
     # Conversores: dict TMDB → entidades do projeto
-    # ------------------------------------------------------------------
-
     def _build_movie(self, data: dict) -> Movie:
         details = data["details"]
         credits = details.get("credits", {})
@@ -270,10 +267,7 @@ class TMDBRepository(IMovieRepository):
             style="",
         )
 
-    # ------------------------------------------------------------------
     # Contrato IMovieRepository
-    # ------------------------------------------------------------------
-
     def get_movie_by_title(self, title: str, year: str = None, lang: str = None) -> Optional[Movie]:
         data = self._fetch_movie_data(title, year, lang)
         return self._build_movie(data) if data else None
