@@ -141,19 +141,6 @@ class CountrySearchHandler(IntentHandler):
 
 
 class PersonSearchHandler(IntentHandler):
-    """Detecta pedidos de busca por filmografia de ator ou diretor.
-
-    Exemplos de frases que ativam:
-        "gostaria de um filme do Tom Holland"
-        "filmes com a Isis Valverde"
-        "o que o Christopher Nolan dirigiu"
-        "filmografia da Fernanda Torres"
-        "quais filmes a Meryl Streep fez"
-
-    Nota: o método matches() padrão sempre retorna False.
-    O IntentClassifier chama matches_original() com o texto original
-    (caixa preservada) para detectar nomes próprios pela capitalização.
-    """
 
     PREP_PATTERNS = {"do", "da", "dos", "das", "pelo", "pela", "com", "de", "sobre", "o", "a"}
     TRIGGER_VERBS = {"filmografia", "participou", "estrelou", "atuou",
