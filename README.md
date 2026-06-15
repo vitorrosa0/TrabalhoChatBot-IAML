@@ -4,9 +4,89 @@ Projeto desenvolvido para a disciplina de **Inteligência Artificial e Machine L
 
 ---
 
+## ⚙️ Variáveis de Ambiente
+
+Antes de executar o projeto, configure o arquivo `.env` na **raiz do repositório** com as seguintes variáveis:
+
+| Variável        | Descrição                                                                 | Obrigatória |
+|-----------------|---------------------------------------------------------------------------|-------------|
+| `HF_TOKEN`      | Token de acesso da Hugging Face (permissão: *Make calls to Inference Providers*) | Sim         |
+| `TMDB_API_KEY`  | Chave de API do The Movie Database (TMDB)                                | Sim         |
+
+O arquivo `src/.env.example` serve de template — ele está no repositório e mostra quais variáveis precisam ser configuradas, mas sem valores reais.
+
+```bash
+# macOS/Linux
+cp src/.env.example .env
+
+# Windows
+copy src\.env.example .env
+```
+
+Abra o `.env` gerado na raiz e preencha com seus tokens:
+
+```env
+HF_TOKEN=seu_token_huggingface_aqui
+TMDB_API_KEY=sua_chave_tmdb_aqui
+```
+
+> Obtenha o token do Hugging Face em: https://huggingface.co/settings/tokens  
+> Obtenha a chave da TMDB em: https://www.themoviedb.org/settings/api
+
+---
+
+## ▶️ Como Executar
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/vitorrosa0/TrabalhoChatBot-IAML.git
+cd TrabalhoChatBot-IAML
+```
+
+### 2. Crie e ative um ambiente virtual (recomendado)
+
+```bash
+python3 -m venv venv
+source venv/bin/activate  # Linux/macOS
+venv\Scripts\activate     # Windows
+```
+
+### 3. Instale as dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure as variáveis de ambiente
+
+Siga as instruções da seção [Variáveis de Ambiente](#️-variáveis-de-ambiente) acima.
+
+### 5. Execute o chatbot
+
+O CineBot pode ser executado de duas formas a partir da **raiz do repositório**:
+
+#### 🖥️ Modo terminal (CLI)
+
+```bash
+python app.py
+```
+
+O bot será iniciado diretamente no terminal. Digite sua mensagem e pressione Enter para conversar. Para encerrar, digite `sair`.
+
+#### 🌐 Modo web (interface no navegador)
+
+```bash
+python app.py --web
+```
+
+O servidor Flask será iniciado e a interface gráfica ficará disponível em `http://localhost:5000`. Abra esse endereço no seu navegador (Chrome recomendado). A interface exibe as mensagens de forma visual, com indicação da fonte de cada resposta (Local, TMDB ou LLM).
+
+---
+
 ## 📌 Descrição
 
-O **CineBot** é um chatbot de linha de comando especializado em filmes. O usuário pode perguntar sobre sinopse, diretor, elenco, curiosidades, prêmios e filmes similares em linguagem natural. O sistema utiliza NLP (NLTK) para interpretar as mensagens, classifica a intenção com **Naive Bayes**, e usa um LLM (Llama 3.1 via Hugging Face) para refinar as respostas e cobrir perguntas fora do escopo local.
+O **CineBot** é um chatbot especializado em filmes. O usuário pode perguntar sobre sinopse, diretor, elenco, curiosidades, prêmios e filmes similares em linguagem natural. O sistema utiliza NLP (NLTK) para interpretar as mensagens, classifica a intenção com **Naive Bayes**, consulta a **API do TMDB** para buscar dados de filmes, e usa um **LLM via Hugging Face** (Llama 3.1 8B) para refinar respostas e cobrir perguntas fora do escopo local.
 
 ---
 
@@ -17,7 +97,9 @@ O **CineBot** é um chatbot de linha de comando especializado em filmes. O usuá
 | Python 3.x | Linguagem principal |
 | NLTK + RSLPStemmer | Processamento de Linguagem Natural e stemming |
 | Naive Bayes (NLTK) | Classificação de intenções (saudação, afirmação) |
+| TMDB API | Repositório principal de dados de filmes |
 | Hugging Face (Llama 3.1 8B) | LLM para fallback e refinamento de respostas |
+| Flask | Servidor web para a interface gráfica |
 | python-dotenv | Gerenciamento de variáveis de ambiente |
 
 ---
@@ -26,14 +108,17 @@ O **CineBot** é um chatbot de linha de comando especializado em filmes. O usuá
 
 ```
 TrabalhoChatBot-IAML/
+├── app.py                  → Ponto de entrada (CLI e Web)
 ├── requirements.txt
 ├── README.md
 └── src/
-    ├── app.py                  → Ponto de entrada (CLI)
+    ├── .env.example            → Template de variáveis de ambiente
     ├── Orchestrator.py         → Coordena NLP, contexto e geração de respostas
-    ├── IMovieRepository.py     → Repositório de filmes (leitura do dataset.json)
+    ├── IMovieRepository.py     → Interface e repositório local (dataset.json)
+    ├── TMDBRepository.py       → Repositório de filmes via API do TMDB
     ├── StateManagement.py      → Gerenciamento de contexto da conversa
-    ├── dataset.json            → Base de dados de filmes
+    ├── dataset.json            → Base de dados local de filmes (fallback)
+    ├── static/                 → Interface web (HTML/CSS/JS)
     ├── entities/               → Modelos de dados (Movie, Director, Actor)
     ├── nlp/                    → Pipeline de NLP e classificadores de intenção
     └── learningModel/          → Integração com LLM (HuggingFaceFallback)
@@ -59,58 +144,6 @@ Após o processamento:
 
 ---
 
-## 🎬 Filmes Disponíveis no Dataset
-
-- Interestelar (2014)
-- O Poderoso Chefão (1972)
-
----
-
-## ▶️ Como Executar
-
-### 1. Clone o repositório
-```bash
-git clone https://github.com/SEU_USUARIO/TrabalhoChatBot-IAML.git
-cd TrabalhoChatBot-IAML
-```
-
-### 2. Crie e ative um ambiente virtual (recomendado)
-```bash
-python3 -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-```
-
-### 3. Instale as dependências
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Configure as variáveis de ambiente
-
-O arquivo `src/.env.example` serve de template, ele está no repositório e mostra quais variáveis precisam ser configuradas, mas sem valores reais.
-
-Para configurar, copie o template e preencha com o seu token:
-```bash
-# macOS/Linux
-cp src/.env.example src/.env
-
-# Windows
-copy src\.env.example src\.env
-```
-
-Abra o `src/.env` gerado e substitua `seu_token_aqui` pelo seu token pessoal do Hugging Face.
-
-> Obtenha o token (com permissão "Make calls to Inference Providers") em: https://huggingface.co/settings/tokens
-
-### 5. Execute o chatbot
-```bash
-cd src
-python3 app.py
-```
-
----
-
 ## 💬 Exemplos de Uso
 
 | Entrada do Usuário | Resposta do Bot |
@@ -122,20 +155,22 @@ python3 app.py
 | "Me conta uma curiosidade" | Curiosidade de bastidores |
 | "Quais prêmios ele ganhou?" | Oscars e indicações |
 | "Tem algum filme parecido?" | Lista de filmes similares |
+| "Filmes de ação" | Lista de filmes do gênero via TMDB |
+| "Filmografia do Tom Holland" | Filmes do ator via TMDB |
 
 ---
 
 ## ⚠️ Limitações
 
-- O dataset é local e contém apenas 2 filmes (Interestelar e O Poderoso Chefão)
 - O refinamento de respostas e o fallback dependem de conexão com a API do Hugging Face e de um token válido
+- A busca de filmes depende de conexão com a API do TMDB e de uma chave válida
 - Gírias ou frases muito informais podem não ser reconhecidas corretamente
 
 ---
 
 ## 👥 Equipe
 
-- Andrezza Castro
+- Andrezza Maria
 - Gustavo Miranda
 - Lucas Ciampi
 - João Victor Leal
@@ -145,5 +180,5 @@ python3 app.py
 
 ## 📅 Entrega
 
-**Data:** 15/06/2026 — com apresentação
+**Data:** 15/06/2026 — com apresentação  
 **Disciplina:** Inteligência Artificial e Machine Learning — UniAcademia
