@@ -7,6 +7,7 @@ Projeto desenvolvido para a disciplina de **Inteligência Artificial e Machine L
 ## ⚙️ Variáveis de Ambiente
 
 Antes de executar o projeto, configure o arquivo `.env` na **raiz do repositório** com as seguintes variáveis:
+Os valores das variáveis de ambiente estão no drive, link compartilhado no docs, visto que não é possível subir access tokens no github
 
 | Variável        | Descrição                                                                 | Obrigatória |
 |-----------------|---------------------------------------------------------------------------|-------------|
